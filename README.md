@@ -13,7 +13,7 @@
 ## 팀원 및 역할
   + 기획
     + 이현성 (CEO)
-    + 박세빈 (CEO Manager)
+    + 박세빈 (CEO staff)
     + 김민정 
     + 황현정
     + 김지민 (Business Team)
