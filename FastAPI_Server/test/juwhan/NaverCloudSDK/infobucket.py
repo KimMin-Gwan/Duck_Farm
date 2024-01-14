@@ -35,7 +35,7 @@ class bucket:
         object_name="sample-folder/"
         self.s3.put_object(Bucket=bucket_name ,Key=object_name)
 
-        object_name='sample-folder/test사인2'
+        object_name='sample-folder/사인.png'
 
         local_file_path="C:\\Users\\antl\\Documents\\GitHub\\Duck_Farm\\FastAPI_Server\\test\\juwhan\\NaverCloudSDK\\사인2.png"
         self.s3.upload_file(local_file_path,bucket_name,object_name)
@@ -44,9 +44,15 @@ class bucket:
         object_name='test사인2'
         self.s3.delete_object(Bucket=bucket_name,Key=object_name)
     
+    def find_file(self) :
+        bucket_name="test0.1"
+        object_key="사인.png"
+        response=self.s3.get()["Body"].read()
+        print("Got Object %s from bucket %s")
 if __name__ == "__main__":
     buc=bucket()
 
     #buc.show_bucket()
-    buc.put_bucket()
+    #buc.put_bucket()
     #buc.delete_bucket_file()
+    buc.find_file()
