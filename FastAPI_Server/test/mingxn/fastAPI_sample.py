@@ -30,16 +30,23 @@ class Item(BaseModel):
     name: str
     body : str
 
-# using post method
+# using post method with custom model
 @app.post('/post_data')
 def str_post(posted_data:Item):
     body_data = posted_data.body
     sample_data = {"head":"json_data", "body":body_data}
+    print(sample_data)
     json_data = json.dumps(sample_data)
     return json_data
-    
-    
-    
+
+# using post method with dict
+@app.post('/post_dict')
+def str_post(posted_data:dict):
+    body_data = posted_data['body']
+    sample_data = {"head":"json_data", "body":body_data}
+    print(sample_data)
+    json_data = json.dumps(sample_data)
+    return json_data
 
 if __name__ == "__main__":
     print("Run Sample System")
