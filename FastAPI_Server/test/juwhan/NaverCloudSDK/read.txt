@@ -3,4 +3,7 @@ Naver Cloud CDN-> 데이터 전송
 
 
 https://blog.naver.com/n_cloudplatform/221351376471   => CDN 하고 Storage 연결사이트 자료
+
+
+
 https://guide.ncloud-docs.com/docs/storage-storage-8-2   => python 용 AWS SDK (boto3)  자료 

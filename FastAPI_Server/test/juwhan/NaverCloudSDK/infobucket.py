@@ -53,6 +53,6 @@ if __name__ == "__main__":
     buc=bucket()
 
     #buc.show_bucket()
-    #buc.put_bucket()
+    buc.put_bucket()
     #buc.delete_bucket_file()
-    buc.find_file()
+    #buc.find_file()
