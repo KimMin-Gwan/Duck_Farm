@@ -21,8 +21,8 @@
     + 김수민 (Designer)
   + 개발
     + 김민관 (Lead Develop, DevOps Manager)
-    + 전성훈 (Server Develop Leader, QA Manager)
-    + 선주환 (Database Administrater)
+    + 전성훈 (Server Develop Leader)
+    + 선주환 (Database Administrater, QA Manager)
     + 양혜림 (Server Developer, Frontend Develop)
     + 박서희 (Frontend Developer)
 
