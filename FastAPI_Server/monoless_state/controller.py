@@ -30,15 +30,16 @@ class User_Controller:
     def try_sign_out(self):
         pass
     
-    # 
         
         
 class Login_Controller:
     def __init__(self, user_data=None):
         self.user_data = user_data
-        self.try_login
+        self.try_login(user_data)
     
-    def try_login(self)
+    def try_login(self):
+        self
+        pass
         
     
 class Error_Controller:
