@@ -4,10 +4,10 @@ from fastapi.staticfiles import StaticFiles
 from starlette.responses import HTMLResponse
 from fastapi.responses import FileResponse
 from NaverCloudSDK import *
-
+from Database import *
 app = FastAPI()
 my_bucket=bucket()
-
+my_db =server_db()
 # CORS 설정
 app.add_middleware(
     CORSMiddleware,
@@ -30,8 +30,7 @@ async def upload_images(files: list[UploadFile] = File(...)):
     try:
         for file in files:
             my_bucket.put_bucket(file.file)
-            # with open(f"static/{file.filename}", "wb") as f:
-            #     f.write(contents)
+            my_db.insert_imgpth("user_email_test","경로 test",1)
         return {"status": "success", "message": "이미지가 업로드되었습니다."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
