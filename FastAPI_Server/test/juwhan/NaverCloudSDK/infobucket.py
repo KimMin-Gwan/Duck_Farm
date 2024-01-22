@@ -45,14 +45,14 @@ class bucket:
         self.s3.delete_object(Bucket=bucket_name,Key=object_name)
     
     def find_file(self) :
-        bucket_name="test0.1"
-        object_key="사인.png"
+        bucket_name="baekhyun-test"
+        object_key="/sample/1.jpg"
         response=self.s3.get()["Body"].read()
         print("Got Object %s from bucket %s")
 if __name__ == "__main__":
     buc=bucket()
 
     #buc.show_bucket()
-    buc.put_bucket()
+    #buc.put_bucket()
     #buc.delete_bucket_file()
-    #buc.find_file()
+    buc.find_file()
