@@ -14,7 +14,7 @@ class bucket:
         
         
     def cors(self):   # Cors 설정 해주는 함수 클래스 생성시 자동으로 실행되게 하고 
-        bucket_name="test0.1"
+        bucket_name="baekhyun-test"
         cors_configuration = {
         'CORSRules': [{
             'AllowedHeaders': ['*'],
@@ -28,8 +28,10 @@ class bucket:
         response = self.s3.get_bucket_cors(Bucket=bucket_name)
         print(response['CORSRules'])
     def show_bucket(self):  #bucket출력해주는 함수
+        
         for bucket in self.response.get('Buckets', []):
             print(bucket.get('Name'))
+            
     def put_bucket(self):  #저장소에 올리는 함수 
         bucket_name="test0.1"
         object_name="sample-folder/"
@@ -52,7 +54,7 @@ class bucket:
 if __name__ == "__main__":
     buc=bucket()
 
-    #buc.show_bucket()
+    buc.show_bucket()
     #buc.put_bucket()
     #buc.delete_bucket_file()
-    buc.find_file()
+    #buc.find_file()
