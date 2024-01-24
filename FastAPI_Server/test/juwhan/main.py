@@ -9,6 +9,7 @@ from io import BytesIO
 from PIL import Image
 from NaverCloudSDK import *
 from Database import *
+from typing import List
 app = FastAPI()
 my_bucket=bucket()
 #my_db =server_db()
@@ -56,7 +57,7 @@ async def get_upload_form(request :Request):
 
 
 @app.post("/upload/")
-async def upload_images(files: list[UploadFile] = File(...)):
+async def upload_images(files: List[UploadFile] = File(...)):
     try:
         for file in files:
             my_bucket.put_bucket(file.file)
@@ -68,7 +69,7 @@ async def upload_images(files: list[UploadFile] = File(...)):
 
 @app.post("/search/")
 async def search_image(request:Request,query:str=Form(...)):
-    print(query)
+    print()
     try:
         cdn_urls=[
             'https://kibxopaerykk22247051.cdn.ntruss.com/sample/10.jpg',
