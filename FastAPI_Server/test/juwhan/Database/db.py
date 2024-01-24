@@ -21,7 +21,6 @@ class server_db:
         self.cur.execute(sql, params)
         self.conn.commit()
 
-            
 # if __name__=="__main__":
 #     my_sql=mysql()
 #     #my_sql.select_test()

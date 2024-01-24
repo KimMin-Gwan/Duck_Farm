@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Search</title>
+</head>
+<body>
+    <h1>Image_Search</h1>
+    <form action="/search/" method="post">
+        <label for="query">Search:</label>ss
+        <input type="text" id="query" name="query" required>
+
+        <!-- <img src="https://kibxopaerykk22247051.cdn.ntruss.com/sample/3.jpg"  alt="Image"> -->
+        <button type="submit">Search</button>
+    </form>
+    <div id="result">
+        {% if search_result %}
+        {% for image_url in search_result %}
+                <img src="{{ image_url }}" alt="Image">
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>

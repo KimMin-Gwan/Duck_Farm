@@ -1,7 +1,10 @@
 import boto3
 from NaverCloudSDK.info import *
+import requests
+from PIL import Image
 service_name = 's3'
 endpoint_url = 'https://kr.object.ncloudstorage.com'
+#endpoint_url = 'kibxopaerykk22247051.cdn.ntruss.com'
 region_name = 'kr-standard'
 access_key = ACCESS_KEY
 secret_key =SECRET_KEY 
@@ -48,8 +51,7 @@ class bucket:
     def find_file(self) :
         bucket_name="baekhyun-test"
         object_key="/sample/1.jpg"
-        response=self.s3.get()["Body"].read()
-        print("Got Object %s from bucket %s")
+
 if __name__ == "__main__":
     buc=bucket()
     buc.show_bucket()
