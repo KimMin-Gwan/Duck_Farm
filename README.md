@@ -14,17 +14,17 @@
   + 기획
     + 이현성 (CEO)
     + 박세빈 (CEO staff)
-    + 김민정 (Project Manager)
-    + 황현정 (Project Manager)
+    + 김민정 (Project Manage)
+    + 황현정 (Project Manage)
     + 김지민 (Business)
   + 디자인
-    + 김수민 (Designer)
+    + 김수민 (Designe)
   + 개발
-    + 김민관 (Lead Develop, DevOps Manager)
-    + 전성훈 (Server Develop Leader)
-    + 선주환 (Database Administrater, QA Manager)
+    + 김민관 (Lead Develop, DevOps Manage)
+    + 전성훈 (Server Develop Lead)
+    + 선주환 (Database Administrater, QA Manage)
     + 양혜림 (Server Developer, Frontend Develop)
-    + 박서희 (Frontend Developer)
+    + 박서희 (Frontend Develop)
 
 ## 상세
  - Language : Python, Dart
