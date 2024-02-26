@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/sign_widget.dart';
+//import 'package:cheese/src/ui/sign_in_widget.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cheese_Demo',
       theme: ThemeData(
+        primaryColor: Color(0xff181420),
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

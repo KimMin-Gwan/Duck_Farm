@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cheese/src/models/user_model.dart';
-import 'package:cheese/src/bloc/user_bloc.dart';
 import 'package:cheese/src/ui/style.dart';
+import 'package:cheese/src/ui/sign_in_widget.dart';
+import 'dart:io';
+
 
 // 로그인 또는 회원가입 선택 창
 class Sign_Widget extends StatefulWidget {
@@ -80,8 +81,6 @@ class _SignWidgetState extends State<Sign_Widget> {
   );
 
 
-
-
   @override
   Widget build(BuildContext context) {
     double queryWidth = MediaQuery.of(context).size.width - 2;
@@ -106,8 +105,9 @@ class _SignWidgetState extends State<Sign_Widget> {
                         GestureDetector(
                             onTap: () {
                               setState(() {
+                                // 회원가입 => 0
                                 _selectedContainerIndex = 0;
-
+                                // 애니메이션을 위한 정지
                               });
                             },
                             child: AnimatedContainer(
@@ -132,7 +132,15 @@ class _SignWidgetState extends State<Sign_Widget> {
                         GestureDetector(
                             onTap: () {
                               setState(() {
+                                // 로그인 => 1;
                                 _selectedContainerIndex = 1;
+                                // 애니메이션을 위한 정지
+                                Future.delayed(_duration, (){
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SignInWidget())
+                                  );
+                                });
                               });
                             },
                             child: AnimatedContainer(
@@ -159,70 +167,6 @@ class _SignWidgetState extends State<Sign_Widget> {
     );
   }
 }
-
-class SignInWidget extends StatefulWidget {
-  SignInWidget({Key? key}) : super(key: key);
-
-  @override
-  _SignInWidgetState createState() => _SignInWidgetState();
-}
-
-class _SignInWidgetState extends State<SignInWidget> {
-  final SignInBloC signInBloC = SignInBloC();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder(
-        stream: signInBloC.signInModel,
-        builder: (BuildContext context, AsyncSnapshot<SignInModel> snapshot){
-          if (snapshot.hasData){
-            return signInBuild(snapshot);
-          } else if(snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          }
-          return Center(child: CircularProgressIndicator());
-        },
-      ),
-    );
-  }
-
-
-  Widget signInBuild(AsyncSnapshot<SignInModel> snapshot){
-    var data = snapshot.data;
-
-    return ;
-  }
-
-
-
-}
-
-
-
-class Sign_Up_Widget extends StatefulWidget {
-  Sign_Up_Widget({Key? key}) : super(key: key);
-  //const Sign_Up_Widget({super.key});
-
-  @override
-  _Sign_Up_WidgetState createState() => _Sign_Up_WidgetState();
-  //State<Sign_Up_Widget> createState() => _Sign_Up_WidgetState();
-}
-
-class _Sign_Up_WidgetState extends State<Sign_Up_Widget> {
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-    );
-  }
-}
-
-
-
-
 
 
 

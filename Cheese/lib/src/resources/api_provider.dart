@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:cheese/src/models/user_model.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+// Json형태로 변환하기 위한 기본 형태
 class JsonParser {
   PackageInfo _packageInfo = PackageInfo(
     appName: 'Unknown',
@@ -14,10 +15,13 @@ class JsonParser {
     buildSignature: 'Unknown',
     installerStore: 'Unknown',
   );
+
+  // Server Url은 상황에 맞춰 변경 필수
   String _server_url = "http://127.0.0.1";
   String _version = "";
   Map _header = {};
 
+  // Constructer
   JsonParser(){
     _initPackageInfo();
     _header = {
@@ -29,6 +33,7 @@ class JsonParser {
     };
   }
 
+  // App 패키지 정보(버전 등)을 받아오는 메서드
   Future<void> _initPackageInfo() async {
     final info = await PackageInfo.fromPlatform();
     _packageInfo = info;
@@ -59,7 +64,7 @@ class JsonParser {
   // header 받기
   //Map getHeader() => {"Content-Type" : "application/json"};
 
-  // 서버 url 받기
+  // 서버 url 접근자
   getUrl() => _server_url;
 }
 

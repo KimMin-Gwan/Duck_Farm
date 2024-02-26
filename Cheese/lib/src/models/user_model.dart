@@ -43,12 +43,7 @@ class SignInModel{
     }else{
       detail = body['detail'];
     }
-
   }
-
-
-
-
 }
 
 
@@ -64,6 +59,7 @@ class Birthday{
   setBirthday(y, m, d){year = y; month = m; day = d;}
 }
 
+// User 데이터 타입
 class _User{
   String _email = "";
   String _password = "";
@@ -86,7 +82,7 @@ class _User{
     _nickname = userData['_nickname'];
   }
 
-
+  // 접근자 모음
   getEmail() => _email;
   getPassword() => _password;
   getUid() => _uid;
@@ -94,6 +90,7 @@ class _User{
   getBirthday() => _birthday;
   getNickname() => _nickname;
 
+  // 변경자 모음
   setEmail(String email){_email = email;}
   setPassword(String password){_password = password;}
   setUid(int uid){_uid = uid;}

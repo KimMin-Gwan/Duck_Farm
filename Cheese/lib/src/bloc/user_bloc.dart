@@ -37,34 +37,18 @@ class SignInBloC {
     }
   }
 
+  // 서버에 로그인을 시도
   fetchSignIn() async {
     _repository.setEmailPassword(_email, _password);
     SignInModel signInModel = await _repository.fetchSign();
     _signFetcher.sink.add(signInModel);
   }
 
+  // 삭제전용 함수
   dispose() {
     _signFetcher.close();
   }
 }
 
-/*
-class UserBloc {
-  final _repository = Repository();
-  final _userFetcher = PublishSubject<UserModel>();
-
-  Observable<UserModel> get userData => _userFetcher.stream;
-
-
-  fetchUserData() async {
-    UserModel userModel = await _repository.fetchUser();
-    _userFetcher.sink.add(userModel);
-  }
-
-  dispose() {
-    _userFetcher.close();
-  }
-}
- */
 
 
