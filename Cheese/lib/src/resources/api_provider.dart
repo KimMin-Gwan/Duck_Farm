@@ -25,11 +25,11 @@ class JsonParser {
   JsonParser(){
     _initPackageInfo();
     _header = {
-      'Version' : _version,
-      'Date' : DateTime.now().toString(),
-      'Action' : 'default',
-      'Content-Type' : 'application/json',
-      'User' : {'login' : 0, 'UID' : 0},
+      'version' : _version,
+      'date' : DateTime.now().toString(),
+      'action' : 'default',
+      'content-Type' : 'application/json',
+      'user' : {'login' : 0, 'UID' : 0},
     };
   }
 
@@ -45,9 +45,9 @@ class JsonParser {
   // action : String, user : 로그인되면 1, 아니면 0, UID: Int
    */
   setHeader(String action, {user = 0, UID = 0}){
-    _header['Action'] = action;
-    _header['User']["login"] = user;
-    _header['User']["UID"] = UID;
+    _header['action'] = action;
+    _header['user']["login"] = user;
+    _header['user']["UID"] = UID;
   }
 
   // 보내기 가능한 형태로 변경 => json 데이터

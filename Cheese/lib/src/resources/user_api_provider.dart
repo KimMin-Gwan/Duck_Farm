@@ -5,11 +5,11 @@ import 'package:cheese/src/models/user_model.dart';
 import 'package:cheese/src/resources/api_provider.dart';
 
 //로그인시도에서 사용되는 JSON 파서
-class SignJsonParser extends JsonParser{
+class SignInJsonParser extends JsonParser{
   Map _body = {};
   String _url = "";
-  SignJsonParser(): super() {
-    String _url = super.getUrl() + "/login";
+  SignInJsonParser(): super() {
+    _url = getUrl() + "/login";
     _body = {
       "email" : "",
       "password" : "",
@@ -29,9 +29,9 @@ class SignJsonParser extends JsonParser{
   getUrl() => _url;
 }
 
-//서버로 부터 로그인 시도
-class SignApiProvider {
-  SignJsonParser signJsonParser = SignJsonParser();
+//서버로 로그인 시도
+class SignInApiProvider {
+  SignInJsonParser signJsonParser = SignInJsonParser();
   Client client = Client();
 
   // email, password 전송
@@ -52,25 +52,115 @@ class SignApiProvider {
   }
 }
 
+//로그인시도에서 사용되는 JSON 파서
+class SignUpJsonParser extends JsonParser{
+  Map _body = {};
+  String _url = "";
 
+  //Contructor
+  SignUpJsonParser(): super() {
+    _url = getUrl() + "/sign_up";
+    _body = {
+      "email" : "",
+      "password" : "",
+      "sex" : "",
+      "birthday" : "",
+      "otp" : 0,
+    };
+  }
 
+  //바디 세팅
+  // otp를 받기위해 Email을 보냄
+  setBody2GetOtp(String email){
+    _body["email"] = email;
+    setHeader("get_otp");
+    return dataParsing(_body);
+  }
 
-class UserApiProvider {
+  // otp를 확인하기 위해 otp를 보냄
+  setBody2ConfirmOtp(String email, int otp){
+    _body["email"] = email;
+    _body["otp"] = otp;
+    setHeader("confirm_otp");
+    return dataParsing(_body);
+  }
+
+  // 회원가입 전용 툴
+  setBody(String email, String birthday, String sex, String password) {
+    _body["email"] = email;
+    _body['password'] = password;
+    _body["birthday"] = birthday;
+    _body["sex"] = sex;
+    setHeader("sign_in");
+    return dataParsing(_body);
+  }
+
+  // 비밀번호 교환 용
+  setPassword(String password){
+    _body['password'] = password;
+    setHeader("change_password");
+    return dataParsing(_body);
+  }
+
+  @override
+  getUrl() => _url;
+}
+
+// 서버로 회원가입 시도
+class SignUpApiProvider {
+  SignUpJsonParser signJsonParser = SignUpJsonParser();
   Client client = Client();
 
-/*
-  Future<UserModel> fetchUserData() async {
-    print("get user data");
-    final response = await client.get("http://www.naver.com");
-    print(response.body.toString());
-    if (response.statusCode == 200){
-      return UserModel.fromJson(json.decode(response.body));
-    }
-    else{
+  // otp 전송
+  Future<SignUpModel> fetchEmailData(email) async {
+    print("Trying to request otp");
+    var body = signJsonParser.setBody2GetOtp(email);
+    final response = await client.post(
+        signJsonParser.getUrl(),
+        headers: {"Content-Type": "application/json"},
+        body: body
+    );
+    print("request status: ${response.statusCode}");
+    if (response.statusCode == 200) {
+      return SignUpModel.fromJson(json.decode(response.body));
+    } else {
       throw Exception('Failed to load post');
     }
-
   }
-     */
+
+  // otp 전송
+  Future<SignUpModel> fetchOtpData(email, otp) async {
+    print("Trying to request otp");
+    var body = signJsonParser.setBody2ConfirmOtp(email, otp);
+    final response = await client.post(
+        signJsonParser.getUrl(),
+        headers: {"Content-Type": "application/json"},
+        body: body
+    );
+    print("request status: ${response.statusCode}");
+    if (response.statusCode == 200) {
+      return SignUpModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
+  // 회원가입 전송
+  Future<SignUpModel> fetchUserData(email, birthday, sex, password) async {
+    print("Trying to request otp");
+    var body = signJsonParser.setBody(email, birthday, sex, password);
+    final response = await client.post(
+        signJsonParser.getUrl(),
+        headers: {"Content-Type": "application/json"},
+        body: body
+    );
+    print("request status: ${response.statusCode}");
+    if (response.statusCode == 200) {
+      return SignUpModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
 }
+
 

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/style.dart';
 import 'package:cheese/src/ui/sign_in_widget.dart';
+import 'package:cheese/src/ui/sign_up_widget.dart';
 import 'dart:io';
 
 
@@ -108,6 +109,12 @@ class _SignWidgetState extends State<Sign_Widget> {
                                 // 회원가입 => 0
                                 _selectedContainerIndex = 0;
                                 // 애니메이션을 위한 정지
+                                Future.delayed(_duration, (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => TermWidget())
+                                  );
+                                });
                               });
                             },
                             child: AnimatedContainer(
@@ -148,6 +155,7 @@ class _SignWidgetState extends State<Sign_Widget> {
                                 curve: Curves.easeInOut,
                                 width: SignInWidthSize(queryWidth, _selectedContainerIndex),
                                 alignment: Alignment.center,
+                                // animation 동작하면 반대편 글자 지워저야됨
                                 child: _selectedContainerIndex == 0? Column() : signIn(),
                                 color: _style.getBoxColor()
                             )

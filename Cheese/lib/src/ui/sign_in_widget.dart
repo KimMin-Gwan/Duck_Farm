@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
+//import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:cheese/src/models/user_model.dart';
 import 'package:cheese/src/bloc/user_bloc.dart';
 import 'package:cheese/src/ui/style.dart';
-import 'package:flutter/widgets.dart';
 
 
 class SignInWidget extends StatefulWidget {
@@ -34,33 +34,40 @@ class _SignInWidgetState extends State<SignInWidget> {
 
       return Scaffold(
         body: Container(
-          width: queryWidth,
-          height: queryHeight,
-          padding: EdgeInsets.all(40),
-          decoration: _style.getMainBoxTheme(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
+        alignment: Alignment.center,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: _style.getGray(),
+        child: Container(
+        alignment: Alignment.center,
+        width: queryWidth,
+        height: queryHeight,
+        padding: EdgeInsets.all(40),
+        decoration: _style.getMainBoxTheme(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
                 height: queryHeight * 0.03
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(0,20,0,0),
+              width: queryWidth,
+              height: queryHeight * 0.07,
+              child: Text("로그인",
+                style: _style.getMainText(),
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0,20,0,0),
-                width: queryWidth,
-                height: queryHeight * 0.07,
-                child: Text("로그인",
-                  style: _style.getMainText(),
-                ),
-              ),
-              Container(
-                child: LoginForm(queryWidth, queryHeight),
-              ),
-              Container(
-                child: SimpleLoginForm(queryWidth, queryHeight),
-              ),
-            ],
-          ),
+            ),
+            Container(
+              child: LoginForm(queryWidth, queryHeight),
+            ),
+            Container(
+              child: SimpleLoginForm(queryWidth, queryHeight),
+            ),
+          ],
         ),
+        ),
+        )
       );
     }
 
@@ -233,9 +240,10 @@ class _SignInWidgetState extends State<SignInWidget> {
                 style: _style.getLoginButtonTheme(),
                 child: Text('로그인', style: _style.getLoginButtonText()),
                 onPressed: (){
-                  if (_formKey.currentState!.validate()){};
-                  signInButtonBuild(context);
-                  signInBloC.fetchSignIn();
+                  if (_formKey.currentState!.validate()){
+                    signInButtonBuild(context);
+                    signInBloC.fetchSignIn();
+                  };
                 },
               )
             )
@@ -264,7 +272,7 @@ class _SignInWidgetState extends State<SignInWidget> {
 
   Widget signInBuild(AsyncSnapshot<SignInModel> snapshot){
     var data = snapshot.data;
-
+    // 홈화면으로 넘어가야하는데 snapshot.data == _User데이터이기 때문에 이를 활용해야함
     return Text("Login Success");
   }
 }
