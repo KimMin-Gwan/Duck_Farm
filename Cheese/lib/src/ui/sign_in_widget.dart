@@ -1,5 +1,6 @@
 //import 'package:flutter/cupertino.dart';
 //import 'package:flutter/widgets.dart';
+import 'package:cheese/src/ui/sign_find_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cheese/src/models/user_model.dart';
 import 'package:cheese/src/bloc/user_bloc.dart';
@@ -207,10 +208,10 @@ class _SignInWidgetState extends State<SignInWidget> {
                     child: TextButton(
                         onPressed: () {
                           //새로운 화면으로 이동(새 화면 푸쉬)
-                          //Navigator.push(
-                          //context,
-                          //MaterialPageRoute(builder: (context) => find.FindIDPW()),
-                          //); //아이디/비밀번호 찾는 화면으로 빌드
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FindEmailWidget()),
+                          ); //아이디/비밀번호 찾는 화면으로 빌드
                         },
                         child: Text('아이디를 잃어버리셨나요?',
                             style: _style.getOptionText())),
@@ -221,10 +222,9 @@ class _SignInWidgetState extends State<SignInWidget> {
                   child: TextButton(
                     onPressed: () {
                     //새로운 화면으로 이동(새 화면 푸쉬)
-                    //Navigator.push(
-                    //context,
-                    //MaterialPageRoute(builder: (context) => find.FindIDPW()),
-                    //); //아이디/비밀번호 찾는 화면으로 빌드
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => FindPasswordWidget())
+                    ); //아이디/비밀번호 찾는 화면으로 빌드
                     },
                     child: Text('비밀번호를 잃어버리셨나요?',
                     style: _style.getOptionText())),

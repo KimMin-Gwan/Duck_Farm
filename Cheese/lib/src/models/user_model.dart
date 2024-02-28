@@ -4,6 +4,41 @@ import 'package:flutter/material.dart';
 import 'package:cheese/src/bloc/user_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+class FindEmailModel{
+  bool _result = false;
+
+  FindEmailModel.fromJson(Data){
+    var header = Data['header'];
+    var body = Data['body'];
+    _result = body['status'];
+  }
+
+  getResult() => _result;
+}
+
+/* //회원가입 json 형태
+Map json_data = {
+  'header' : {
+    'version' : '0.1',
+    'date' : 'yy/mm/dd',
+    'action' : 'login',
+    'content-type': 'application/json'
+  },
+  'body' : {
+    'user' :{
+      'uid' : 0,
+      'email' : "email@email.com",
+      'password' : "password",
+      'birthday' : "yy/mm/dd",
+      'sex' : 'male',
+      'nickname' : 'nick'
+    },
+    'status' : '0', // 0이면 실패
+    'about' : 'tips' // 전송 데이터의 상태
+  }
+};
+ */
+
 // 회원가입에 사용되는 모델
 class SignUpModel{
   bool status = false;

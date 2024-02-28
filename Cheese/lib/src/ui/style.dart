@@ -137,6 +137,7 @@ class SignInWidgetTheme extends SignWidgetTheme {
   TextStyle _loginButtonText = TextStyle();
   TextStyle _simpleLoginText = TextStyle();
   ButtonStyle _loginButton = ButtonStyle();
+  ButtonStyle _loginButtonDark = ButtonStyle();
   BoxDecoration _mainBoxTheme = BoxDecoration();
   TextStyle _textFieldLabelTextStyle = TextStyle();
   BorderSide _textFieldBorder = BorderSide();
@@ -155,6 +156,14 @@ class SignInWidgetTheme extends SignWidgetTheme {
         borderRadius: BorderRadius.circular(12),
       ),
     );
+    _loginButtonDark = ElevatedButton.styleFrom(
+      backgroundColor: getWhiteGray(),
+      surfaceTintColor: getWhiteGray(),
+      foregroundColor: getWhite(),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+    );
     _mainBoxTheme = BoxDecoration(
       color: getBoxColor(),
       borderRadius: BorderRadius.circular(20),
@@ -166,6 +175,7 @@ class SignInWidgetTheme extends SignWidgetTheme {
   TextStyle getSimpleLoginText() => _simpleLoginText;
   TextStyle getTextFieldLabelTextStyle() =>_textFieldLabelTextStyle;
   ButtonStyle getLoginButtonTheme() => _loginButton;
+  ButtonStyle getLoginButtonDarkTheme() => _loginButtonDark;
   BoxDecoration getMainBoxTheme() => _mainBoxTheme;
   BorderSide getTextFieldBorder() => _textFieldBorder;
 

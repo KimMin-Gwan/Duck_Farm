@@ -2,6 +2,18 @@ import 'dart:async';
 import 'package:cheese/src/resources/user_api_provider.dart';
 import 'package:cheese/src/models/user_model.dart';
 
+class FindEmailRepository{
+  final findEmailApiProvider = FindEmailApiProvider();
+  String _email = "";
+
+  setEmail(email){
+    _email = email;
+  }
+
+  Future<FindEmailModel> fetchEmail() => findEmailApiProvider.fetchEmailData(_email);
+
+}
+
 // 로그인을 위한 레포지토리
 class SignInRepository {
   final signApiProvider = SignInApiProvider();
@@ -31,6 +43,8 @@ class SignUpRepository{
   setBirthday(birthday){_birthday= birthday;}
   setSex(sex){_sex = sex;}
   setOtp(otp){_otp = otp;}
+
+  getPassword() => _password;
 
 
   // 서버 펫쳐

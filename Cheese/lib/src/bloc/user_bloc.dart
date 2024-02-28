@@ -3,6 +3,19 @@ import 'package:cheese/src/models/user_model.dart';
 import 'package:cheese/src/resources/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
+class FindEmailBloC{
+  final _repository = FindEmailRepository();
+
+  Future<FindEmailModel> fetchEmail() async{
+    FindEmailModel findEmailModel = await _repository.fetchEmail();
+    return findEmailModel;
+  }
+
+  setEmail(String email){
+    _repository.setEmail(email);
+  }
+}
+
 class SignInBloC {
   final _repository = SignInRepository();
   final _signFetcher = PublishSubject<SignInModel>();
@@ -55,7 +68,7 @@ class SignUpBloC{
 
   // 로그인 정규식
   RegExp _regex = RegExp(r'@[A-Za-z0-9_]{5,}.*\.[A-Za-z]{2,}');
-
+  RegExp _passwordRegExp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,16}$');
 
   Future<SignUpModel> fetchEmail() async{
     SignUpModel signUpModel = await _repository.fetchEmailSign();
@@ -65,6 +78,13 @@ class SignUpBloC{
   Future<SignUpModel> fetchOTP() async {
     SignUpModel signUpModel = await _repository.fetchOtpData();
     return signUpModel;
+  }
+
+  bool checkState(password){
+    if(_repository.getPassword() != password)
+      return true;
+    else
+      return false;
   }
 
 
@@ -78,6 +98,23 @@ class SignUpBloC{
       return 0;
     }
   }
+  bool validEmail(String email) {
+    if (_regex.hasMatch(email)){
+      _repository.setEmail(email);
+      return true;
+    } else{
+      return false;
+    }
+  }
+
+  bool validPassword(String password) {
+    if(_passwordRegExp.hasMatch(password)){
+      _repository.setPassword(password);
+      return true;
+    }else
+      return false;
+  }
+
 
   // Password 세팅
   setPassword(String password) {
@@ -89,14 +126,17 @@ class SignUpBloC{
     }
   }
 
+  int gettedOTP = 1234;
+
   // OTP 세팅
-  setOTP(String otp) {
-    if (otp!= null) {
-      _repository.setOtp(otp);
-      return 1;
-    } else{
-      return 0;
-    }
+  // OTP가 서버에서 받아온 OTP와 동일하다면 true, 아니면 false
+  bool setOTP(String otp) {
+    int intOTP = int.parse(otp);
+    //if (intOTP == _repository.getOTP())
+    if (intOTP == gettedOTP)
+      return true;
+    else
+      return false;
   }
 
 
