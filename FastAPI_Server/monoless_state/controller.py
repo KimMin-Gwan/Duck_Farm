@@ -49,7 +49,6 @@ class User_Controller:
         pass
     
         
-        
 class Login_Controller:
     def __init__(self, user_data=None):
         self.user_data = user_data
