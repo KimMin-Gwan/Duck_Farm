@@ -19,7 +19,7 @@
     + 황현정 (Project Manage)
     + 김지민 (Business)
   + 디자인
-    + 김수민 (Designe)
+    + 김수민 (Design)
   + 개발
     + 김민관 (Lead Develop, DevOps Manage)
     + 전성훈 (Server Develop Lead)
