@@ -1,6 +1,7 @@
 
 
 # Email 검색 목적의 데이터
+# "/find_email"
 
 find_email_request = {
     "header" : {

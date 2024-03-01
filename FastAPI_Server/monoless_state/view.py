@@ -27,15 +27,19 @@ class APP_Server:
         self.register_routes()
         
     def register_routes(self):
+        # 시스템 엔드포인트
         @self.app.get('/')
-        def main():
+        def home():
             print("Server End point root")
             print("SYSTEM_CALL:Root System well")
             return "Server Working"       
 
-        @self.app.post("/login")
+        # 로그인 엔드포인트
+        @self.app.post("/sign_in")
         def login(user_data:dict):
-            self.controller.login(user_data = user_data)
+            result = self.controller.sign(user_data = user_data)
+            return result
+    
 
     def run_system(self):
         uvicorn.run(app=self.app, host='127.0.0.1', port=8000)
