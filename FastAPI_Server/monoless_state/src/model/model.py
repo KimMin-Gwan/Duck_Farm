@@ -1,5 +1,7 @@
 from database_ma import *
-from type import *
+from model.data_format import *
+
+
 class User_Model:
     def __init__(self) -> None:
         self.db=None

@@ -8,12 +8,11 @@ class Master_Controller:
     
     # 유저와 관련된 데이터 처리
     def sign(self, data:dict):
-        user_controller = User_Controller(model = self.model, data = data)
-        result = user_controller.processor(user_data)
+        user_controller = User_Controller(model = self.model)
+        result = user_controller.processor(data)
         return result
 
-        
-        
+
 # User 관련 처리
 class User_Controller:
     def __init__(self, model, data:dict, uid=0):
@@ -39,6 +38,7 @@ class User_Controller:
         except Exception as error_message:
             e = error_message
         finally:
+            
 
 
         

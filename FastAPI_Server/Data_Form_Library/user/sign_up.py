@@ -22,7 +22,7 @@ email_response= {
     "header" : {
       'version' : '0.2.3', #버전 String
       'date' : "24/01/30",  #날짜 String
-      'action' : 'find_password', # 동작 String
+      'action' : 'sign_up', # 동작 String
       'content-Type' : 'application/json',  # 전송 데이터 타입 -> 변경 금지
     },
     "body" : {
@@ -39,11 +39,12 @@ password_request = {
     "header" : {
       'version' : '0.2.3', #버전 String
       'date' : "24/01/30",  #날짜 String
-      'action' : 'find_password', # 동작 String
+      'action' : 'password', # 동작 String
       'content-Type' : 'application/json',  # 전송 데이터 타입 -> 변경 금지
       'user' : {'login' : 0, 'UID' : '0'},  # 로그인 안됨으로 0
     },
     "body" : {
+        "otp" : 1234, # otp데이터 (암호화 x)
         "email" : "email@email.com", # 이메일
         "birthday" : "yy/mm/dd", # 생년월일
         "sex" : "male", # male vs female
@@ -56,13 +57,12 @@ password_response= {
     "header" : {
       'version' : '0.2.3', #버전 String
       'date' : "24/01/30",  #날짜 String
-      'action' : 'find_password', # 동작 String
+      'action' : 'passord', # 동작 String
       'content-Type' : 'application/json',  # 전송 데이터 타입 -> 변경 금지
     },
     "body" : {
         "uid" : '',  # uid 
         "email" : "email@email.com", # 이메일
-        "password" : "Password!", # 변경요청 패스워드
         "status" : 1, # 처리결과 int
         "about" : "sign_in_complete" # 처리 결과에 대한 주석
     }

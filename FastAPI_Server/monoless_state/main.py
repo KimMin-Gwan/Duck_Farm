@@ -1,6 +1,6 @@
-from view import APP_Server
-from controller import *
-from model import *
+from Duck_Farm.FastAPI_Server.monoless_state.src.view import APP_Server
+from src.controller import *
+from src.model import *
 
 
 class Main():
