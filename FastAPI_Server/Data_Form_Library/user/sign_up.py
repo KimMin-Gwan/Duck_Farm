@@ -63,7 +63,7 @@ password_response= {
     "body" : {
         "uid" : '',  # uid 
         "email" : "email@email.com", # 이메일
-        "status" : 1, # 처리결과 int
+        "status" : 0, # 처리결과 int
         "about" : "sign_in_complete" # 처리 결과에 대한 주석
     }
 }

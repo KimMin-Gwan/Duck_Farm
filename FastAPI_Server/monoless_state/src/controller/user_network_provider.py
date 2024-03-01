@@ -27,8 +27,8 @@ class Sign_In_Json_Parser(Json_Parser):
         self.body['user']['nickname'] = user_data.get_nickname()
         self.body['status'] = status
         self.body['about'] = about
-        return 
-
+        return
+    
 
 # 회원 가입
 class Sign_Up_Json_Parser(Json_Parser):

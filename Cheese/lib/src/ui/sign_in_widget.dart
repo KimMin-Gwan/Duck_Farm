@@ -106,16 +106,18 @@ class _SignInWidgetState extends State<SignInWidget> {
                 IconButton(
                   // 간편로그인 API 호출 위치
                   onPressed: (){},
-                  icon: Image.asset('kakao.png',
-                  width: 80,
-                  height: 30)
+                  icon: Image(
+                    image: AssetImage("assets/kakao.png"),
+                    width: 80,
+                    height: 30,
+                  )
                 ),
                 IconButton(
                   // 간편로그인 API 호출 위치
                     onPressed: (){},
-                    icon: Image.asset('naver.png',
+                    icon: Image.asset('assets/naver.png',
                         width: 80,
-                        height: 30)
+                        height: 30, )
                 ),
               ],
             )

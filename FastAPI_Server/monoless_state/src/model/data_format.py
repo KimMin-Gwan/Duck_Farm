@@ -15,6 +15,8 @@ class User:
     def set_user_data(self,uid,data):
         pass
 
+
+# 이건 아직 작성 안해도됨
 class Profile:
     def __init__(self,user):
         self.user=user
