@@ -3,7 +3,7 @@ import time
 from model import User, Master_Model
 from network_provider import Error_Json_Parser
 from user_network_provider import *
-
+from datetime import datetime
 import random
 
 class Master_Controller:
@@ -123,6 +123,8 @@ class Sign_Up:
         return result, tip
     
     def __make_uid(self):
+
+
         return
         # 03/02 오후에 작업할 부분
 
