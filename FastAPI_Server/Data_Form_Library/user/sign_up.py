@@ -39,7 +39,7 @@ password_request = {
     "header" : {
       'version' : '0.2.3', #버전 String
       'date' : "24/01/30",  #날짜 String
-      'action' : 'password', # 동작 String
+      'action' : 'sign_up', # 동작 String
       'content-Type' : 'application/json',  # 전송 데이터 타입 -> 변경 금지
       'user' : {'login' : 0, 'UID' : '0'},  # 로그인 안됨으로 0
     },
@@ -57,7 +57,7 @@ password_response= {
     "header" : {
       'version' : '0.2.3', #버전 String
       'date' : "24/01/30",  #날짜 String
-      'action' : 'passord', # 동작 String
+      'action' : 'sign_up', # 동작 String
       'content-Type' : 'application/json',  # 전송 데이터 타입 -> 변경 금지
     },
     "body" : {

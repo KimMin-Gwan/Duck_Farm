@@ -6,6 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 from fastapi.websockets import WebSocketDisconnect
 import base64  # for image transfer
 import uvicorn
+from controller import *
 
 
 class APP_Server:
@@ -36,10 +37,34 @@ class APP_Server:
 
         # 로그인 엔드포인트
         @self.app.post("/sign_in")
-        def login(user_data:dict):
+        def sing_in(user_data:dict):
             result = self.controller.sign(user_data = user_data)
             return result
-    
+
+        @self.app.post("/sign_up/email")
+        def sign_up_email(user_data:dict):
+            result = self.controller.sign(user_data= user_data, type="email")
+            return result
+        
+        @self.app.post("/sign_up/password")
+        def sign_up_password(user_data:dict):
+            result = self.controller.sign(user_data= user_data, type="password")
+            return result
+
+        @self.app.post("/find_email")
+        def find_email(user_data:dict):
+            result = self.controller.sign(user_data= user_data)
+            return result
+
+        @self.app.post("/find_password/email")
+        def find_password_email(user_data:dict):
+            result = self.controller.sign(user_data= user_data, type="email")
+            return result
+
+        @self.app.post("/find_password/password")
+        def find_password_password(user_data:dict):
+            result = self.controller.sign(user_data= user_data, type="password")
+            return result
 
     def run_system(self):
         uvicorn.run(app=self.app, host='127.0.0.1', port=8000)

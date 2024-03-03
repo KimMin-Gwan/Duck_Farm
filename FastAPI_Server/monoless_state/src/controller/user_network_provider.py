@@ -79,7 +79,7 @@ class Find_Email_Json_Parser(Json_Parser):
         }
 
 
-    def set_otp_body(self, status: int, about: str) -> None:
+    def set_body(self, status: int, about: str) -> None:
         self.body['status'] = status # 결과
         self.body['about'] = about
         return 

@@ -56,13 +56,19 @@ class User_Model:
 
         return # True vs False
 
+    def set_user_password(self, password:str)->bool :
+        self.user.set_password(password=password)
+        return # True vs False
+
     def find_user_uid(self,uid):
         print(uid)
 
     def get_user_data_as_uid(self,uid,user):
         pass
 
-    def modify_user_data(self,user):
+    def modify_user_data(self):
+        # db로 현재 self.user의 데이터로 수정해서 저장
+
         pass
 
 class Master:

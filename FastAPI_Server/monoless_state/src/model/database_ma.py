@@ -1,5 +1,7 @@
 import pymysql
-class Local_Database:
+
+# 로컬 디비에 오늘 회원가입한 사람에 대한 데이터가 추가되어야함
+class Local_Database: 
     def __init__(self) -> None:
         self.conn=None
         self.cur=None

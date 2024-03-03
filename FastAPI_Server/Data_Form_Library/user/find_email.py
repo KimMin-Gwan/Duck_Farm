@@ -21,7 +21,7 @@ find_email_response = {
     'header' : {
         'version' : '0.1',
         'date' : 'yy/mm/dd',
-        'action' : 'signin',
+        'action' : 'find_email',
         'content-type': 'application/json'
     },
     "body" : {
