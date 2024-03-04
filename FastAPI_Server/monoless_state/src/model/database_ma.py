@@ -33,9 +33,11 @@ class Database:
         self.__connect_db() 
     def __connect_db(self):
         print("reun __connect_local")
-        self.conn=pymysql.connect(host="127.0.0.1",user="root",password="tjs991101",db='duckfarm',charset='utf8')
+        self.conn=pymysql.connect(host="127.0.0.1",user="root",password="duckfarm1234!",db='duckfarm',charset='utf8')
         self.cur=self.conn.cursor()      
 
+    def find_user_email(self,u_email):
+        return self.cur.callproc("find_email",u_email)
     def send_query(self,type=None,sql=None):
         self.cur.execute("SELECT * FROM user")
         result=self.cur.fetchall()

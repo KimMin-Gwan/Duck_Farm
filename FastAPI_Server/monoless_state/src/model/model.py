@@ -4,7 +4,7 @@ from model.data_format import *
 
 class User_Model:
     def __init__(self) -> None:
-        self.db=None
+        self.db=Database()
         self.user = User() # 유저 데이터 초기화 
         self.otp = 0
 
@@ -14,9 +14,9 @@ class User_Model:
         return self.user
     
     # 이메일 검색
-    def find_email(email:str) -> bool:
+    def find_email(self,email:str) -> bool:
         #self.db.이메일 검색하는 함수
-        return # True vs False
+        return  self.db.find_user_email(email)
 
     # 이메일 또는 uid로 유저 생성
     # 해당 email 또는 uid가 있는지 확인하는 절차가 필요(선행)
@@ -84,3 +84,9 @@ class Master:
     
     def get_local_data(self):
         return self.local_data
+
+
+
+if __name__=="__main__":
+    user=User_Model()
+    print(user.find_email("hello"))
