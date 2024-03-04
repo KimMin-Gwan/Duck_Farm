@@ -10,7 +10,7 @@ class Local_Database:
         self.__connect_db() 
     def __connect_db(self):
         print("reun __connect_local")
-        self.conn=pymysql.connect(host="127.0.0.1",user="duck",password="duckfarm1234!",db='duckfarm',charset='utf8')
+        self.conn=pymysql.connect(host="192.168.0.6",user="duck",password="duckfarm1234!",db='duckfarm',charset='utf8')
         self.cur=self.conn.cursor()      
     def send_query(self,type,sql):
         pass
@@ -33,7 +33,7 @@ class Database:
         self.__connect_db() 
     def __connect_db(self):
         print("reun __connect_local")
-        self.conn=pymysql.connect(host="127.0.0.1",user="duck",password="duckfarm1234!",db='duckfarm',charset='utf8')
+        self.conn=pymysql.connect(host="192.168.0.6",user="duck",password="duckfarm1234!",db='duckfarm',charset='utf8')
         self.cur=self.conn.cursor()      
 
     def find_user_email(self,u_email):
