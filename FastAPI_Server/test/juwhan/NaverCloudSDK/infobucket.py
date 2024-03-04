@@ -1,7 +1,9 @@
 import boto3
-from NaverCloudSDK.info import *
 import requests
 from PIL import Image
+ACCESS_KEY="eeJ2HV8gE5XTjmrBCi48"
+SECRET_KEY="zAGUlUjXMup1aSpG6SudbNDzPEXHITNkEUDcOGnv"
+CDN_DOMAIN="kibxopaerykk22247051.cdn.ntruss.com"
 service_name = 's3'
 endpoint_url = 'https://kr.object.ncloudstorage.com'
 #endpoint_url = 'kibxopaerykk22247051.cdn.ntruss.com'
@@ -40,9 +42,13 @@ class bucket:
         bucket_name="baekhyun-test"
         #object_name="sample-folder/"
         #self.s3.put_object(Bucket=bucket_name ,Key=object_name)
-        object_name=f'sample-folder/{self.img_num}.png'
+        
+
+        
+        object_name=f'winter/sample.jpg'
         self.img_num+=1
-        self.s3.upload_fileobj(local_file_path,bucket_name,object_name)
+        self.s3.upload_file(local_file_path,bucket_name,object_name)
+
     def delete_bucket_file(self):  #저장소 내 파일 삭제 하는 함수
         bucket_name="test0.1"
         object_name='test사인2'
@@ -54,8 +60,8 @@ class bucket:
 
 if __name__ == "__main__":
     buc=bucket()
-    buc.show_bucket()
+    #buc.show_bucket()
 
-    #buc.put_bucket()
+    buc.put_bucket("/Users/seonjuhwan/Documents/GitHub/Duck_Farm/FastAPI_Server/test/juwhan/NaverCloudSDK/사인2.png")
     #buc.delete_bucket_file()
     #buc.find_file()
