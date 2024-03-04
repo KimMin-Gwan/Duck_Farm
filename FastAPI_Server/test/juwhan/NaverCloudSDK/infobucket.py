@@ -43,11 +43,11 @@ class bucket:
         object_name=f'sample-folder/{self.img_num}.png'
         self.img_num+=1
         self.s3.upload_fileobj(local_file_path,bucket_name,object_name)
+
     def delete_bucket_file(self):  #저장소 내 파일 삭제 하는 함수
         bucket_name="test0.1"
         object_name='test사인2'
         self.s3.delete_object(Bucket=bucket_name,Key=object_name)
-    
     def find_file(self) :
         bucket_name="baekhyun-test"
         object_key="/sample/1.jpg"
@@ -56,6 +56,6 @@ if __name__ == "__main__":
     buc=bucket()
     buc.show_bucket()
 
-    #buc.put_bucket()
+    buc.put_bucket()
     #buc.delete_bucket_file()
     #buc.find_file()
