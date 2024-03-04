@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:cheese/src/ui/sign_widget.dart';
+import 'package:cheese/src/ui/sign/sign_widget.dart';
+import 'package:flutter/services.dart';
+import 'package:cheese/src/ui/home_widget.dart';
 //import 'package:cheese/src/ui/sign_in_widget.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   runApp(const MyApp());
 }
@@ -21,7 +27,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Sign_Widget(),
+      //home: Sign_Widget(),
+      home: HomeWidget(),
     );
   }
 }

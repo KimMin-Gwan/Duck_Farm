@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cheese/src/ui/style.dart';
-import 'package:cheese/src/ui/sign_in_widget.dart';
-import 'package:cheese/src/ui/sign_up_widget.dart';
+import 'package:cheese/src/ui/sign/style.dart';
+import 'package:cheese/src/ui/sign/sign_in_widget.dart';
+import 'package:cheese/src/ui/sign/sign_up_widget.dart';
 import 'dart:io';
 
 
