@@ -33,7 +33,7 @@ class Database:
         self.__connect_db() 
     def __connect_db(self):
         print("reun __connect_local")
-        self.conn=pymysql.connect(host="db-l6ul6-kr.vpc-pub-cdb.ntruss.com",user="duck",password="duckfarm1234!",db='duckfarm',charset='utf8')
+        self.conn=pymysql.connect(host="db-l6u6-kr.vpc-pub-cdb.ntruss.com",user="duck",password="duckfarm1234!",db='duckfarm',charset='utf8')
         self.cur=self.conn.cursor()      
 
     def find_user_email(self,u_email):
