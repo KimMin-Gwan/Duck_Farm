@@ -37,6 +37,7 @@ class Database:
         self.cur=self.conn.cursor()      
 
     def find_user_email(self,u_email):
+        print(u_email)
         return self.cur.callproc("find_email",u_email)
     def send_query(self,type=None,sql=None):
         self.cur.execute("SELECT * FROM user")
