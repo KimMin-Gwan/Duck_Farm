@@ -136,7 +136,7 @@ class Sign_Up:
             result = 0
             tip = "email duplicated"
         else:
-            otp_maker = OTP_Maker()
+            otp_maker = OTP_Maker(self.model)
             otp_maker.otp_making(email=email)
             # otp_maker.send_otp(email=email) otp 보내야함
             result = 1,
