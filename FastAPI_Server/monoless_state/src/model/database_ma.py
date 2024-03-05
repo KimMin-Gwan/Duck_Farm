@@ -46,7 +46,7 @@ class Database:
 
         print(result)
 
-        self.cur.execute('SELECT @_find_email_3')
+        self.cur.execute('SELECT @_find_email_2')
         uid=self.cur.fetchone()[0]
         if(result):
             print("yes")
