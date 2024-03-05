@@ -90,4 +90,4 @@ class Master:
 
 if __name__=="__main__":
     user=User_Model()
-    print(user.find_email("hello"))
+    print(user.find_email("mathsun0011@gmail.com"))
