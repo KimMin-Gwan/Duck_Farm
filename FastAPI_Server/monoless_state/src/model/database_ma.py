@@ -45,20 +45,32 @@ class Database:
         result=self.cur.fetchone()[0]
 
         print(result)
-
         self.cur.execute('SELECT @_find_email_2')
         uid=self.cur.fetchone()[0]
         print(uid)
         if(result):
             print("yes")
-            return True
+            return (True,uid)
         else:
             print("NO")
-            return False
+            return (False,uid)
+        
+    def make_user(self,email,password,birthdate,tel,name,sex):
+        if(sex=="female"):
+            sex=1
+        elif(sex=="male"):
+            sex=2
+        result=None
+        self.cur.callproc("make_user",(email,password,birthdate,tel,name,sex,result))
+        self.cur.execute('select @_make_user_1')
+        result=self.cur.fetchone() [0]
+        print(result)
     def send_query(self,type=None,sql=None):
         self.cur.execute("SELECT * FROM user")
         result=self.cur.fetchall()
         print(result)
+        
+        
     def __read_data(self,table,sql):
         pass
 

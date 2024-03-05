@@ -11,15 +11,15 @@ class User:
         self.__password=None
         self.__birthday=None
         self.__nickname=None
-    
-    def set_user_data(self,uid,sex,email,password,birthday,nickname):
+        self.__phonenumber=None 
+    def set_user_data(self,uid,sex,email,password,birthday,nickname,phonenumber):
         self.__uid=uid
         self.__sex=sex
         self.__email=email
         self.__password=password
         self.__birthday=birthday
         self.__nickname=nickname
-
+        self.__phonenumber=phonenumber
 # 이건 아직 작성 안해도됨
 class Profile:
     def __init__(self,user):
