@@ -38,11 +38,11 @@ class Database:
 
     def find_user_email(self,u_email):
         print(u_email)
-        result=None
+        result=""
         self.cur.callproc("find_email",(u_email,result))    
         self.cur.execute('SELECT @result')
         result=self.cur.fetchone()[0]
-        print("==========="+result)
+        print(result)
         return result
     def send_query(self,type=None,sql=None):
         self.cur.execute("SELECT * FROM user")
