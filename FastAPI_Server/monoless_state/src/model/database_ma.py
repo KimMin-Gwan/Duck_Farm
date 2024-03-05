@@ -66,7 +66,12 @@ class Database:
         self.cur.callproc("make_user",(email,password,birthdate,tel,name,sex_number,result))
         self.cur.execute('select @_make_user_1')
         result=self.cur.fetchone()[0]
-        print(result)
+        try:
+            self.cur.callproc("make_user", (email, password, birthdate, tel, name, sex_number, result))
+            self.cur.execute('SELECT @_make_user_1')
+            result = self.cur.fetchone()[0]
+        except pymysql.Error as e:
+            print("SQL 오류 발생:", e)
         return result
     def send_query(self,type=None,sql=None):
         self.cur.execute("SELECT * FROM user")
