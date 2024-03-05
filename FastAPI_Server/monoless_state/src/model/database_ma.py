@@ -40,7 +40,7 @@ class Database:
         print(u_email)
         result=None
         self.cur.callproc("find_email",(u_email,result))    
-        self.cur.execute('SELECT @result')
+        self.cur.execute('SELECT @resul')
         h=self.cur.fetchone()[0]
         print(h)
         if(result):
