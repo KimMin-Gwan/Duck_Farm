@@ -39,7 +39,7 @@ class Database:
     def find_user_email(self,u_email):
         print(u_email)
         result=""
-        self.cur.callproc("find_email",(u_email,))    
+        self.cur.callproc("find_email",(u_email,None))    
         self.cur.execute('SELECT @result')
         result=self.cur.fetchone()["@result"]
         print(result)
