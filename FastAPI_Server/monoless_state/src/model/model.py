@@ -1,5 +1,5 @@
-from database_ma import *
-from model.data_format import *
+from src.model.database_ma import *
+from src.model.data_format import *
 
 
 class User_Model:

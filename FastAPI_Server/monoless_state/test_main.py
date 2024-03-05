@@ -1,4 +1,4 @@
-from src.model import *
+from src.model.model import *
 
 
 if __name__=="__main__":
