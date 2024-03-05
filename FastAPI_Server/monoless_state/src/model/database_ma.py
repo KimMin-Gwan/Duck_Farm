@@ -43,8 +43,9 @@ class Database:
         self.cur.callproc("find_email",(u_email,result,uid))    
         self.cur.execute('SELECT @_find_email_1,@_find_email_2')
         result=self.cur.fetchone()[0]
-        uid=self.cur.fetchone()[1]
+
         print(result)
+        uid=self.cur.fetchone()[1]
         print(uid)
         if(result):
             print("yes")
