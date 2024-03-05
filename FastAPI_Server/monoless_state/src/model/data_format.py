@@ -12,13 +12,13 @@ class User:
         self.__birthday
         self.__nickname
     
-    def set_user_data(self,uid,data):
+    def set_user_data(self,uid,sex,email,password,birthday,nickname):
         self.__uid=uid
-        self.__sex=data[0]
-        self.__email=data[1]
-        self.__password=data[2]
-        self.__birthday=data[3]
-        self.__nickname=data[4]
+        self.__sex=sex
+        self.__email=email
+        self.__password=password
+        self.__birthday=birthday
+        self.__nickname=nickname
 
 # 이건 아직 작성 안해도됨
 class Profile:

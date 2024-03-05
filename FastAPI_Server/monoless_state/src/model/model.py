@@ -5,8 +5,7 @@ from src.model.data_format import *
 class User_Model:
     def __init__(self) -> None:
         self.db=Database()
-        tu=[None,None,None,None]
-        self.user = User(1,tu) # 유저 데이터 초기화 
+        self.user = User(1,None,None,None,None,None) # 유저 데이터 초기화 
         self.otp = 0
 
     # 유저 정보 리턴 
