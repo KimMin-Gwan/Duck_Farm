@@ -52,7 +52,7 @@ class User_Model:
         return #True vs False
     
     # uid, email, password, birthday, sex로 유저 만들고 DB에 저장
-    def make_user(self, uid:int, email:str, password:str, birthday:str, sex:str,phonenumber:str) -> bool:
+    def make_user(self, email:str, password:str, birthday:str, sex:str,phonenumber:str) -> bool:
         # birthday는  "yy/mm/dd" 형식의 str 데이터
         # sex는 "male" 또는 "female" 형식의 str 데이터
         # self.user= User()로 만들고 그대로 저장
