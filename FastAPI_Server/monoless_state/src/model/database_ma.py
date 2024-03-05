@@ -41,8 +41,8 @@ class Database:
         result=None
         self.cur.callproc("find_email",(u_email,result))    
         self.cur.execute('SELECT @result')
-        result=self.cur.fetchone()[0]
-        print(result)
+        h=self.cur.fetchone()[0]
+        print(h)
         if(result):
             print("yes")
             return True
