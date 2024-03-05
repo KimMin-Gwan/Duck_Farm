@@ -61,6 +61,7 @@ class Database:
         elif(sex=="male"):
             sex=2
         result=None
+        print("asdfafds")
         self.cur.callproc("make_user",(email,password,birthdate,tel,name,sex,result))
         self.cur.execute('select @_make_user_1')
         result=self.cur.fetchone() [0]
