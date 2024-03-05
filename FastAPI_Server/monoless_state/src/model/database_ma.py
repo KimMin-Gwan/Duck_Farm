@@ -61,10 +61,10 @@ class Database:
         elif(sex=="male"):
             sex=2
         result=None
-        print("asdfafds")
+        print(sex)
         self.cur.callproc("make_user",(email,password,birthdate,tel,name,sex,result))
         self.cur.execute('select @_make_user_1')
-        result=self.cur.fetchone() [0]
+        result=self.cur.fetchone()[0]
         print(result)
         return result
     def send_query(self,type=None,sql=None):
