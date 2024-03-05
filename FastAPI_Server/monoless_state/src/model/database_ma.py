@@ -56,13 +56,14 @@ class Database:
             return (False,uid)
         
     def make_user_db(self,email,password,birthdate,tel,name,sex):
+        sex_number=0
         if(sex=="female"):
-            sex=1
+            sex_number=1
         elif(sex=="male"):
-            sex=2
+            sex_number=2
         result=None
-        print(sex)
-        self.cur.callproc("make_user",(email,password,birthdate,tel,name,sex,result))
+        print(sex_number)
+        self.cur.callproc("make_user",(email,password,birthdate,tel,name,sex_number,result))
         self.cur.execute('select @_make_user_1')
         result=self.cur.fetchone()[0]
         print(result)
