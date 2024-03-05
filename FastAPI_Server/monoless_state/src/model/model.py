@@ -6,9 +6,8 @@ class User_Model:
     def __init__(self) -> None:
         self.db=Database()
         self.user = User() # 유저 데이터 초기화 
-        self.user.set_user_data(1,None,None,None,None,None)
-        self.otp = 0
-
+        self.otp = 0 
+  #uid 는 AUTO_INCREMENT 로 동작하고있음 
     # 유저 정보 리턴 
     # 이 함수의 존재 의의에 대해 논의가 필요 
     def get_user(self):
@@ -21,8 +20,11 @@ class User_Model:
 
     # 이메일 또는 uid로 유저 생성
     # 해당 email 또는 uid가 있는지 확인하는 절차가 필요(선행)
-    def set_user(eamil="", uid=0):
-        if uid != 0 :
+    def set_user(self,eamil="", uid=0):
+        (flag,uid)=self.db.find_user_email(eamil)
+
+        if flag:
+            self.user.set_user_data()
             pass # 아래 주석 참고
             #user_data = self.get_user_data_as_uid(uid) # 유저 데이터 검색
             #self.user = user(user_data)  # 유저 생성
@@ -50,12 +52,16 @@ class User_Model:
         return #True vs False
     
     # uid, email, password, birthday, sex로 유저 만들고 DB에 저장
-    def make_user(self, uid:int, email:str, password:str, birthday:str, sex:str) -> bool:
+    def make_user(self, uid:int, email:str, password:str, birthday:str, sex:str,phonenumber:str) -> bool:
         # birthday는  "yy/mm/dd" 형식의 str 데이터
         # sex는 "male" 또는 "female" 형식의 str 데이터
         # self.user= User()로 만들고 그대로 저장
-
-        return # True vs False
+        try:
+            self.user.set_user_data(email,password,birthday,sex,phonenumber)
+            self.db.make_user()
+            return True
+        except:
+            return False
 
     def set_user_password(self, password:str)->bool :
         self.user.set_password(password=password)
@@ -87,7 +93,3 @@ class Master:
         return self.local_data
 
 
-
-if __name__=="__main__":
-    user=User_Model()
-    print(user.find_email("mathsun0011@gmail.com"))
