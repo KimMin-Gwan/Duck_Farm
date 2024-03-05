@@ -41,7 +41,7 @@ class Database:
         result=None
         self.cur.callproc("find_email",(u_email,result))    
         self.cur.execute('SELECT @result')
-        result=self.cur.fetchone()['@result']
+        result=self.cur.fetchone()[0]
         print("==========="+result)
         return result
     def send_query(self,type=None,sql=None):
