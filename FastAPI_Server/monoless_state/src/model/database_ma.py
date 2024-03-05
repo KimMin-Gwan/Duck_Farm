@@ -56,10 +56,10 @@ class Database:
             return (False,uid)
         
     def make_user_db(self,email,password,birthdate,tel,name,sex):
-        sex_number=0
-        if(sex=="female"):
+        sex_number=2
+        if sex=="female":
             sex_number=1
-        elif(sex=="male"):
+        elif sex=="male":
             sex_number=2
         result=None
         print(sex_number)

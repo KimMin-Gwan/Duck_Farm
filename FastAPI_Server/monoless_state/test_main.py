@@ -12,7 +12,7 @@ if __name__=="__main__":
             email=(input("email : "))
             password=input("password : ")
             birthday=input("birthday : ")
-            sex=input("femail,mail") 
+            sex=input("femail,mail : ") 
             phone=input("input phone nmumber :")
             name=input("input name : ")
             print(user.make_user(email,password,birthday,phone,name,sex))
