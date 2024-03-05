@@ -1,4 +1,3 @@
-from src.controller import *
 from src.model import *
 
 
