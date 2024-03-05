@@ -46,14 +46,13 @@ class Database:
 
         print(result)
         uid=self.cur.fetchone()[1]
-        print(uid)
         if(result):
             print("yes")
+            print(uid)
             return True
         else:
             print("NO")
             return False
-        return result
     def send_query(self,type=None,sql=None):
         self.cur.execute("SELECT * FROM user")
         result=self.cur.fetchall()
