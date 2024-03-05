@@ -63,9 +63,6 @@ class Database:
             sex_number=2
         result=None
         print(sex_number)
-        self.cur.callproc("make_user",(email,password,birthdate,tel,name,sex_number,result))
-        self.cur.execute('select @_make_user_1')
-        result=self.cur.fetchone()[0]
         try:
             self.cur.callproc("make_user", (email, password, birthdate, tel, name, sex_number, result))
             self.cur.execute('SELECT @_make_user_1')
