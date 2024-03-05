@@ -42,7 +42,12 @@ class Database:
         self.cur.callproc("find_email",(u_email,None))    
         self.cur.execute('SELECT @result')
         result=self.cur.fetchone()["@result"]
-        print(result)
+        if(result):
+            print("yes")
+            return True
+        else:
+            print("NO")
+            return False
         return result
     def send_query(self,type=None,sql=None):
         self.cur.execute("SELECT * FROM user")
