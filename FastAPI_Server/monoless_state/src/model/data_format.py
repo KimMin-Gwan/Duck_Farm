@@ -5,12 +5,12 @@ import json
 # 3. mutator중 하나로 한번에 모든 내부 데이터 만들 수 있도록 설정
 class User:
     def __init__(self) -> None:
-        self.__uid
-        self.__sex
-        self.__email
-        self.__password
-        self.__birthday
-        self.__nickname
+        self.__uid=None
+        self.__sex=None
+        self.__email=None
+        self.__password=None
+        self.__birthday=None
+        self.__nickname=None
     
     def set_user_data(self,uid,sex,email,password,birthday,nickname):
         self.__uid=uid
