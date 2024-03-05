@@ -12,8 +12,7 @@ class User:
         self.__birthday=None
         self.__nickname=None
         self.__phonenumber=None 
-    def set_user_data(self,uid,sex,email,password,birthday,nickname,phonenumber):
-        self.__uid=uid
+    def set_user_data(self,email,password,birthday,phonenumber,nickname,sex):
         self.__sex=sex
         self.__email=email
         self.__password=password

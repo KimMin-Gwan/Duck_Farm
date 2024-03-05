@@ -55,7 +55,7 @@ class Database:
             print("NO")
             return (False,uid)
         
-    def make_user(self,email,password,birthdate,tel,name,sex):
+    def make_user_db(self,email,password,birthdate,tel,name,sex):
         if(sex=="female"):
             sex=1
         elif(sex=="male"):
@@ -66,6 +66,7 @@ class Database:
         self.cur.execute('select @_make_user_1')
         result=self.cur.fetchone() [0]
         print(result)
+        return result
     def send_query(self,type=None,sql=None):
         self.cur.execute("SELECT * FROM user")
         result=self.cur.fetchall()

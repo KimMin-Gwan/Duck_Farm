@@ -14,7 +14,8 @@ if __name__=="__main__":
             birthday=input("birthday : ")
             sex=input("femail,mail") 
             phone=input("input phone nmumber :")
-            print(user.make_user(email,password,birthday,sex,phone))
+            name=input("input name : ")
+            print(user.make_user(email,password,birthday,phone,name,sex))
         else:
             print("end ===")
             break
