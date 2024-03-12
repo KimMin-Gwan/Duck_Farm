@@ -59,6 +59,7 @@ class User_Model:
         sql="SELECT otp_code FROM userTBL WHERE email = %s"
         self.localdb.cur.execute(sql,email)
         result=self.localdb.cur.fetchone()
+        self.localdb.conn.commit()
         # email로 검색하여 otp 찾아오기
         self.otp=""  # otp 초기화를 시켜야하는데 초기화가 안됌 일단
         if(result):
