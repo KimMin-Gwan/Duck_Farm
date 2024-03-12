@@ -67,7 +67,7 @@ class User_Model:
         except:
             return False
     def set_user_password(self, email,password:str)->bool :
-        sql="UPDATE usertbl SET password = %s WHERE useremail = %s"
+        sql="UPDATE usertbl SET password = %s WHERE email = %s"
         data=(password,email)
         
         self.db.cur.execute(sql,data) 
