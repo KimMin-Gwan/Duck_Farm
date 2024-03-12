@@ -37,22 +37,17 @@ class Database:
         self.cur=self.conn.cursor()      
 
     def find_user_email(self,u_email):
-        print(u_email)
         result=None
         uid=None
         self.cur.callproc("find_email",(u_email,result,uid))    
         self.cur.execute('SELECT @_find_email_1')
         result=self.cur.fetchone()[0]
 
-        print(result)
         self.cur.execute('SELECT @_find_email_2')
         uid=self.cur.fetchone()[0]
-        print(uid)
         if(result):
-            print("yes")
             return (True,uid)
         else:
-            print("NO")
             return (False,uid)
         
     def make_user_db(self,email,password,birthdate,tel,name,sex):
