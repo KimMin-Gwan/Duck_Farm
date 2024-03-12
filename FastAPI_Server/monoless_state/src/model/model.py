@@ -60,11 +60,11 @@ class User_Model:
         self.localdb.cur.execute(sql,email)
         result=self.localdb.cur.fetchone()
         # email로 검색하여 otp 찾아오기
+        self.otp=""
         if(result):
             self.otp=result[0]
             return self.otp 
         else:
-            self.otp=None
             return None 
             
     # uid, email, password, birthday, sex로 유저 만들고 DB에 저장
