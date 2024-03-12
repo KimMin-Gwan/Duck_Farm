@@ -72,7 +72,7 @@ class User_Model:
         
         self.db.cur.execute(sql,data) 
         self.db.conn.commit()
-        if(self.db.cur>0):
+        if(self.db.cur.rowcount>0):
             return True
         else:
             return False
