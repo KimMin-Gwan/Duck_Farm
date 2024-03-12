@@ -41,7 +41,7 @@ class User_Model:
         self.otp = encrypted_otp  #  암호화된 데이터
         sql=f"INSERT INTO userTBL (email,otp_code) valuse (%s , %s)"
         data=(email,self.otp)
-        self.localdb.cur.execute(sql.data)
+        self.localdb.cur.execute(sql,data)
         self.localdb.conn.commit() 
         # 로컬 DB에 otp와 email을 쌍으로 저장할것
         return 
