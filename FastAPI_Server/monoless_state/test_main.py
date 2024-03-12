@@ -7,7 +7,7 @@ if __name__=="__main__":
         number=int(input("1  ==  find_email \n 2 == 회원가입  \n  3==otp 장입  \n  4== otp 확인"))
         if(number==1):
             email=input("input email : ")
-            user.find_email(email)
+            print(user.find_email(email))
         elif(number==2):
             uid=input("uid : ")
             email=(input("email : "))
@@ -30,8 +30,9 @@ if __name__=="__main__":
         elif (number==6) :
             uid=(input("input uid"))
             user.set_user("",uid)
-            
+         
             
         else:
             print("end ===")
             break
+        print("\n\n\n")
