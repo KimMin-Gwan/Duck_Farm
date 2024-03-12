@@ -13,12 +13,10 @@ class User_Model:
     # 이 함수의 존재 의의에 대해 논의가 필요 
     def get_user(self):
         return self.user
-    
     # 이메일 검색
     def find_email(self,email:str) -> bool:
         #self.db.이메일 검색하는 함수
-        return  self.db.find_user_email(email)
-
+        return  self.db.find_user_email(email)   #(bool / uid)
     # 이메일 또는 uid로 유저 생성
     # 해당 email 또는 uid가 있는지 확인하는 절차가 필요(선행)
     def set_user(self,eamil="", uid=0):
@@ -38,28 +36,26 @@ class User_Model:
     # otp 저장
     # 잠깐 사용할 용도 : self.otp, 저장하고 확인 용도: 로컬 DB에 저장
     def set_otp(self, email,encrypted_otp):
-        self.otp = encrypted_otp  #  암호화된 데이터
         sql=f"INSERT INTO userTBL (email,otp_code) values (%s , %s)"
-        data=(email,self.otp)
+        data=(email,encrypted_otp)
         self.localdb.cur.execute(sql,data)
         self.localdb.conn.commit() 
         # 로컬 DB에 otp와 email을 쌍으로 저장할것
         return 
-
     # set_otp가 선행되어야 의미있는 데이터가됨
     def get_otp(self):
-        
         return self.otp
-    
     # 로컬 db로 부터 찾아오기
     def get_otp_db(self, email) -> bool:
         sql="SELECT otp_code FROM userTBL WHERE email = %s"
         self.localdb.cur.execute(sql,email)
         result=self.localdb.cur.fetchone()
-        
         # email로 검색하여 otp 찾아오기
-        return result[0]
-    
+        if(result):
+            self.opt=result[0]
+            return True
+        else:
+            return False
     # uid, email, password, birthday, sex로 유저 만들고 DB에 저장
     def make_user(self, email:str, password:str, birthday:str,phone:str,name:str, sex:str) -> bool:
         # birthday는  "yy/mm/dd" 형식의 str 데이터
@@ -70,20 +66,24 @@ class User_Model:
             return self.db.make_user_db(email,password,birthday,phone,name,sex)
         except:
             return False
-
-    def set_user_password(self, password:str)->bool :
-        self.user.set_password(password=password)
-        return # True vs False
+    def set_user_password(self, email,password:str)->bool :
+        sql="UPDATE userTBL SET password = %s WHERE useremail = %s"
+        data=(password,email)
+        
+        self.db.cur.execute(sql,data) 
+        self.db.conn.commit()
+        if(self.db.cur>0):
+            return True
+        else:
+            return False
 
     def find_user_uid(self,uid):
-        print(uid)
-
+        pass # 필요없어보임? 
     def get_user_data_as_uid(self,uid,user):
         pass
 
     def modify_user_data(self):
         # db로 현재 self.user의 데이터로 수정해서 저장
-        
         pass
 
 class Master:

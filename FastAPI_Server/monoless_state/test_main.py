@@ -23,7 +23,10 @@ if __name__=="__main__":
         elif (number==4):
             email=input("input email")
             print(user.get_otp_db(email))
-        
+        elif (number==5):
+            email=(input("input email"))
+            print(user.set_user_password("change_password",email))
+            
         else:
             print("end ===")
             break

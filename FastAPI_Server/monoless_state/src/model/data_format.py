@@ -19,6 +19,8 @@ class User:
         self.__birthday=birthday
         self.__nickname=nickname
         self.__phonenumber=phonenumber
+    def get_email(self):
+        return self.__email
 # 이건 아직 작성 안해도됨
 class Profile:
     def __init__(self,user):
