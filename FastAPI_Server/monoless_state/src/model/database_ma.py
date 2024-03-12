@@ -61,6 +61,7 @@ class Database:
             self.cur.callproc("make_user", (uid,email, password, birthdate, tel, name, sex_number, result))
             self.cur.execute('SELECT @_make_user_1')
             result = self.cur.fetchone()[0]
+            self.conn.commit()
         except pymysql.Error as e:
             print("SQL 오류 발생:", e)
         return result
