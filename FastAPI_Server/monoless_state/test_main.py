@@ -4,7 +4,7 @@ from src.model.model import *
 if __name__=="__main__":
     user=User_Model()
     while(True):
-        number=int(input("1  ==  find_email \n 2 == 회원가입  \n  3==otp 확인"))
+        number=int(input("1  ==  find_email \n 2 == 회원가입  \n  3==otp 장입  \n  4== otp 확인"))
         if(number==1):
             email=input("input email : ")
             user.find_email(email)
@@ -20,7 +20,10 @@ if __name__=="__main__":
             email=(input("input email"))
             otp=input("input otp")
             user.set_otp(email,otp)
-            
+        elif (number==4):
+            email=input("input email")
+            print(user.get_otp_db(email))
+        
         else:
             print("end ===")
             break

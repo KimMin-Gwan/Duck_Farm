@@ -48,12 +48,17 @@ class User_Model:
 
     # set_otp가 선행되어야 의미있는 데이터가됨
     def get_otp(self):
+        
         return self.otp
     
     # 로컬 db로 부터 찾아오기
     def get_otp_db(self, email) -> bool:
+        sql="SELECT otp_code FROM userTBL WHERE email = %s"
+        self.localdb.cur.execute(sql,email)
+        result=self.localdb.cur.fetchone()
+        
         # email로 검색하여 otp 찾아오기
-        return #True vs False
+        return result[0]
     
     # uid, email, password, birthday, sex로 유저 만들고 DB에 저장
     def make_user(self, email:str, password:str, birthday:str,phone:str,name:str, sex:str) -> bool:
