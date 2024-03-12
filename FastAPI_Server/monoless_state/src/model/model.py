@@ -3,7 +3,7 @@ from src.model.data_format import *
 
 
 class User_Model:
-    def __init__(self) -> None:
+    def __init__(self,db,local_db) -> None:
         self.db=Database()
         self.localdb=Local_Database()
         self.user = User() # 유저 데이터 초기화 

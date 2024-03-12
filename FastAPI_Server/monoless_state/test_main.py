@@ -2,7 +2,12 @@ from src.model.model import *
 
 
 if __name__=="__main__":
-    user=User_Model()
+    #서버에서 딱 한번만 실행 시켜야함 동시에 디비에 접근시 connection 오류뜸 
+    
+    db=Database()
+    local_db=Local_Database()
+     
+    user=User_Model(db,local_db)
     while(True):
         number=int(input("1  ==  find_email \n 2 == 회원가입  \n  3==otp 장입  \n  4== otp 확인"))
         if(number==1):

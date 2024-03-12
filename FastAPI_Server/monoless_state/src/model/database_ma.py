@@ -2,7 +2,7 @@ import pymysql
 import boto3
 import requests
 from PIL import Image
-# 로컬 디비에 오늘 회원가입한 사람에 대한 데이터가 추가되어야함
+
 class Local_Database: 
     def __init__(self) -> None:
         self.conn=None
@@ -12,6 +12,10 @@ class Local_Database:
         print("connect local db")
         self.conn=pymysql.connect(host="localhost",user="root",password="duckfarm1234!",db='Cheese',charset='utf8')
         self.cur=self.conn.cursor()      
+    def get_conn(self):
+        return self.conn
+    def get_cur(self):
+        return self.cur
     def send_query(self,type,sql):
         pass
     def __read_data(table,sql):
@@ -35,7 +39,10 @@ class Database:
         print("__connect_db")
         self.conn=pymysql.connect(host="db-l6ul6.vpc-cdb.ntruss.com",user="test_user",password="duckfarm1234!",db='Cheese',charset='utf8')
         self.cur=self.conn.cursor()      
-
+    def get_conn(self):
+        return self.conn
+    def get_cur(self):
+        return self.cur
     def find_user_email(self,u_email):
         result=None
         uid=None
