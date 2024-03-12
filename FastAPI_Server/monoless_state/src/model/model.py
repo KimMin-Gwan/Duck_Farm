@@ -27,7 +27,7 @@ class User_Model:
         #재사용가능한 코드를 만들라고 email // uid email 가지고 처리하고 uid ==0 이면 email로 찾고 email =="" 이면   user 를 만들어서 set을 해준다.
         sql=f"SELECT * FROM user_total_info WHERE "
         if email=="":
-            sql+="uid = %d"
+            sql+="uid = %s"
             self.db.cur.execute(sql,uid)
             self.db.conn.commit()
             result=self.db.cur.fetchone()
