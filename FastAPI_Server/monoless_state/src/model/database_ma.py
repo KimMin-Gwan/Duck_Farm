@@ -10,7 +10,7 @@ class Local_Database:
         self.__connect_db() 
     def __connect_db(self):
         print("connect local db")
-        self.conn=pymysql.connect(host="127.0.0.1",user="root",db='Cheese',charset='utf8')
+        self.conn=pymysql.connect(host="127.0.0.1",user="root",password="duckfarm1234!",db='Cheese',charset='utf8')
         self.cur=self.conn.cursor()      
     def send_query(self,type,sql):
         pass
