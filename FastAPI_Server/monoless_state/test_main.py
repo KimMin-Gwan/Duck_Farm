@@ -11,10 +11,11 @@ if __name__=="__main__":
         elif(number==2):
             email=(input("email : "))
             password=input("password : ")
-            birthday=input("birthday : ")
+            birthday=input("birthday : ")    #2020:11:01 형식으로 입력해야함 
             sex=input("femail,mail : ") 
             phone=input("input phone nmumber :")
             name=input("input name : ")
+            
             print(user.make_user(email,password,birthday,phone,name,sex))
         else:
             print("end ===")

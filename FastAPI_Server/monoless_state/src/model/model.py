@@ -5,6 +5,7 @@ from src.model.data_format import *
 class User_Model:
     def __init__(self) -> None:
         self.db=Database()
+        self.localdb=Local_Database()
         self.user = User() # 유저 데이터 초기화 
         self.otp = 0 
   #uid 는 AUTO_INCREMENT 로 동작하고있음 
@@ -38,7 +39,10 @@ class User_Model:
     # 잠깐 사용할 용도 : self.otp, 저장하고 확인 용도: 로컬 DB에 저장
     def set_otp(self, encrypted_otp, otp, email):
         self.otp = encrypted_otp  #  암호화된 데이터
-
+        sql=f"INSERT INTO userTBL (email,otp_code) valuse (%s , %s)"
+        data=(email,otp)
+        self.localdb.cur.execute(sql.data)
+        self.localdb.conn.commit() 
         # 로컬 DB에 otp와 email을 쌍으로 저장할것
         return 
 
@@ -74,7 +78,7 @@ class User_Model:
 
     def modify_user_data(self):
         # db로 현재 self.user의 데이터로 수정해서 저장
-
+        
         pass
 
 class Master:

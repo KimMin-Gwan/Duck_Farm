@@ -9,8 +9,8 @@ class Local_Database:
         self.cur=None
         self.__connect_db() 
     def __connect_db(self):
-        print("reun __connect_local")
-        self.conn=pymysql.connect(host="db-l6ul6.vpc-cdb.ntruss.com",user="test_user",password="duckfarm1234!",db='Cheese',charset='utf8')
+        print("connect local db")
+        self.conn=pymysql.connect(host="localhost",user="root",password="",db='Cheese',charset='utf8')
         self.cur=self.conn.cursor()      
     def send_query(self,type,sql):
         pass
@@ -133,6 +133,5 @@ class Bucket:
         object_key="/sample/1.jpg"
 
 if __name__=='__main__':
-    print("dfadsf")
     buc=Bucket()
     buc.show_bucket()
