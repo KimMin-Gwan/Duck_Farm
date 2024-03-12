@@ -64,6 +64,7 @@ class User_Model:
             self.otp=result[0]
             return self.otp 
         else:
+            self.otp=None
             return None 
             
     # uid, email, password, birthday, sex로 유저 만들고 DB에 저장
