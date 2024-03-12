@@ -46,20 +46,19 @@ class Database:
         self.cur.execute('SELECT @_find_email_2')
         uid=self.cur.fetchone()[0]
         if(result):
-            return (True,uid)
+            return True
         else:
-            return (False,uid)
+            return False
         
-    def make_user_db(self,email,password,birthdate,tel,name,sex):
+    def make_user_db(self,uid,email,password,birthdate,tel,name,sex):
         sex_number=2
         if sex=="female":
             sex_number=1
         elif sex=="male":
             sex_number=2
         result=None
-        print(sex_number)
         try:
-            self.cur.callproc("make_user", (email, password, birthdate, tel, name, sex_number, result))
+            self.cur.callproc("make_user", (uid,email, password, birthdate, tel, name, sex_number, result))
             self.cur.execute('SELECT @_make_user_1')
             result = self.cur.fetchone()[0]
         except pymysql.Error as e:

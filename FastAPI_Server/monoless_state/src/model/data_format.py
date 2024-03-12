@@ -12,15 +12,34 @@ class User:
         self.__birthday=None
         self.__nickname=None
         self.__phonenumber=None 
-    def set_user_data(self,email,password,birthday,phonenumber,nickname,sex):
-        self.__sex=sex
+    def set_user_data(self,uid,email,password,birthday,phone,name,sex):
+        self.__uid=uid
         self.__email=email
         self.__password=password
+        self.__nickname=name
+        self.__phonenumber=phone
         self.__birthday=birthday
-        self.__nickname=nickname
-        self.__phonenumber=phonenumber
+        self.__sex=sex
     def get_email(self):
         return self.__email
+    def get_sex(self):
+        return self.__sex
+    def get_password(self):
+        return self.__password
+    def get_birthday(self):
+        return self.__birthday
+    def get_nickname(self):
+        return self.__nickname
+    def get_phonenumber(self):
+        return self.__phonenumber
+    def get_uid(self):
+        return self.__uid
+    def set_email(self,email):
+        self.__email=email
+    def set_sex(self,sex):
+        self.__sex=sex
+    def set_password(self,password):
+        self.__password=password
 # 이건 아직 작성 안해도됨
 class Profile:
     def __init__(self,user):
