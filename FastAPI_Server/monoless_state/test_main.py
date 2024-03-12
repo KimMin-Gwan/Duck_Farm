@@ -27,7 +27,7 @@ if __name__=="__main__":
             email=(input("input email"))
             print(user.set_user_password("change_password",email))
         elif (number==6) :
-            uid=int(input("input uid"))
+            uid=(input("input uid"))
             user.set_user("",uid)
             
             
