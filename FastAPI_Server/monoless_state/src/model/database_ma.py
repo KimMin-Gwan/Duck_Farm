@@ -64,6 +64,9 @@ class Database:
         except pymysql.Error as e:
             print("SQL 오류 발생:", e)
         return result
+    
+    
+    
     def send_query(self,type=None,sql=None):
         self.cur.execute("SELECT * FROM user")
         result=self.cur.fetchall()
