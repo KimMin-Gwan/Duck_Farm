@@ -9,13 +9,14 @@ if __name__=="__main__":
             email=input("input email : ")
             user.find_email(email)
         elif(number==2):
+            uid=input("uid : ")
             email=(input("email : "))
             password=input("password : ")
             birthday=input("birthday : ")    #2020:11:01 형식으로 입력해야함 
             sex=input("femail,mail : ") 
             phone=input("input phone nmumber :")
             name=input("input name : ")
-            print(user.make_user(email,password,birthday,phone,name,sex))
+            print(user.make_user(uid,email,password,birthday,phone,name,sex))
         elif(number==3):
             email=(input("input email"))
             otp=input("input otp")
