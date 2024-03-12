@@ -39,7 +39,7 @@ class User_Model:
     # 잠깐 사용할 용도 : self.otp, 저장하고 확인 용도: 로컬 DB에 저장
     def set_otp(self, email,encrypted_otp):
         self.otp = encrypted_otp  #  암호화된 데이터
-        sql=f"INSERT INTO userTBL (email,otp_code) valuse (%s , %s)"
+        sql=f"INSERT INTO userTBL (email,otp_code) values (%s , %s)"
         data=(email,self.otp)
         self.localdb.cur.execute(sql,data)
         self.localdb.conn.commit() 
