@@ -60,12 +60,13 @@ class User_Model:
         self.localdb.cur.execute(sql,email)
         result=self.localdb.cur.fetchone()
         # email로 검색하여 otp 찾아오기
-        self.otp=""
-        if(result):
-            self.otp=result[0]
-            return self.otp 
-        else:
-            return None 
+        self.otp=""  # otp 초기화를 시켜야하는데 초기화가 안됌 일단
+        return result[0]
+        # if(result):
+        #     self.otp=result[0]
+        #     return result[0]
+        # else:
+        #     return None 
             
     # uid, email, password, birthday, sex로 유저 만들고 DB에 저장
     def make_user(self, uid,email:str, password:str, birthday:str,phone:str,name:str, sex:str) -> bool:
