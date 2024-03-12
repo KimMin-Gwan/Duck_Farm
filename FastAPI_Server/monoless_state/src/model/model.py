@@ -19,7 +19,7 @@ class User_Model:
         return  self.db.find_user_email(email)   #(bool / uid)
     # 이메일 또는 uid로 유저 생성
     # 해당 email 또는 uid가 있는지 확인하는 절차가 필요(선행)
-    def set_user(self,eamil="", uid=0):
+    def set_user(self,eamil="", uid=0):  
         (flag,uid)=self.db.find_user_email(eamil)
 
         if flag:
