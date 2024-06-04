@@ -23,9 +23,13 @@
   + 개발
     + 김민관 (Lead Develop, DevOps Manage)
     + 전성훈 (Server Develop Lead)
-    + 선주환 (Database Administrater, QA Manage)
-    + 양혜림 (Server Developer, Frontend Develop)
+    + 선주환 (Database Administrater)
+    + 양혜림 (Develop Manager)
     + 박서희 (Frontend Develop)
+    + 양승준 (UI Developer)
+    + 최세영 (Server Developer)
+    + 곽동규 (Server Developer, Database Administrater)
+    + 정현규 (UI Developer, Test Managing)
 
 ## 상세
  - Language : Python, Dart
