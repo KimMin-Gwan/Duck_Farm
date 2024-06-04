@@ -1,0 +1,1 @@
+from view.parsers.head_parser import *
