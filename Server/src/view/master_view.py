@@ -1,5 +1,7 @@
 
-class Master_View:
+from parsers.head_parser import Head_Parser
+
+class Master_View(Head_Parser):
     def __init__(self) -> None:
         self._endpoint = ""
         pass

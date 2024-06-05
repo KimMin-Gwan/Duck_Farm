@@ -46,6 +46,8 @@ class Local_Databass:
         self.__save_json(file_name, self.__image_data)
         return
     
+    def find_user_with_uid(self):
+        return
 
 
 
