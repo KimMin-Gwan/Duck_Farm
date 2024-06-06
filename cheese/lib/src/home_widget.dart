@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
 
             // BiasWidget
             Container(
-              margin: EdgeInsets.fromLTRB(25.0, 30.0, 25.0, 10.0),
+              margin: EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 20.0),
               child: BiasWidget(selectedDate: DateTime.now()), // 오늘 날짜를 임의로 넣음
             ),
             // 다른 위젯 추가
@@ -186,31 +186,36 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       child: Column(
         children: [
           // 연도와 월을 화살표와 함께 표시
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                icon: Icon(Icons.arrow_left),
-                onPressed: () {
-                  setState(() {
-                    _focusedDay = DateTime(_focusedDay.year, _focusedDay.month - 1);
-                  });
-                },
-              ),
-              Text(
-                DateFormat('MMMM yyyy').format(_focusedDay),
-                style: TextStyle(fontSize: 15.0),
-              ),
-              IconButton(
-                icon: Icon(Icons.arrow_right),
-                onPressed: () {
-                  setState(() {
-                    _focusedDay = DateTime(_focusedDay.year, _focusedDay.month + 1);
-                  });
-                },
-              ),
-            ],
+          Padding(
+            padding: EdgeInsets.only(top: 15.0),
+            child:    Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_left),
+                  onPressed: () {
+                    setState(() {
+                      _focusedDay = DateTime(_focusedDay.year, _focusedDay.month - 1);
+                    });
+                  },
+                ),
+                Text(
+                  DateFormat('MMMM, yyyy').format(_focusedDay),
+                  style: TextStyle(fontSize: 15.0),
+                ),
+                IconButton(
+                  icon: Icon(Icons.arrow_right),
+                  onPressed: () {
+                    setState(() {
+                      _focusedDay = DateTime(_focusedDay.year, _focusedDay.month + 1);
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
+
+
           Divider(
             color: Colors.lightBlue, // 구분선 색상을 하늘색으로 설정
             thickness: 0.5, // 구분선 두께 설정
@@ -246,10 +251,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
               weekdayStyle: TextStyle(color: Colors.black),
               weekendStyle: TextStyle(color: Colors.black),
             ),
-            rowHeight: 75.0, // 날짜 셀의 세로 높이 조정
+            rowHeight: 70.0, // 날짜 셀의 세로 높이 조정
           ),
           Divider(
-            color: Colors.lightBlue, // 구분선 색상을 하늘색으로 설정
+            color: Colors.white, // 구분선 색상을 하늘색으로 설정
             thickness: 0.5, // 구분선 두께 설정
           ),
         ],
@@ -269,139 +274,163 @@ class BiasWidget extends StatefulWidget {
   _BiasState createState() => _BiasState();
 }
 
+
 class _BiasState extends State<BiasWidget> {
   // 한국어 요일 목록
   final List<String> _weekDays = ['월', '화', '수', '목', '금', '토', '일'];
-  final List<String> _items = ['Item 1','Item 2'];
 
   @override
   Widget build(BuildContext context) {
     // 선택된 날짜의 요일 계산 (1=월요일, 7=일요일)
     String weekDay = _weekDays[widget.selectedDate.weekday - 1];
     String formattedDate = DateFormat('dd').format(widget.selectedDate);
-    // String weekDay = DateFormat('E', 'ko_KR').format(widget.selectedDate); // LocaleError 발생
 
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+      child: Column(
+        children: [
+          // 첫 번째 파트: 날짜와 요일
+          _buildDateAndWeekDay(formattedDate, weekDay),
+          // 두 번째 파트: 사진이랑 이름
+          _buildProfileSection(),
+          // 세 번째 파트: 타임라인
+          _buildTimelineSection(context),
+        ],
+      ),
+    );
+  }
+
+  Padding _buildDateAndWeekDay(String formattedDate, String weekDay) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+      child: Row(
+        children: [
+          Text(
+            '$formattedDate.$weekDay',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding _buildProfileSection() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(5.0, 15.0, 0.0, 0.0),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundImage: AssetImage('assets/images/your_image.png'), // 이미지 경로 수정 필요
+          ),
+          SizedBox(width: 10),
+          Text(
+            '정우성',
+            style: TextStyle(fontSize: 16),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding _buildTimelineSection(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10.0, 20.0, 0.0, 0.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildTimelineDotLine(),
+          Expanded(child: _buildEventSection(context)), // 추가: 남은 공간을 차지하도록 확장
+        ],
+      ),
+    );
+  }
+
+  Column _buildTimelineDotLine() {
     return Column(
       children: [
-        // 첫 번째 파트: 날짜와 요일
-        Padding(
-          padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-          child: Row(
-            children: [
-              Text(
-                '$formattedDate.$weekDay',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
+        CircleAvatar(
+          radius: 5,
+          backgroundColor: Colors.grey,
         ),
-
-        // 두 번째 파트: 원형 사진과 텍스트
-        Padding(
-          padding: const EdgeInsets.fromLTRB(5.0, 15.0, 0.0, 0.0),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 20,
-                backgroundImage: AssetImage('assets/images/your_image.png'), // 이미지 경로 수정 필요
-              ),
-              SizedBox(width: 10),
-              Text(
-                '정우성',
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
+        Container(
+          width: 2,
+          height: 200, // 임의로 작성
+          color: Colors.grey,
         ),
-
-        Padding(
-          padding: EdgeInsets.fromLTRB(10.0, 20.0, 0.0, 0.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 왼쪽 부분
-              Column(
-                children: [
-                  CircleAvatar(
-                    radius: 5,
-                    backgroundColor: Colors.grey,
-                  ),
-                  Container(
-                    width: 2,
-                    height: 200, // 임의로 작성
-                    color: Colors.grey,
-                  ),
-                ],
-              ),
-              // 오른쪽 부분
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween, // 가운데 간격
-                      children: [
-                        Text(
-                          '2023 더팩트 뮤직 어워드',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600, // 글씨를 굵게 설정
-                          ),
-                        ),
-                        SizedBox(width: MediaQuery.of(context).size.width * 0.45), // ???????????
-                        Icon(
-                          Icons.arrow_forward_ios, // 오른쪽 화살표 아이콘
-                          size: 16.0, // 아이콘 크기 조절
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.8, // 화면 너비의 90%를 차지하도록 설정
-                      height: 150,
-                      margin: EdgeInsets.only(right: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10), // 왼쪽 위 모서리
-                          bottomLeft: Radius.circular(10), // 왼쪽 아래 모서리
-                        ),
-                      ),
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal, // 수평 스크롤을 활성화
-                        itemCount: 10, // 내부 사각형 개수 -> 추후 바꾸기
-                        itemBuilder: (context, index) {
-                          return Align(
-                            alignment: Alignment.center, // 내부 사각형을 수직 방향 중앙에 배치
-                            child: Container(
-                              width: 120, // 내부 사각형 가로
-                              height: 120, // 내부 사각형 세로
-                              decoration: BoxDecoration(
-                                color: Colors.deepPurpleAccent, // 여기에 색상을 지정합니다.
-                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              ),
-                              margin: EdgeInsets.fromLTRB(
-                                  index == 0 ? 20.0 : 10.0, // 첫 번째 사각형만 왼쪽에 추가 공간을 설정
-                                  0.0,
-                                  10.0,
-                                  0.0
-                              ), // 사각형 사이의 간격을 설정합니다.
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-
       ],
+    );
+  }
+
+  Column _buildEventSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildEventTitle(context),
+        _buildEventGallery(context),
+      ],
+    );
+  }
+
+  Padding _buildEventTitle(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15.0, right: 10.0), // 오른쪽 여백 추가
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            '2023 더팩트 뮤직 어워드',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+          ),
+          Icon(
+            Icons.arrow_forward_ios,
+            size: 16.0,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding _buildEventGallery(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: 150,
+        margin: EdgeInsets.only(right: 10),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            bottomLeft: Radius.circular(10),
+          ),
+        ),
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 10, // 내부 사각형 개수 -> 추후 바꾸기
+          itemBuilder: (context, index) => _buildGalleryItem(index),
+        ),
+      ),
+    );
+  }
+
+  Align _buildGalleryItem(int index) {
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        width: 120,
+        height: 120,
+        decoration: BoxDecoration(
+          color: Colors.deepPurpleAccent,
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        ),
+        margin: EdgeInsets.fromLTRB(
+          index == 0 ? 20.0 : 10.0,
+          0.0,
+          10.0,
+          0.0,
+        ),
+      ),
     );
   }
 }
