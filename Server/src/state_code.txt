@@ -1,0 +1,9 @@
+2XX -> 전송에 성공함 / 3XX -> 경고 / 4XX -> 에러 (Try - Except) / 5XX -> 금지 ( 금지된 유저, 금지된 접근)
+
+200 : /core_system/home_page -> 디폴트 홈화면 전송 완료
+201 : /core_system/home_page -> 특정 바이어스 홈화면 전송 완료
+202 : /core_system/home_page -> 확인 실패
+
+
+222 : /core_system/upload_post -> 정상적으로 업로드 성공
+223 : /core_system/upload_post -> 업로드 실패
