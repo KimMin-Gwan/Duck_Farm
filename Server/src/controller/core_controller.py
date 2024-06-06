@@ -1,5 +1,5 @@
-from user_model import User_Model
-from image_model import Image_Model
+from model import User_Model
+from model import Image_Model
 
 class Core_Controller:
     def __init__(self) -> None:
@@ -17,9 +17,9 @@ class Core_Controller:
         image_list = image_Model.get_bias_image_data(request['bid'])
 
         result = {
-            'state_code': ''
+            'state_code': '',
             "date" : "00/00/00",
-            "bid" : request['bid']
+            "bid" : request['bid'],
             'total_image_list':image_list
         }
 

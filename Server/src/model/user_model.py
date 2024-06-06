@@ -1,12 +1,12 @@
-from model.fake_database import Local_Databass
+from model.fake_database import Local_database
 class User_Model:
-    def __init__(self,databass) -> None:
-        self.__databass:Local_Databass = databass
+    def __init__(self,database) -> None:
+        self.__database:Local_database = database
         self.__user = None
 
     def is_vaild_user(self,uid):
         result = False
-        user_data = self.__databass.find_user_with_uid(uid)
+        user_data = self.__database.find_user_with_uid(uid)
         if not user_data:
             return result
         self.__user = User(user_data)

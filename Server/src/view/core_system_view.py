@@ -8,22 +8,21 @@ from controller import Core_Controller
 import json
 
 class Core_Service_View(Master_View):
-    def __init__(self, app:FastAPI, endpoint:str, databass) -> None:
+    def __init__(self, app:FastAPI, endpoint:str, database) -> None:
         self.__app = app
         self._endpoint = endpoint
-        self.__databass = databass
+        self.__database = database
         self.register_route(endpoint)
 
     def register_route(self, endpoint:str):
         @self.__app.get(endpoint+"/home")
         def home():
-            return "Hello, Core_View"
+            return "Hello, This is Root of Core-System Service"
 
         @self.__app.post(endpoint+"/home")
         def home(request:dict):
-            print(request)
-
-            core_Controller=Core_Controller()
+            return "hello"
+            core_Controller=Core_Controller(self.__database)
             result = core_Controller.get_home_data(request)
 
             response = Response_Result(
@@ -36,22 +35,22 @@ class Core_Service_View(Master_View):
         
         @self.__app.post(endpoint+"/upload_post")
         def upload_new_post(request:dict):
-        
-            upload_Controller = Upload_Controller(self.__databass)
+            upload_Controller = Upload_Controller(self.__database)
             result= upload_Controller.upload_new_post(request=request)
-            response = Response_Result(request_type= "client", state_code=result['state-code'],
-                            detail="success", upload_token= result['token'], bid= result['bid'],
-                            iid=result['iid'])
-
+            response = Response_Result(
+                request_type= "client", state_code=result['state-code'],
+                detail="success", upload_token= result['token'], bid= result['bid'],
+                iid=result['iid']
+            )
             return response.make_send_data()
 
 
 class Response_Result(Head_Parser):
-    
     def __init__(self, request_type, state_code, detail="default",
                  date="", bid="", total_image_list=[], 
                  upload_token="", iid=""):
-        self._header['state_code'] = state_code
+        self._header['request-type'] = request_type
+        self._header['state-code'] = state_code
         self._header['detail'] = detail
         self._body = {
             "date" : date,

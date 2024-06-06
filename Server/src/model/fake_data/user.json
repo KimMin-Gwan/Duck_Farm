@@ -1,0 +1,10 @@
+[
+    {
+        "uid" : "1234-abcd-5678",
+        "uname" : "Chodan",
+        "password" : "qwer",
+        "birthday" : "1998/10/18",
+        "email" : "chodan@naver.com",
+        "bid" : ["1001"]
+    }
+]

@@ -1,8 +1,8 @@
 
 
 class Image_Model:
-    def __init__(self, databasss) -> None:
-        self.__databass = databasss
+    def __init__(self, database) -> None:
+        self.__database = database
         self.__image = None
 
     """
@@ -21,25 +21,25 @@ class Image_Model:
 
     def make_image_data(self, request):
         iids = []
-        db_image_num = self.__databass.get_bias_image_num_with_bid(request['bid'])
+        db_image_num = self.__database.get_bias_image_num_with_bid(request['bid'])
         upload_image_num = len(request['image_filenames'])
 
         for n in range (upload_image_num):
             iid = request['bid'] + "-" + str(db_image_num + n)
             iids.append(iid)
 
-        self.__databass.add_bias_image_num(upload_image_num)
+        self.__database.add_bias_image_num(upload_image_num)
 
 
         self.__image = Image(request)
         self.__image.set_iid(iids)
-        self.__databass.save_new_image_data(self.__image)
+        self.__database.save_new_image_data(self.__image)
 
         return iids
 
 
     def get_bias_image_data(self,bid):
-        result = .find_image_with_bid(bid)
+        result = self.__database.find_image_with_bid(bid)
         return result
         
 

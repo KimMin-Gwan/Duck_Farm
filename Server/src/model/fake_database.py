@@ -1,7 +1,7 @@
 import json
 
 
-class Local_Databass:
+class Local_database:
     def __init__(self) -> None:
         self.__db_file_path = "./model/fake_data/"
         self.__data_files = {
