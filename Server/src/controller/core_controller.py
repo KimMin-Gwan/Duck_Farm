@@ -17,9 +17,10 @@ class Core_Controller:
         image_list = image_Model.get_bias_image_data(request['bid'])
 
         result = {
+            'state_code': ''
             "date" : "00/00/00",
             "bid" : request['bid']
-            "image_list" : [image_list]
+            'total_image_list':image_list
         }
 
         return result
