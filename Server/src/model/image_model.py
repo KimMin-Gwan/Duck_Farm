@@ -1,5 +1,5 @@
 
-
+# 이미지 데이터를 생성하고 디비에 저장함
 class Image_Model:
     def __init__(self, databasss) -> None:
         self.__databass = databasss
@@ -18,6 +18,7 @@ class Image_Model:
 
     3. iid 리턴
     """
+    # 이미지 데이터 생성함수
 
     def make_image_data(self, request):
         iids = []
@@ -36,11 +37,79 @@ class Image_Model:
         self.__databass.save_new_image_data(self.__image)
 
         return iids
+    
+    
+    def get_iid(self):
+        return self.__iid
         
+    def get_iname(self):
+        return self.__iname
+    
+    def get_bid(self):
+        return self.__bid
+    
+    def get_image_type(self):
+        return self.__image_type
+    
+    def get_uid(self):
+        return self.__uid
+    
+    def get_image_info(self):
+        return self.__image_info
+    
+    def get_location(self):
+        return self.__location
+    
+    def get_uploadedDate(self):
+        return self.__uploadedDate
+    
+    def get_scheduleDate(self):
+        return self.__scheduleDate
 
+    def get_scheduleName(self):
+        return self.__scheduleName
+    
+    def set_iid(self, iid):
+        self._iid = iid
+        return
 
+    def set_iname(self, iname):
+        self._iname = iname
+        return
+    
+    def set_bid(self, bid):
+        self.__bid = bid
+        return
+    
+    def set_image_type(self, image_type):
+        self.__image_type = image_type
+        return 
 
+    def set_uid(self, uid):
+        self.__uid = uid
+        return 
+    
+    def set_image_info(self, image_info):
+        self.__image_info = image_info
+        return 
 
+    def set_location(self, location):
+        self.__location = location
+        return 
+
+    def set_uploadedDate(self, uploadedDate):
+        self.__uploadedDate = uploadedDate
+        return 
+
+    def set_scheduleDate(self, scheduleDate):
+        self.__scheduleDate = scheduleDate
+        return 
+    
+    def set_scheduleName(self, scheduleName):
+        self.__scheduleName = scheduleName
+        return 
+    
+# 이미지 객체를 생성하고 id설정함
 class Image:
     def __init__(self) -> None:
         self.__iid = []

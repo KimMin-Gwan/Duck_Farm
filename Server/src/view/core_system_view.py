@@ -23,10 +23,12 @@ class Core_Service_View(Master_View):
         
         @self.__app.post(endpoint+"/upload_post")
         def upload_new_post(request:dict):
-        
+            
+            # Upload_Controller 생성 및 업로드 처리
             upload_Controller = Upload_Controller(self.__databass)
             result= upload_Controller.upload_new_post(request=request)
 
+            # 응답 헤더/바디 설정
             self._header['request-type'] = "client"
             self._header['state-code'] = result['state-code']
             if result['state-code'] == 222:

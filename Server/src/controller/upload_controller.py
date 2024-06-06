@@ -1,6 +1,7 @@
 from model import User_Model
 from model import Image_Model
 
+# 이미지 업로드 기능
 class Upload_Controller():
     def __init__(self,databass) -> None:
         self.__databass = databass

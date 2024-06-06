@@ -1,5 +1,6 @@
 from model.fake_database import Local_Databass
 class User_Model:
+    # user 유효성 검사
     def __init__(self,databass) -> None:
         self.__databass:Local_Databass = databass
         self.__user = None
@@ -15,6 +16,7 @@ class User_Model:
     
 
 class User:
+    # user 데이터 관리
     def __init__(self, user_data:dict):
         self.__uid = user_data['uid']
         self.__uname =  user_data['uname']
