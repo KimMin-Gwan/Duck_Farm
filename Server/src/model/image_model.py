@@ -36,6 +36,11 @@ class Image_Model:
         self.__databass.save_new_image_data(self.__image)
 
         return iids
+
+
+    def get_bias_image_data(self,bid):
+        result = .find_image_with_bid(bid)
+        return result
         
 
 
@@ -43,8 +48,16 @@ class Image_Model:
 
 class Image:
     def __init__(self) -> None:
-        self.__iid = []
-
+        self.__iid = ''
+        self.__iname=''
+        self.__bid=''
+        self.__iamge_type=''
+        self.__uid=''
+        self.__image_info=''
+        self.__location=''
+        self.__uploadedDate=''
+        self.__scheduleDate=''
+        self.__scheduleName=''
         pass
 
     def set_iid(self, iids):

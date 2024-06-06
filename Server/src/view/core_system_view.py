@@ -2,6 +2,7 @@ from typing import Any
 from fastapi import FastAPI
 from  view.master_view import Master_View
 from controller import Upload_Controller
+from controller import Core_Controller
 import json
 
 class Core_Service_View(Master_View):
@@ -19,7 +20,23 @@ class Core_Service_View(Master_View):
         @self.__app.post(endpoint+"/home")
         def home(request:dict):
             print(request)
-            return
+
+            core_Controller=Core_Controller()
+            result = core_Controller.get_home_data(request)
+
+            body={
+                "total_image_list": [
+                    result
+                ]
+            }
+
+            response = {
+                "body" : body
+            }
+
+            response = json.dumps(response)
+            response = response.encode()
+            return response
         
         @self.__app.post(endpoint+"/upload_post")
         def upload_new_post(request:dict):
