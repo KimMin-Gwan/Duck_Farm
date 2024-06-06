@@ -30,7 +30,7 @@ class Head_Parser(Configure_File_Reader):
         self._extract_host_port("./../configure.txt")
         self._header = {
             "request-type" : "default",
-            "server-version" : self.__version,
+            "server-version" : self._version,
             "state-code" : 100,
             "detail" : "Default"
         }
