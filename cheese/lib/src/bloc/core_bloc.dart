@@ -4,11 +4,7 @@ import 'package:cheese/src/bloc/core_state.dart';
 
 
 class CoreBloc extends Bloc<CoreEvent, CoreState>{
-  CoreBloc() : super(InitCoreState()){
-
-  }
-
-
+  CoreBloc() : super(InitCoreState()){}
 }
 
 
