@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  final HomeTheme _style = HomeTheme(); // 테마
+  final double maxWidth = 400.0;
+  final double maxHeight = 900.0;
+  bool interaction = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: _style.mainWhiteColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -24,7 +28,7 @@ class _HomePageState extends State<HomePage> {
             // HomeBodyWidget
             Container(
               margin: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-              child: HomeBodyWidget(),
+              child: BiasWidget(),
             ),
 
             // CalenderWidget
@@ -36,7 +40,8 @@ class _HomePageState extends State<HomePage> {
             // BiasWidget
             Container(
               margin: EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 20.0),
-              child: BiasWidget(selectedDate: DateTime.now()), // 오늘 날짜를 임의로 넣음
+              child:
+                  HomeBodyWidget(selectedDate: DateTime.now()), // 오늘 날짜를 임의로 넣음
             ),
             // 다른 위젯 추가
           ],
@@ -45,7 +50,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 
 // TopBarWidget
 class TopBarWidget extends StatefulWidget {
@@ -77,87 +81,108 @@ class _TopBarState extends State<TopBarWidget> {
   }
 }
 
-
-// HomeBodyWidget
-class HomeBodyWidget extends StatefulWidget {
+// BiasWidget
+class BiasWidget extends StatefulWidget {
   @override
-  _HomeBodyState createState() => _HomeBodyState();
+  _BiasState createState() => _BiasState();
 }
 
-class _HomeBodyState extends State<HomeBodyWidget> {
-  // 가상의 데이터 리스트
-  final List<String> _items = ['Item 1','Item 2']; //Item이 6개일때 스크롤 확인 OK
+class _BiasState extends State<BiasWidget> {
+  final List<String> _items = ['Item 1']; // 가상의 데이터 리스트
+
+  final HomeTheme _style = HomeTheme(); // 테마
+  final double maxWidth = 400.0;
+  final double maxHeight = 900.0;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[100], // 배경을 회색으로 설정
-        borderRadius: BorderRadius.circular(10.0), // 모서리를 둥글게 설정 (반지름 10.0)
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top:10.0, right: 5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Icon(Icons.more_vert), // 오른쪽 상단에 위치하는 아이콘
-              ],
-            ),
-          ),
-          Container(
-            height: 100, // 높이를 지정하여 스크롤 가능하도록 설정
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal, // 가로 스크롤 설정
-              itemCount: _items.length,
-              itemBuilder: (context, index) {
-                return Row(
-                  children: [
-                    if (index == 0) // 첫 번째 원의 경우
-                      SizedBox(width: 15.0), // 원하는 만큼의 왼쪽 빈 공간 추가
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(9.0, 0.0, 9.0, 5.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(1), // 그림자 색상
-                                  spreadRadius: 2, // 그림자 퍼짐 반경
-                                  blurRadius: 2, // 그림자 흐림 정도
-                                  offset: Offset(0, 3), // 그림자 위치 (x, y)
-                                ),
-                              ],
-                            ),
-                            child: CircleAvatar(
-                              radius: 30, // 원의 크기 설정
-                              backgroundImage: AssetImage('assets/images/eng_logo.png'), // 이미지 경로
-                            ),
-                          ),
-                        ),
-                        Text(
-                          '정우성', // 텍스트
-                          style: TextStyle(
-                            fontSize: 16.0, // 텍스트 크기 조절
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                );
+    double queryWidth = MediaQuery.of(context).size.width;
+    if (queryWidth > maxWidth) {
+      queryWidth = maxWidth;
+    }
 
-              },
-            ),
+    double queryHeight = MediaQuery.of(context).size.height;
+    if (queryHeight > maxHeight) {
+      queryHeight = maxHeight;
+    }
+
+    double mainHeight = queryHeight * 0.2;
+
+    return Container(
+      decoration: _style.mainBoxDecoration,
+      width: queryWidth,
+      height: mainHeight,
+      alignment: Alignment.center,
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, right: 5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(Icons.more_vert), // 오른쪽 상단에 위치하는 아이콘
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                child: Container(
+                  height: mainHeight * 0.6, // 높이를 지정하여 스크롤 가능하도록 설정
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal, // 가로 스크롤 설정
+                    itemCount: _items.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                        child: _biasProfile(
+                          width: queryWidth,
+                          height: mainHeight,
+                          biasName: '정우성', // 실제 데이터로 변경 가능
+                          biasId: _items[index], // 실제 데이터로 변경 가능
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
-}
 
+  Widget _biasProfile({
+    required double width,
+    required double height,
+    required String biasName,
+    required String biasId,
+  }) {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [_style.mainBoxShadow],
+          ),
+          child: CircleAvatar(
+            radius: height * 0.2, // 원의 크기 설정
+            backgroundImage: AssetImage('assets/images/eng_logo.png'), // 이미지 경로
+          ),
+        ),
+        Text(
+          biasName, // 텍스트
+          style: TextStyle(
+            fontSize: 14.0, // 텍스트 크기 조절
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 // CalenderWidget
 class CalendarWidget extends StatefulWidget {
@@ -169,34 +194,28 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
+  final HomeTheme _style = HomeTheme(); // 테마
+  final double maxWidth = 400.0;
+  final double maxHeight = 900.0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white, // Container의 배경색을 설정합니다.
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5), // 그림자의 색상과 투명도를
-            spreadRadius: 5, // 그림자가 퍼지는 반경
-            blurRadius: 5, // 그림자의 흐림 정도
-            offset: Offset(0.1, 3), // 그림자의 위치
-          ),
-        ],
-      ),
+      decoration: _style.calenderBoxShadow,
       child: Column(
         children: [
           // 연도와 월을 화살표와 함께 표시
           Padding(
             padding: EdgeInsets.only(top: 15.0),
-            child:    Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   icon: Icon(Icons.arrow_left),
                   onPressed: () {
                     setState(() {
-                      _focusedDay = DateTime(_focusedDay.year, _focusedDay.month - 1);
+                      _focusedDay =
+                          DateTime(_focusedDay.year, _focusedDay.month - 1);
                     });
                   },
                 ),
@@ -208,7 +227,8 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   icon: Icon(Icons.arrow_right),
                   onPressed: () {
                     setState(() {
-                      _focusedDay = DateTime(_focusedDay.year, _focusedDay.month + 1);
+                      _focusedDay =
+                          DateTime(_focusedDay.year, _focusedDay.month + 1);
                     });
                   },
                 ),
@@ -216,11 +236,11 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             ),
           ),
 
-
           Divider(
             color: Colors.lightBlue, // 구분선 색상을 하늘색으로 설정
             thickness: 0.5, // 구분선 두께 설정
           ),
+
           TableCalendar(
             firstDay: DateTime.utc(2010, 10, 16),
             lastDay: DateTime.utc(2030, 3, 14),
@@ -254,6 +274,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             ),
             rowHeight: 70.0, // 날짜 셀의 세로 높이 조정
           ),
+
           Divider(
             color: Colors.white, // 구분선 색상을 하늘색으로 설정
             thickness: 0.5, // 구분선 두께 설정
@@ -264,19 +285,17 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
 }
 
-
-// BiasWidget
-class BiasWidget extends StatefulWidget {
+// HomeBodyWidget
+class HomeBodyWidget extends StatefulWidget {
   final DateTime selectedDate; // Calendar에서 선택한 날짜
 
-  BiasWidget({Key? key, required this.selectedDate}) : super(key: key);
+  HomeBodyWidget({Key? key, required this.selectedDate}) : super(key: key);
 
   @override
-  _BiasState createState() => _BiasState();
+  _HomeBodyState createState() => _HomeBodyState();
 }
 
-
-class _BiasState extends State<BiasWidget> {
+class _HomeBodyState extends State<HomeBodyWidget> {
   // 한국어 요일 목록
   final List<String> _weekDays = ['월', '화', '수', '목', '금', '토', '일'];
 
@@ -322,7 +341,8 @@ class _BiasState extends State<BiasWidget> {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: AssetImage('assets/images/your_image.png'), // 이미지 경로 수정 필요
+            backgroundImage:
+                AssetImage('assets/images/your_image.png'), // 이미지 경로 수정 필요
           ),
           SizedBox(width: 10),
           Text(
