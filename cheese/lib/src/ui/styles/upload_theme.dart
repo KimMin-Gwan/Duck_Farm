@@ -9,15 +9,28 @@ import 'package:flutter/material.dart';
 class UploadTheme extends MainTheme{
   // 데이터 멤버로 사전 정의
   BoxDecoration mainBoxDecoration = BoxDecoration();
+  BoxDecoration imageBoxDecoration = BoxDecoration();
+  Color imageBoxColor = Colors.grey.withOpacity(0.5);
+  TextStyle infoTitleText = TextStyle();
+  TextStyle inputDataText = TextStyle();
+  TextStyle emptyDataText = TextStyle();
+  TextStyle essentialStarText = TextStyle();
+  TextStyle uploadTitleText = TextStyle();
+  TextStyle completeButton = TextStyle();
+  Divider divideLine = Divider();
 
   // 생성자 내부에서 상세 정의
-  HomeTheme(){
-    /*
-    mainBoxDecoration = BoxDecoration(
-      color: mainContainerColor,
-      //borderRadius: BorderRadius()
-    )
-     */
+  UploadTheme(){
+    imageBoxDecoration = BoxDecoration(
+      color: imageBoxColor,
+      borderRadius: BorderRadius.circular(8),
+    );
+    uploadTitleText = TextStyle(fontSize:15, fontWeight: FontWeight.w700);
+    completeButton = TextStyle(fontSize: 15, color: Colors.deepPurpleAccent, fontWeight: FontWeight.w600);
+    infoTitleText = TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.w200);
+    inputDataText = TextStyle(fontSize: 13,);
+    emptyDataText = TextStyle(fontSize: 15, color: Colors.grey.withOpacity(0.8));
+    essentialStarText = TextStyle(fontSize: 15, color: Colors.deepPurpleAccent, fontWeight: FontWeight.w700);
   }
 // 접근자 수정자 생성 금지
 
