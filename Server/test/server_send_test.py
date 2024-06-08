@@ -34,7 +34,7 @@ request_data = request_data.encode()
 
 response = requests.post("http://127.0.0.1:5000"+endpoint, data=request_data)
 
-print(response)
+print(response.json())
 
 
 

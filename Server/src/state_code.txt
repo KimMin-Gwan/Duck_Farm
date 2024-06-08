@@ -4,6 +4,9 @@
 201 : /core_system/home_page -> 특정 바이어스 홈화면 전송 완료
 202 : /core_system/home_page -> 확인 실패
 
+501 : /core_system/home_page -> uid 판독 실패
+
+
 
 222 : /core_system/upload_post -> 정상적으로 업로드 성공
 223 : /core_system/upload_post -> 업로드 실패

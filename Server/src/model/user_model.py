@@ -1,10 +1,10 @@
-from model.fake_database import Local_database
+from model.fake_database import Local_Database
 class User_Model:
     # user 유효성 검사
     def __init__(self,databass) -> None:
         self.__databass:Local_Database = databass
     def __init__(self,database) -> None:
-        self.__database:Local_database = database
+        self.__database:Local_Database = database
         self.__user = None
 
     def is_vaild_user(self,uid):
@@ -16,6 +16,12 @@ class User_Model:
         result = True
         return result
     
+    def get_uid(self):
+        return self.__user.get_uid()
+    
+    def get_bias(self):
+        return self.__user.get_bias()
+    
 
 class User:
     # user 데이터 관리
@@ -24,6 +30,14 @@ class User:
         self.__uname =  user_data['uname']
         self.__password =  user_data['password']
         self.__birthday = user_data['birthday']
+        self.__bias = user_data['bias']
+
+    def set_bias(self, bias):
+        self.__bias = bias
+        return
+
+    def get_bias(self):
+        return self.__bias
 
     def get_uid(self):
         return self.__uid

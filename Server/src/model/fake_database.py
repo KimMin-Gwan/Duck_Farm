@@ -1,7 +1,7 @@
 import json
 
 
-class Local_database:
+class Local_Database:
     def __init__(self) -> None:
         self.__db_file_path = "./model/fake_data/"
         self.__data_files = {
@@ -46,8 +46,14 @@ class Local_database:
         self.__save_json(file_name, self.__image_data)
         return
     
-    def find_user_with_uid(self):
-        return
+    # uid로 유저 찾기 -> 찾환 데이터 반환 없으면 None 반환
+    def find_user_with_uid(self, uid:str):
+        find_user = None
+        for user in self.__user_data:
+            if user['uid'] == uid:
+                find_user = user
+
+        return find_user
 
 
 

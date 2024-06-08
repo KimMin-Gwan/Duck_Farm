@@ -1,6 +1,6 @@
 from view import Cheese_Server
 from view.parsers import Configure_File_Reader
-from model import Local_database
+from model import Local_Database
 
 
 class Master(Configure_File_Reader):
@@ -12,7 +12,7 @@ class Master(Configure_File_Reader):
         pass
 
     def server_start_up(self):
-        database = Local_database()
+        database = Local_Database()
         cheese_server = Cheese_Server(database=database)
         cheese_server.run_server(self._host, self._port)
         

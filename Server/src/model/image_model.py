@@ -1,5 +1,5 @@
 
-# 이미지 데이터를 생성하고 디비에 저장함
+
 class Image_Model:
     def __init__(self, database) -> None:
         self.__database = database
@@ -18,7 +18,6 @@ class Image_Model:
 
     3. iid 리턴
     """
-    # 이미지 데이터 생성함수
 
     def make_image_data(self, request):
         iids = []
@@ -37,15 +36,40 @@ class Image_Model:
         self.__database.save_new_image_data(self.__image)
 
         return iids
-    
-    
+
+
+    def get_bias_image_data(self, bid):
+        #bid = "0000" # 디폴트
+        result = self.__database.find_image_with_bid(bid)
+
+        
+
+        return result
+        
+
+
+
+
+class Image:
+    def __init__(self) -> None:
+        self.__iid = ''
+        self.__iname=''
+        self.__bid=''
+        self.__iamge_type=''
+        self.__uid=''
+        self.__image_info=''
+        self.__location=''
+        self.__uploadedDate=''
+        self.__scheduleDate=''
+        self.__scheduleName=''
+        pass
+
+    def set_iid(self, iids):
+        self.__iid = iids
+        return 
+
     def get_iid(self):
         return self.__iid
-
-
-    def get_bias_image_data(self,bid):
-        result = self.__database.find_image_with_bid(bid)
-        return result
         
     def get_iname(self):
         return self.__iname
@@ -113,26 +137,5 @@ class Image_Model:
     def set_scheduleName(self, scheduleName):
         self.__scheduleName = scheduleName
         return 
-    
-# 이미지 객체를 생성하고 id설정함
-class Image:
-    def __init__(self) -> None:
-        self.__iid = ''
-        self.__iname=''
-        self.__bid=''
-        self.__iamge_type=''
-        self.__uid=''
-        self.__image_info=''
-        self.__location=''
-        self.__uploadedDate=''
-        self.__scheduleDate=''
-        self.__scheduleName=''
-        pass
-
-    def set_iid(self, iids):
-        self.__iid = iids
-        return 
-
-
 
     
