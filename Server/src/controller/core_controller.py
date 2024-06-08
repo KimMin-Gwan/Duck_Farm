@@ -22,7 +22,9 @@ class Core_Controller:
 
         image_model = Image_Model()
 
-        if request['bid'] == "0000": 
+        #non-bid user=User(request)  user.get_bid() #bid list 
+
+        if request['bid'] == "0000":
             bias_model = Bias_Model()
             bid = bias_model.get_latest_uploaded_bias(user_model.get_bias())
             image_list = image_model.get_bias_image_data(bid)

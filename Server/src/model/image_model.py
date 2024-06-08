@@ -3,7 +3,8 @@
 class Image_Model:
     def __init__(self, database) -> None:
         self.__database = database
-        self.__image = None
+        self.__images = None
+        self.__schedules = None
 
     """
     1. 이미지 아이디 만들기

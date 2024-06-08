@@ -17,6 +17,11 @@ class Bias_Model:
 
         return bids[latest_index]
 
+    def make_schedule_list(self,bid):#####
+        bias_data=db.get_bias_data(bid)
+        bias=Bias(bias_data)
+        schedule=db.get_schedule_with_bid(bid)
+
 class Bias: #####
     def __init__(self,bid) -> None:
             self.__bid=bid
@@ -47,8 +52,9 @@ class Schedule: #####
             self.__tpye=''
     
     def get_schedule_data(self):
-        #for i in db.get_schedule_data(self.__sid): schedule_data=i  ?? 추가를 해야 하는데 아닌가?
+        #for i in db.get_schedule_data(self.__sid): schedule_data=i  ??
         schedule_data=db.get_schedule_data(self.__sid)
 
         return schedule_data
+    
 
