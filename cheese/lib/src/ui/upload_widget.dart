@@ -186,7 +186,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
           ),
           Container(
               padding: EdgeInsets.only(left: 30),
-              width: width * 0.8,
+              width: width * 0.9,
               height: height * 0.045,
             child: TextField(
               controller: biasTextController,
@@ -223,7 +223,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
             ),
             Container(
               padding: EdgeInsets.only(left: 30),
-              width: width * 0.8,
+              width: width * 0.9,
                 height: height * 0.045,
               child: TextField(
                 controller: scheduleTextController,
@@ -260,7 +260,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
             ),
             Container(
               padding: EdgeInsets.only(left: 30),
-              width: width * 0.8,
+              width: width * 0.9,
               height: height * 0.045,
               child: TextField(
                   controller: dateTextController,
@@ -290,7 +290,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
             ),
             Container(
               padding: const EdgeInsets.only(left: 30),
-              width: width * 0.8,
+              width: width * 0.9,
               height: height * 0.045,
               child: TextField(
                 controller: detailTextController,
@@ -333,7 +333,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
             ),
             Container(
               padding: EdgeInsets.only(left: 30),
-              width: width * 0.8,
+              width: width * 0.9,
               height: height * 0.045,
               child: TextField(
                   controller: linkTextController,
@@ -366,7 +366,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
                 children: [
                   Container(
                     padding: EdgeInsets.only(left: 30),
-                    width: width * 0.8,
+                    width: width * 0.9,
                     height: height * 0.045,
                     child: TextField(
                         controller: locationTextController,
