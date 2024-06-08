@@ -19,10 +19,10 @@ class Core_Service_View(Master_View):
         def home():
             return "Hello, This is Root of Core-System Service"
 
-        @self.__app.post(endpoint+"/home_page")
-        def home(request:dict):
+        @self.__app.post(endpoint+"/home_page") #홈 bias선택, 달력, schedule
+        def home(request:dict):#request: uid, bid(default: )
             core_Controller=Core_Controller(self.__database)
-            result = core_Controller.get_home_data(request)
+            result = core_Controller.get_home_data(request) 
 
             response = Response_Result(
                 request_type="client", state_code=result['state-code'],

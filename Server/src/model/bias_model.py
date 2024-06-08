@@ -17,4 +17,38 @@ class Bias_Model:
 
         return bids[latest_index]
 
+class Bias: #####
+    def __init__(self,bid) -> None:
+            self.__bid=bid
+            self.__sid=[''] #bias의 모든 schedule id?
+            self.__name=''
+    
+    def get_bid(self):
+        return self.__bid
+    def get_name(self):
+        return self.__name
+    def set_bid(self,bid):
+        self.__bid=bid
+    def set_name(self,name):
+        self.__name=name
+
+    def get_bias_data(self):####
+        bias_data = db.get_bias_data(self.__bid)
+
+        return bias_data
+
+
+class Schedule: #####
+    def __init__(self,sid) -> None:
+            self.__bid=''
+            self.__sid=sid
+            self.__date=''
+            self.__name=''
+            self.__tpye=''
+    
+    def get_schedule_data(self):
+        #for i in db.get_schedule_data(self.__sid): schedule_data=i  ?? 추가를 해야 하는데 아닌가?
+        schedule_data=db.get_schedule_data(self.__sid)
+
+        return schedule_data
 

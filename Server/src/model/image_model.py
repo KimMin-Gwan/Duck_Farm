@@ -40,12 +40,32 @@ class Image_Model:
 
     def get_bias_image_data(self, bid):
         #bid = "0000" # 디폴트
+        #loop
+        """
+        
+        bias = Bias(bid)
+        bias_data = bias.get_bias_data()
+
+        schedule = Schedule()
+        ##for _ in bias_data.get.sid() : schedule_data = schedule.get_schedule_data #
+        #schedule_data = schedule.get_schedule_data()
+        ##schedule_data #schedule_list  #list 안에 iid_list 
+        #image_lsit=db.get_image_by_sid(schedule.get_sid()) #전부 다 찾을 때 까지 반복
+
+
+        #result == schedule_data + image_list
+
+        
+
+        """
         result = self.__database.find_image_with_bid(bid)
 
-        
-
         return result
-        
+    
+    def get_image_by_schedule(self,sid): #####
+        bias=Bias(bid)
+            #bias_model에 schedule class
+        return
 
 
 

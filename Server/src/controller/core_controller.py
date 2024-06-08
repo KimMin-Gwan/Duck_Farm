@@ -13,7 +13,7 @@ class Core_Controller:
     def get_home_data(self,request):
         user_model = User_Model()
         result = {}
-        if not user_model.is_vaild_user(request['uid']) :
+        if not user_model.is_vaild_user(request['uid']) :   #유저 확인
             result = {
                 "state_code" : "501",
                 "detail" : "permision denied",
@@ -22,7 +22,7 @@ class Core_Controller:
 
         image_model = Image_Model()
 
-        if request['bid'] == "0000":
+        if request['bid'] == "0000": 
             bias_model = Bias_Model()
             bid = bias_model.get_latest_uploaded_bias(user_model.get_bias())
             image_list = image_model.get_bias_image_data(bid)
