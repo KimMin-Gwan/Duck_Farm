@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import './src/ui/styles/main_theme.dart"';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,25 +22,25 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             // TopBarWidget
-            Container(
+            Padding(
+              padding: EdgeInsets.all(0.0),
               child: TopBarWidget(),
             ),
 
             // HomeBodyWidget
-            Container(
-              margin: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+            Padding(
+              padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
               child: BiasWidget(),
             ),
 
-            // CalenderWidget
-            Container(
-              margin: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
+            Padding(
+              padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
               child: CalendarWidget(),
             ),
 
             // BiasWidget
-            Container(
-              margin: EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 20.0),
+            Padding(
+              padding: EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 20.0),
               child:
                   HomeBodyWidget(selectedDate: DateTime.now()), // 오늘 날짜를 임의로 넣음
             ),
@@ -93,6 +94,7 @@ class _BiasState extends State<BiasWidget> {
   final HomeTheme _style = HomeTheme(); // 테마
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
+  final double minHeight = 130.0;
 
   @override
   Widget build(BuildContext context) {
@@ -106,51 +108,62 @@ class _BiasState extends State<BiasWidget> {
       queryHeight = maxHeight;
     }
 
-    double mainHeight = queryHeight * 0.2;
+    double mainHeight =
+        max(queryHeight * 0.2, minHeight); // minHeight와 비교하여 더 큰 값을 선택
 
-    return Container(
-      decoration: _style.mainBoxDecoration,
-      width: queryWidth,
-      height: mainHeight,
-      alignment: Alignment.center,
-      child: Stack(
-        children: [
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0, right: 5.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+    return SingleChildScrollView(
+      // SingleChildScrollView 추가
+      child: ConstrainedBox(
+        // minHeight를 보장하기 위한 ConstrainedBox 추가
+        constraints: BoxConstraints(minHeight: minHeight), // 최소 높이 설정
+        child: IntrinsicHeight(
+          // 높이를 자식의 높이에 맞추기 위한 IntrinsicHeight 추가
+          child: Container(
+            decoration: _style.mainBoxDecoration,
+            width: queryWidth,
+            height: mainHeight,
+            alignment: Alignment.center,
+            child: Stack(
+              children: [
+                Column(
                   children: [
-                    Icon(Icons.more_vert), // 오른쪽 상단에 위치하는 아이콘
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0, right: 5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(Icons.more_vert), // 오른쪽 상단에 위치하는 아이콘
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                      child: Container(
+                        height: mainHeight * 0.6, // 높이를 지정하여 스크롤 가능하도록 설정
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal, // 가로 스크롤 설정
+                          itemCount: _items.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  10.0, 0.0, 10.0, 0.0),
+                              child: _biasProfile(
+                                width: queryWidth,
+                                height: mainHeight,
+                                biasName: '정우성', // 실제 데이터로 변경 가능
+                                biasId: _items[index], // 실제 데이터로 변경 가능
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                child: Container(
-                  height: mainHeight * 0.6, // 높이를 지정하여 스크롤 가능하도록 설정
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal, // 가로 스크롤 설정
-                    itemCount: _items.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                        child: _biasProfile(
-                          width: queryWidth,
-                          height: mainHeight,
-                          biasName: '정우성', // 실제 데이터로 변경 가능
-                          biasId: _items[index], // 실제 데이터로 변경 가능
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -173,12 +186,13 @@ class _BiasState extends State<BiasWidget> {
             backgroundImage: AssetImage('assets/images/eng_logo.png'), // 이미지 경로
           ),
         ),
-        Text(
-          biasName, // 텍스트
-          style: TextStyle(
-            fontSize: 14.0, // 텍스트 크기 조절
+        Padding(
+          padding: EdgeInsets.only(top: 5.0),
+          child: Text(
+            biasName, // 텍스트
+            style: _style.biasName,
           ),
-        ),
+        )
       ],
     );
   }
@@ -221,7 +235,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 ),
                 Text(
                   DateFormat('MMMM, yyyy').format(_focusedDay),
-                  style: TextStyle(fontSize: 15.0),
+                  style: _style.monthYear,
                 ),
                 IconButton(
                   icon: Icon(Icons.arrow_right),
@@ -236,10 +250,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             ),
           ),
 
-          Divider(
-            color: Colors.lightBlue, // 구분선 색상을 하늘색으로 설정
-            thickness: 0.5, // 구분선 두께 설정
-          ),
+          _style.calenderDevider,
 
           TableCalendar(
             firstDay: DateTime.utc(2010, 10, 16),
@@ -258,27 +269,17 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             startingDayOfWeek: StartingDayOfWeek.monday,
             headerVisible: false, // 기본 헤더 숨기기
             calendarStyle: CalendarStyle(
-              todayDecoration: BoxDecoration(
-                color: Colors.blue,
-                shape: BoxShape.circle,
-              ),
-              selectedDecoration: BoxDecoration(
-                color: Colors.blueAccent,
-                shape: BoxShape.circle,
-              ),
-              weekendTextStyle: TextStyle(color: Colors.black),
+              todayDecoration: _style.todayBox,
+              selectedDecoration: _style.selectedBox,
+              weekendTextStyle: _style.weekColor,
             ),
             daysOfWeekStyle: DaysOfWeekStyle(
-              weekdayStyle: TextStyle(color: Colors.black),
-              weekendStyle: TextStyle(color: Colors.black),
+              weekdayStyle: _style.weekColor,
+              weekendStyle: _style.weekColor,
             ),
-            rowHeight: 70.0, // 날짜 셀의 세로 높이 조정
+            rowHeight: maxHeight * 0.08, // 날짜 셀의 세로 높이 조정
           ),
-
-          Divider(
-            color: Colors.white, // 구분선 색상을 하늘색으로 설정
-            thickness: 0.5, // 구분선 두께 설정
-          ),
+          _style.calenderDevider,
         ],
       ),
     );
@@ -298,6 +299,9 @@ class HomeBodyWidget extends StatefulWidget {
 class _HomeBodyState extends State<HomeBodyWidget> {
   // 한국어 요일 목록
   final List<String> _weekDays = ['월', '화', '수', '목', '금', '토', '일'];
+  final HomeTheme _style = HomeTheme(); // 테마
+  final double maxWidth = 400.0;
+  final double maxHeight = 900.0;
 
   @override
   Widget build(BuildContext context) {
@@ -327,7 +331,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         children: [
           Text(
             '$formattedDate.$weekDay',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            style: _style.eventday,
           ),
         ],
       ),
@@ -344,10 +348,12 @@ class _HomeBodyState extends State<HomeBodyWidget> {
             backgroundImage:
                 AssetImage('assets/images/your_image.png'), // 이미지 경로 수정 필요
           ),
-          SizedBox(width: 10),
-          Text(
-            '정우성',
-            style: TextStyle(fontSize: 16),
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Text(
+              '정우성',
+              style: TextStyle(fontSize: 16),
+            ),
           ),
         ],
       ),
@@ -371,13 +377,13 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     return Column(
       children: [
         CircleAvatar(
-          radius: 5,
-          backgroundColor: Colors.grey,
+          radius: 5, // 원 크기 바꿀 필요 없기에 고정값으로
+          backgroundColor: _style.mainContainerColor,
         ),
         Container(
-          width: 2,
-          height: 200, // 임의로 작성
-          color: Colors.grey,
+          width: 2, // 두께라서 고정값으로
+          height: maxHeight * 0.2, // 타임라인 길이 설정 (->0.19)
+          color: _style.mainContainerColor,
         ),
       ],
     );
@@ -395,17 +401,17 @@ class _HomeBodyState extends State<HomeBodyWidget> {
 
   Padding _buildEventTitle(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15.0, right: 10.0), // 오른쪽 여백 추가
+      padding: const EdgeInsets.only(left: 15.0), // 오른쪽 여백 추가
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             '2023 더팩트 뮤직 어워드',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+            style: _style.eventTitle,
           ),
           Icon(
             Icons.arrow_forward_ios,
-            size: 16.0,
+            size: 16.0, // 아이콘 사이즈도 바꾸지 X것 같으므로 고정값
           ),
         ],
       ),
@@ -416,16 +422,10 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     return Padding(
       padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        height: 150,
+        width: maxWidth, // 상세 사진(회색) 가로 사이즈
+        height: maxHeight * 0.15, // 세로 사이즈
         margin: EdgeInsets.only(right: 10),
-        decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-          ),
-        ),
+        decoration: _style.eventGalleryBox,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: 10, // 내부 사각형 개수 -> 추후 바꾸기
@@ -439,12 +439,9 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     return Align(
       alignment: Alignment.center,
       child: Container(
-        width: 120,
-        height: 120,
-        decoration: BoxDecoration(
-          color: Colors.deepPurpleAccent,
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
+        width: maxHeight * 0.12, // 내부 상세사진(보라) 높이
+        height: maxHeight * 0.12, // 세로 높이
+        decoration: _style.galleryBox,
         margin: EdgeInsets.fromLTRB(
           index == 0 ? 20.0 : 10.0,
           0.0,

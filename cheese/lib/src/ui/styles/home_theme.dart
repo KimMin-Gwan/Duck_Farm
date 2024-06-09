@@ -8,16 +8,27 @@ import 'package:cheese/src/ui/styles/main_theme.dart';
 // ex) decoration : _style.mainBoxDecoration
 
 class HomeTheme extends MainTheme {
+  // BiasWidget
   BoxDecoration mainBoxDecoration = BoxDecoration();
   BoxShadow mainBoxShadow = BoxShadow();
-
+  TextStyle biasName = TextStyle();
+  // CalenderWidget
   BoxDecoration calenderBoxShadow = BoxDecoration();
   Divider calenderDevider = Divider();
+  TextStyle monthYear = TextStyle();
+  BoxDecoration todayBox = BoxDecoration();
+  BoxDecoration selectedBox = BoxDecoration();
+  TextStyle weekColor = TextStyle();
+  // HomeBodyWidget
+  TextStyle eventday = TextStyle();
+  BoxDecoration eventGalleryBox = BoxDecoration();
+  BoxDecoration galleryBox = BoxDecoration();
+  TextStyle eventTitle = TextStyle();
 
-  // 생성자 내부에서 상세 정의
   HomeTheme() {
+    // BiasWidget
     mainBoxDecoration = BoxDecoration(
-      color: mainBiasWidgetColor,
+      color: Colors.grey[200], // 추후 색 변경하기
       borderRadius: BorderRadius.circular(10.0),
     );
 
@@ -41,9 +52,41 @@ class HomeTheme extends MainTheme {
       ],
     );
 
+    biasName = TextStyle(
+      fontSize: 14.0, // 텍스트 크기 조절
+    );
+
+    // CalenderWidget
     calenderDevider = Divider(
       color: Colors.white, // 구분선 색상을 하늘색으로 설정
       thickness: 0.5, // 구분선 두께 설정
+    );
+    monthYear = TextStyle(fontSize: 15.0);
+    todayBox = BoxDecoration(
+      color: Colors.blue,
+      shape: BoxShape.circle,
+    );
+    selectedBox = BoxDecoration(
+      color: Colors.blueAccent,
+      shape: BoxShape.circle,
+    );
+    weekColor = TextStyle(color: Colors.black);
+
+    // HomeBodyWidget
+    eventday = TextStyle(fontSize: 15, fontWeight: FontWeight.bold);
+    eventTitle = TextStyle(fontSize: 15, fontWeight: FontWeight.w600);
+
+    eventGalleryBox = BoxDecoration(
+      color: Colors.grey[100],
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(10),
+        bottomLeft: Radius.circular(10),
+      ),
+    );
+
+    galleryBox = BoxDecoration(
+      color: Colors.deepPurpleAccent,
+      borderRadius: BorderRadius.all(Radius.circular(10.0)),
     );
   }
 }
