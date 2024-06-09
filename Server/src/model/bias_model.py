@@ -28,7 +28,7 @@ class Bias_Model:
         sids = self.__database.get_sid_with_bid(bid) #select sid from BiasSchedule where bid=bid  db에서 받은 sid를 list로 변환하여 받음
 
         for sid in sids():
-            schedule_data = database.get_schedule_with_sid(sid) #sid로 schedule의 모든 데이터를 받아옴 slect *
+            schedule_data = self.__database.get_schedule_with_sid(sid) #sid로 schedule의 모든 데이터를 받아옴 slect *
             result.append(Schedule(schedule_data))
 
         return result
@@ -75,13 +75,13 @@ class Schedule:
     def get_location(self):
         return self.__location
 
-    def set_sid(self):
+    def set_sid(self, sid):
         self.__sid = sid
-    def set_bid(self):
-        self.__bid = sid
-    def set_date(self):
-        self.__date = sid
-    def set_name(self):
-        self.__name = sid
-    def set_location(self):
+    def set_bid(self, bid):
+        self.__bid = bid
+    def set_date(self, date):
+        self.__date = date
+    def set_name(self, name):
+        self.__name = name
+    def set_location(self, location):
         self.__location = location

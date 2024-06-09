@@ -9,7 +9,7 @@ class Core_Controller:
         # 1.  유저 속성 확인
         # 3.  달이 0이면 모르겠고 오늘꺼 이슈
 
-    def get_none_bias_home_data(self,request):
+    def get_none_bias_home_data(self,request, database):
 
         bias_models=[]
         target_schedules=[]
@@ -27,12 +27,12 @@ class Core_Controller:
             return result
 
         '''
-        for bid in request[‘bid’] :
+        for bid in request['bid'] :
             bias_model = Bias_Model(datebase)
             bias_model.make_schedule_list(bid)
             bias_models.append(bias_model)
         for schedule in bias_models[0].get_schedules():
-            if (schedule.get_schedule_date() == request[‘date’]):
+            if (schedule.get_schedule_date() == request['date']):
                 target_schedule.append(schedule_date)
         if target_schedules : 
             for schedule in target_schedules:
@@ -59,25 +59,26 @@ class Core_Controller:
         '''
 
         for bid in request['bid'] :
-            bias_model = Bias_Model(datebase)
+            bias_model = Bias_Model(database)
             bias_model.make_schedule_list(bid)
             bias_models.append(bias_model)
 
         for schedule in bias_models[0].get_schedules():
             if (schedule.get_date() == request['date']):
-                target_schedule.append(schedule)
+                target_schedules.append(schedule)
 
         if target_schedules :
             for schedule in target_schedules:
-            image_model = Image_Model(database)
-            image_model.make_image_data_with_schedule(schedule.get_sid())
-            image_models.append(image_model)
+                image_model = Image_Model(database)
+                image_model.make_image_data_with_schedule(schedule.get_sid())
+                image_models.append(image_model)
 
         for bias_model in bias_models:
             image_by_date.append(bias_model.get_image_by_date())  #bias_model에 get_image_by_date 작성 필요
 
         for image_model in image_models:
             image_list.append(image_model.get_home_body_image_list())  #image_model에 get_home_body_image_list 작성 필요
+
         latest_image = {
             'bid' : bias_models[0].get_bid(),
             'image_list' : image_list
