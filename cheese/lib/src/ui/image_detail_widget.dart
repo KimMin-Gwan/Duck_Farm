@@ -258,9 +258,7 @@ class _TopDetailWidgetState extends State<TopDetailWidget> {
                   Container(
                     height: height * 0.028,
                     width: width * 0.16,
-                    decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.grey)),
-                    ),
+                    decoration: _style.divideLineDecoration,
                     child: Center(
                       child: Text('수정하기',style: _style.optionText,),
                     ),

@@ -6,6 +6,7 @@ class ImageDetailTheme extends MainTheme{
   Color threeDotColor = Colors.grey.withOpacity(0.7);
   Decoration profileDecoration = BoxDecoration();
   Decoration listOptionDecoration = BoxDecoration();
+  Decoration divideLineDecoration = BoxDecoration();
   TextStyle locationText = TextStyle();
   TextStyle likeText = TextStyle();
   TextStyle nickNameText = TextStyle();
@@ -23,7 +24,11 @@ class ImageDetailTheme extends MainTheme{
     listOptionDecoration = BoxDecoration(
       borderRadius: BorderRadius.circular(4),
       border: Border.all(color: Colors.grey),
-      color: Colors.white
+      color: Colors.grey
+
+    );
+    divideLineDecoration = BoxDecoration(
+      border: Border(bottom: BorderSide(color: Colors.white)),
     );
     optionText = TextStyle(fontSize: 11, fontWeight: FontWeight.w500);
     locationText = TextStyle(fontSize: 12, fontWeight: FontWeight.w600);
