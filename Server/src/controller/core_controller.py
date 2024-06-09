@@ -6,9 +6,6 @@ class Core_Controller:
     def __init__(self) -> None:
         pass
 
-        # 1.  유저 속성 확인
-        # 3.  달이 0이면 모르겠고 오늘꺼 이슈
-
     def get_none_bias_home_data(self,request, database):
 
         bias_models=[]
@@ -92,3 +89,6 @@ class Core_Controller:
         }
 
         return result
+    
+    def get_bias_home_data(self, request, database):
+        return
