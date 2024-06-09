@@ -71,7 +71,7 @@ class Image_Model:
         result =[]
         iids = self.__database.get_iid_with_sid(sid) #select iid from ImageSchedule where sid=sid
         for iid in iids:
-            image_data = database.get_image_data_with_iid(iid)
+            image_data = database.get_image_data_with_iid(iid) 
             result.append(Image(image_data))
 
         return result

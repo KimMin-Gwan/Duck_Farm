@@ -2,7 +2,9 @@ from datetime import datetime
 
 class Bias_Model:
     def __init__(self, database) -> None:
-        self.__database = database
+        self.__database = database 
+        self.__bias = None
+        self.__schedules = None
 
 
     # 받아온 bid 리스트에서 가장 최근에 업데이트된 bid를 반환
@@ -31,6 +33,9 @@ class Bias_Model:
 
         return result
 
+    def get_schedules(self):
+        return self.__schedules
+    
 class Bias:
     def __init__(self,bid,sid,name) -> None:
             self.__bid = bid
