@@ -11,7 +11,7 @@ class Bias_Model:
     def get_latest_uploaded_bias(self, bids:list, month):
         date_times = []
         for bid in bids:
-            date_time = self.__database.get_lates_image_date_time(bid)
+            date_time = self.__database.get_lates_image_date_time(bid)      #db에 저장된 가장 최근 date를 bid로 가져ㅑ옴
             date_time = datetime.strptime(date_time)
             date_times.append(date_time)
 
@@ -25,10 +25,10 @@ class Bias_Model:
         bias_data = self.__database.get_bid_data(bid)
         this.bias = Bias(bias_data)
         '''
-        sids = self.__database.get_sid_with_bid(bid) #select sid from BiasSchedule where bid=bid
+        sids = self.__database.get_sid_with_bid(bid) #select sid from BiasSchedule where bid=bid  db에서 받은 sid를 list로 변환하여 받음
 
         for sid in sids():
-            schedule_data = database.get_schedule_with_sid(sid)
+            schedule_data = database.get_schedule_with_sid(sid) #sid로 schedule의 모든 데이터를 받아옴 slect *
             result.append(Schedule(schedule_data))
 
         return result

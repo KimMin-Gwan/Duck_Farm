@@ -54,7 +54,7 @@ class Image_Model:
 
         #result == schedule_data + image_list
         """
-        result = self.__database.find_image_with_bid(bid)
+        result = self.__database.find_image_with_bid(bid) #bid로 iid찾기 근데 이거 쓰는 함수인가?
 
         return result
     
@@ -69,9 +69,9 @@ class Image_Model:
         this.schedule = schedule
         '''
         result =[]
-        iids = self.__database.get_iid_with_sid(sid) #select iid from ImageSchedule where sid=sid
+        iids = self.__database.get_iid_with_sid(sid) #select iid from ImageSchedule where sid=sid  / sid로 iid를 찾아서 list로 반환
         for iid in iids:
-            image_data = database.get_image_data_with_iid(iid) 
+            image_data = database.get_image_data_with_iid(iid)  # iid로 image 데이터 가져오기 slect * 
             result.append(Image(image_data))
 
         return result

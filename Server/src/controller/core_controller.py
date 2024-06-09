@@ -74,10 +74,10 @@ class Core_Controller:
             image_models.append(image_model)
 
         for bias_model in bias_models:
-            image_by_date.append(bias_model.get_image_by_date()) 
+            image_by_date.append(bias_model.get_image_by_date())  #bias_model에 get_image_by_date 작성 필요
 
         for image_model in image_models:
-            image_list.append(image_model.get_home_body_image_list()) 
+            image_list.append(image_model.get_home_body_image_list())  #image_model에 get_home_body_image_list 작성 필요
         latest_image = {
             'bid' : bias_models[0].get_bid(),
             'image_list' : image_list
