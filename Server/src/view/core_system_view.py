@@ -22,9 +22,10 @@ class Core_Service_View(Master_View):
         @self.__app.post(endpoint+"/home_page") #홈 bias선택, 달력, schedule
         def home(request:dict):#request: uid, bid(default: )
             core_Controller=Core_Controller(self.__database)
-            result = core_Controller.get_home_data(request) 
+            #result = core_Controller.get_home_data(request) 
+            result = core_Controller.get_none_bias_home_data(request) 
 
-            response = Response_Result(
+            response = Response_Result(######################################
                 request_type="client", state_code=result['state-code'],
                 detail="success", home_image=result['home_image'],
                 bid=result['bid'], date=result['date']

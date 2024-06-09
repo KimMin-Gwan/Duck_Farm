@@ -42,8 +42,7 @@ class Image_Model:
     def get_bias_image_data(self, bid):
         #bid = "0000" # 디폴트
         #loop
-        """
-        
+        """    
         bias = Bias(bid)
         bias_data = bias.get_bias_data()
 
@@ -53,36 +52,45 @@ class Image_Model:
         ##schedule_data #schedule_list  #list 안에 iid_list 
         #image_lsit=db.get_image_by_sid(schedule.get_sid()) #전부 다 찾을 때 까지 반복
 
-
         #result == schedule_data + image_list
-
-        
-
         """
         result = self.__database.find_image_with_bid(bid)
 
         return result
     
-    def get_image_by_schedule(self,sid): #####
-        bias=Bias(bid)
-            #bias_model에 schedule class
-        return
+    def make_image_data_with_schedule(self,sid): #####
+        '''
+        images=[]
+        for iid in shecdule.get_iid()
+            image_data = database.get_image_data_with_iid(iid)
+            image = Image(image_data)
+            this.images.append(image)
+
+        this.schedule = schedule
+        '''
+        result =[]
+        iids = self.__database.get_iid_with_sid(sid) #select iid from ImageSchedule where sid=sid
+        for iid in iids:
+            image_data = database.get_image_data_with_iid(iid)
+            result.append(Image(image_data))
+
+        return result
 
 
 
 
 class Image:
-    def __init__(self) -> None:
-        self.__iid = ''
-        self.__iname=''
-        self.__bid=''
-        self.__iamge_type=''
-        self.__uid=''
-        self.__image_info=''
-        self.__location=''
-        self.__uploadedDate=''
-        self.__scheduleDate=''
-        self.__scheduleName=''
+    def __init__(self,iid,iname,bid,image_type,uid,image_info,location,uploaded_date,schedule_date,schedule_name) -> None:
+        self.__iid = iid
+        self.__iname = iname
+        self.__bid = bid
+        self.__iamge_type = image_type
+        self.__uid = uid
+        self.__image_info = image_info
+        self.__location = location
+        self.__uploaded_date = uploaded_date
+        self.__schedule_date = schedule_date
+        self.__schedule_name = schedule_name
         pass
 
     def set_iid(self, iids):
@@ -110,14 +118,14 @@ class Image:
     def get_location(self):
         return self.__location
     
-    def get_uploadedDate(self):
-        return self.__uploadedDate
+    def get_uploaded_date(self):
+        return self.__uploaded_date
     
-    def get_scheduleDate(self):
-        return self.__scheduleDate
+    def get_schedule_date(self):
+        return self.__schedule_date
 
-    def get_scheduleName(self):
-        return self.__scheduleName
+    def get_schedule_name(self):
+        return self.__schedule_name
     
     def set_iid(self, iid):
         self._iid = iid
@@ -147,16 +155,16 @@ class Image:
         self.__location = location
         return 
 
-    def set_uploadedDate(self, uploadedDate):
-        self.__uploadedDate = uploadedDate
+    def set_uploaded_date(self, uploaded_date):
+        self.__uploaded_date = uploaded_date
         return 
 
-    def set_scheduleDate(self, scheduleDate):
-        self.__scheduleDate = scheduleDate
+    def set_schedule_date(self, schedule_date):
+        self.__schedule_date = schedule_date
         return 
     
-    def set_scheduleName(self, scheduleName):
-        self.__scheduleName = scheduleName
+    def set_schedule_name(self, schedule_name):
+        self.__schedule_name = schedule_name
         return 
 
     
