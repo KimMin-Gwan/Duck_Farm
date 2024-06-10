@@ -1,4 +1,4 @@
-
+from model.schedule_data import Schedule
 
 class Image_Model:
     def __init__(self, database) -> None:
@@ -30,7 +30,6 @@ class Image_Model:
             iids.append(iid)
 
         self.__database.add_bias_image_num(upload_image_num)
-
 
         self.__image = Image(request)
         self.__image.set_iid(iids)
@@ -80,11 +79,11 @@ class Image_Model:
         image_data = self.__database.get_image_data_with_iid(iid)
         self.__images = Image(image_data)
 
-        schedule_data = self.__database.get_schedule_data_with_sid(image.get_sid()) ##
-        self.__schedules = Schedule(schedule_data)##########################
+        schedule_data = self.__database.get_schedule_data_with_sid(self.__image.get_sid()) ##
+        self.__schedules = Schedule(schedule_data) ##
         return
     
-        def get_home_body_image_list(self):
+    def get_home_body_image_list(self):
         image_data={ 
             'scheduleName':self.__images.get_schedule_name(),
             'type':self.__images.get_image_type(), 

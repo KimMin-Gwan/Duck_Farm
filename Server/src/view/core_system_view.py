@@ -50,10 +50,9 @@ class Core_Service_View(Master_View):
         @self.__app.post(endpoint+"/image_detail_page") #request: uid, iid, *bid, *schedule_name
         def upload_new_post(request:dict):
             
-            image_Controller=image_Controller(self.__database)
+            image_controller=Image_Controller(self.__database)
 
-            result= core_Controller.get_image_detail(request)
-
+            result= image_controller.get_image_detail(request)
             response = Response_Result( result )
             
             return response.make_send_data()

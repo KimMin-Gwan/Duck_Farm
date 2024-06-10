@@ -53,7 +53,7 @@ class HomeTheme extends MainTheme {
     );
 
     biasName = TextStyle(
-      fontSize: 14.0, // 텍스트 크기 조절
+      fontSize: 10.0, // 텍스트 크기 조절
     );
 
     // CalenderWidget
@@ -61,7 +61,7 @@ class HomeTheme extends MainTheme {
       color: Colors.white, // 구분선 색상을 하늘색으로 설정
       thickness: 0.5, // 구분선 두께 설정
     );
-    monthYear = TextStyle(fontSize: 15.0);
+    monthYear = TextStyle(fontSize: 12.0);
     todayBox = BoxDecoration(
       color: Colors.blue,
       shape: BoxShape.circle,
@@ -79,14 +79,14 @@ class HomeTheme extends MainTheme {
     eventGalleryBox = BoxDecoration(
       color: Colors.grey[100],
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(10),
-        bottomLeft: Radius.circular(10),
+        topLeft: Radius.circular(16),
+        bottomLeft: Radius.circular(16),
       ),
     );
 
     galleryBox = BoxDecoration(
       color: Colors.deepPurpleAccent,
-      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      borderRadius: BorderRadius.all(Radius.circular(12.0)),
     );
   }
 }

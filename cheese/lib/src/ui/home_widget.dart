@@ -1,7 +1,12 @@
+import 'dart:math';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
+import 'package:cheese/src/bloc/core_bloc/core_event.dart';
+import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import './src/ui/styles/main_theme.dart"';
+import 'package:cheese/src/ui/styles/home_theme.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,20 +19,117 @@ class _HomePageState extends State<HomePage> {
   final double maxHeight = 900.0;
   bool interaction = false;
 
+
   @override
   Widget build(BuildContext context) {
+    double queryWidth = MediaQuery.of(context).size.width;
+    if (queryWidth > maxWidth) {
+      queryWidth = maxWidth;
+    }
+
+    double queryHeight = MediaQuery.of(context).size.height;
+    if (queryHeight > maxHeight) {
+      queryHeight = maxHeight;
+    }
     return Scaffold(
       backgroundColor: _style.mainWhiteColor,
-      body: SingleChildScrollView(
+      floatingActionButton: Container(
+        height: 80,
+        width: 80,
+        child: FloatingActionButton(
+          onPressed: () {},
+          child: Image.asset('images/assets/upload_button.png'),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        )
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: Stack(
+        children: [
+          TopBarWidget(),
+          Column(
+            children:[
+              Container(
+                width: queryWidth,
+                height: 50,
+              ),
+              Container(
+                width: queryWidth,
+                height: queryHeight - 110,
+                child: HomeWidget()
+              ),
+            ]
+          ),
+          Column(
+              children:[
+                Container(
+                  width: queryWidth,
+                  height: queryHeight - 60,
+                  //color: Colors.grey,
+                ),
+                BottomBarWidget()
+              ]
+          )
+        ],
+      )
+    );
+
+      /*
+
+       */
+  }
+}
+// TopBarWidget
+class TopBarWidget extends StatefulWidget {
+  @override
+  _TopBarState createState() => _TopBarState();
+}
+
+class _TopBarState extends State<TopBarWidget> {
+  final double appBarHeight = 50;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: EdgeInsets.symmetric(horizontal: 25.0), // 좌우 간격
+      height: appBarHeight,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween, // 가운데 간격
+        children: [
+          Container(
+            height : 27.5,
+            child: Image.asset(
+              'images/assets/eng_logo.png', // 이미지 경로
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              // 메뉴 아이콘 클릭 시 동작
+            },
+            icon: Icon(Icons.menu),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+class HomeWidget extends StatefulWidget {
+  const HomeWidget({super.key});
+
+  @override
+  State<HomeWidget> createState() => _HomeWidgetState();
+}
+
+class _HomeWidgetState extends State<HomeWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
         child: Column(
           children: [
-            // TopBarWidget
-            Padding(
-              padding: EdgeInsets.all(0.0),
-              child: TopBarWidget(),
-            ),
-
-            // HomeBodyWidget
             Padding(
               padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
               child: BiasWidget(),
@@ -42,45 +144,43 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 20.0),
               child:
-                  HomeBodyWidget(selectedDate: DateTime.now()), // 오늘 날짜를 임의로 넣음
+              HomeBodyWidget(selectedDate: DateTime.now()), // 오늘 날짜를 임의로 넣음
             ),
             // 다른 위젯 추가
           ],
         ),
-      ),
     );
   }
 }
 
-// TopBarWidget
-class TopBarWidget extends StatefulWidget {
+
+class BottomBarWidget extends StatefulWidget {
+  const BottomBarWidget({super.key});
+
   @override
-  _TopBarState createState() => _TopBarState();
+  State<BottomBarWidget> createState() => _BottomBarWidgetState();
 }
 
-class _TopBarState extends State<TopBarWidget> {
+class _BottomBarWidgetState extends State<BottomBarWidget> {
+  final double bottomBarHeight = 60;
+  final maxWidth = 400.0;
+
   @override
   Widget build(BuildContext context) {
+    double queryWidth = MediaQuery.of(context).size.width;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25.0), // 좌우 간격
-      height: kToolbarHeight, // AppBar와 높이 같게
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween, // 가운데 간격
-        children: [
-          Image.asset(
-            'assets/images/eng_logo.png', // 이미지 경로
-          ),
-          IconButton(
-            onPressed: () {
-              // 메뉴 아이콘 클릭 시 동작
-            },
-            icon: Icon(Icons.menu),
-          )
-        ],
-      ),
+      width: queryWidth,
+      height: bottomBarHeight,
+      color: Color(0xff232323),
     );
   }
 }
+
+
+
+
+
+
 
 // BiasWidget
 class BiasWidget extends StatefulWidget {
@@ -89,83 +189,101 @@ class BiasWidget extends StatefulWidget {
 }
 
 class _BiasState extends State<BiasWidget> {
-  final List<String> _items = ['Item 1']; // 가상의 데이터 리스트
+  final List<String> _items = ['Item 1','Item 1','Item 1','Item 1']; // 가상의 데이터 리스트
 
   final HomeTheme _style = HomeTheme(); // 테마
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
-  final double minHeight = 130.0;
+  final double minHeight = 100.0;
 
   @override
   Widget build(BuildContext context) {
-    double queryWidth = MediaQuery.of(context).size.width;
+    double queryWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     if (queryWidth > maxWidth) {
       queryWidth = maxWidth;
     }
 
-    double queryHeight = MediaQuery.of(context).size.height;
+    double queryHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
     if (queryHeight > maxHeight) {
       queryHeight = maxHeight;
     }
+    double mainHeight = max(
+        queryHeight * 0.18, minHeight); // minHeight와 비교하여 더 큰 값을 선택
 
-    double mainHeight =
-        max(queryHeight * 0.2, minHeight); // minHeight와 비교하여 더 큰 값을 선택
+    return BlocBuilder<CoreBloc, CoreState>(
+        builder: (context, state) {
+          if (state is NoneBiasState || state is BiasState) {
+            return biasWidgetBody(queryWidth, mainHeight, state);
+          }
+          else if (state is InitCoreState){
+            return Container(
+              child: Text("로딩 중")
+            );
+          }
+          else{
+            return Container(); // 오류
+          }
+        }
+    );
+  }
 
-    return SingleChildScrollView(
-      // SingleChildScrollView 추가
-      child: ConstrainedBox(
+  Widget biasWidgetBody(queryWidth, mainHeight, state){
+      return ConstrainedBox(
         // minHeight를 보장하기 위한 ConstrainedBox 추가
         constraints: BoxConstraints(minHeight: minHeight), // 최소 높이 설정
-        child: IntrinsicHeight(
-          // 높이를 자식의 높이에 맞추기 위한 IntrinsicHeight 추가
-          child: Container(
-            decoration: _style.mainBoxDecoration,
-            width: queryWidth,
-            height: mainHeight,
-            alignment: Alignment.center,
-            child: Stack(
-              children: [
-                Column(
+        child: Container(
+          decoration: _style.mainBoxDecoration,
+          width: queryWidth,
+          height: 40,
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              Container(
+                width: queryWidth * 0.86,
+                height: 20,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0, right: 5.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(Icons.more_vert), // 오른쪽 상단에 위치하는 아이콘
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                      child: Container(
-                        height: mainHeight * 0.6, // 높이를 지정하여 스크롤 가능하도록 설정
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal, // 가로 스크롤 설정
-                          itemCount: _items.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  10.0, 0.0, 10.0, 0.0),
-                              child: _biasProfile(
-                                width: queryWidth,
-                                height: mainHeight,
-                                biasName: '정우성', // 실제 데이터로 변경 가능
-                                biasId: _items[index], // 실제 데이터로 변경 가능
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
+                    Container(
+                      height: 9,
+                      width: 9,
+                      child: Icon(Icons.more_vert), // 오른쪽 상단에 위치하는 아이콘
+                    )
                   ],
                 ),
-              ],
-            ),
+              ),
+              SingleChildScrollView (
+                child: Container(
+                  padding: EdgeInsets.only(left: 8),
+                  height: mainHeight * 0.50, // 높이를 지정하여 스크롤 가능하도록 설정
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal, // 가로 스크롤 설정
+                    itemCount: _items.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                            10.0, 0.0, 10.0, 0.0),
+                        child: _biasProfile(
+                          width: queryWidth,
+                          height: mainHeight,
+                          biasName: '쵸단', // 실제 데이터로 변경 가능
+                          biasId: _items[index], // 실제 데이터로 변경 가능
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              )
+            ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _biasProfile({
@@ -182,8 +300,8 @@ class _BiasState extends State<BiasWidget> {
             boxShadow: [_style.mainBoxShadow],
           ),
           child: CircleAvatar(
-            radius: height * 0.2, // 원의 크기 설정
-            backgroundImage: AssetImage('assets/images/eng_logo.png'), // 이미지 경로
+            radius: height * 0.18, // 원의 크기 설정
+            backgroundImage: AssetImage('images/assets/chodan.jpg'), // 이미지 경로
           ),
         ),
         Padding(
@@ -205,6 +323,7 @@ class CalendarWidget extends StatefulWidget {
 }
 
 class _CalendarWidgetState extends State<CalendarWidget> {
+  CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -214,75 +333,90 @@ class _CalendarWidgetState extends State<CalendarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double queryWidth = MediaQuery.of(context).size.width;
+    // 가로 최대 길이를 400으로 한정
+    if (queryWidth > maxWidth) { queryWidth = maxWidth; }
+    double queryHeight = MediaQuery.of(context).size.height;
+    // 세로 최대 길이를 1200으로  한정
+    if (queryHeight > maxHeight) { queryHeight = maxHeight; }
     return Container(
-      decoration: _style.calenderBoxShadow,
-      child: Column(
-        children: [
-          // 연도와 월을 화살표와 함께 표시
-          Padding(
-            padding: EdgeInsets.only(top: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_left),
-                  onPressed: () {
+      width: queryWidth,
+        height: 420,
+        decoration: _style.calenderBoxShadow,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 연도와 월을 화살표와 함께 표시
+            Container(
+              width: queryWidth * 0.9,
+              height : 28,
+              padding: EdgeInsets.only(top: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_left),
+                    onPressed: () {
+                      setState(() {
+                        _focusedDay =
+                            DateTime(_focusedDay.year, _focusedDay.month - 1);
+                      });
+                    },
+                  ),
+                  Text(
+                    DateFormat('MMMM, yyyy').format(_focusedDay),
+                    style: _style.monthYear,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.arrow_right),
+                    onPressed: () {
+                      setState(() {
+                        _focusedDay =
+                            DateTime(_focusedDay.year, _focusedDay.month + 1);
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+             // _style.calenderDevider,
+            Expanded(
+              child: Transform.scale(
+                scale: 0.9,
+                child: TableCalendar(
+                  firstDay: DateTime.utc(2010, 10, 16),
+                  lastDay: DateTime.utc(2030, 3, 14),
+                  focusedDay: _focusedDay,
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDay, day);
+                  },
+                  onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
-                      _focusedDay =
-                          DateTime(_focusedDay.year, _focusedDay.month - 1);
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay; // `_focusedDay`도 업데이트
                     });
                   },
+                  calendarFormat: CalendarFormat.month,
+                  startingDayOfWeek: StartingDayOfWeek.monday,
+                  headerVisible: false, // 기본 헤더 숨기기
+                  calendarStyle: CalendarStyle(
+                    todayDecoration: _style.todayBox,
+                    selectedDecoration: _style.selectedBox,
+                    weekendTextStyle: _style.weekColor,
+                  ),
+                  daysOfWeekStyle: DaysOfWeekStyle(
+                    weekdayStyle: _style.weekColor,
+                    weekendStyle: _style.weekColor,
+                  ),
+                  rowHeight: maxHeight * 0.08, // 날짜 셀의 세로 높이 조정
                 ),
-                Text(
-                  DateFormat('MMMM, yyyy').format(_focusedDay),
-                  style: _style.monthYear,
-                ),
-                IconButton(
-                  icon: Icon(Icons.arrow_right),
-                  onPressed: () {
-                    setState(() {
-                      _focusedDay =
-                          DateTime(_focusedDay.year, _focusedDay.month + 1);
-                    });
-                  },
-                ),
-              ],
+              )
             ),
-          ),
-
-          _style.calenderDevider,
-
-          TableCalendar(
-            firstDay: DateTime.utc(2010, 10, 16),
-            lastDay: DateTime.utc(2030, 3, 14),
-            focusedDay: _focusedDay,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay; // `_focusedDay`도 업데이트
-              });
-            },
-            calendarFormat: CalendarFormat.month,
-            startingDayOfWeek: StartingDayOfWeek.monday,
-            headerVisible: false, // 기본 헤더 숨기기
-            calendarStyle: CalendarStyle(
-              todayDecoration: _style.todayBox,
-              selectedDecoration: _style.selectedBox,
-              weekendTextStyle: _style.weekColor,
-            ),
-            daysOfWeekStyle: DaysOfWeekStyle(
-              weekdayStyle: _style.weekColor,
-              weekendStyle: _style.weekColor,
-            ),
-            rowHeight: maxHeight * 0.08, // 날짜 셀의 세로 높이 조정
-          ),
-          _style.calenderDevider,
-        ],
-      ),
-    );
+            _style.calenderDevider,
+          ],
+        ),
+      );
   }
 }
 
@@ -346,12 +480,12 @@ class _HomeBodyState extends State<HomeBodyWidget> {
           CircleAvatar(
             radius: 20,
             backgroundImage:
-                AssetImage('assets/images/your_image.png'), // 이미지 경로 수정 필요
+                AssetImage('images/assets/chodan.jpg'), // 이미지 경로 수정 필요
           ),
           Padding(
             padding: const EdgeInsets.only(left: 5.0),
             child: Text(
-              '정우성',
+              '쵸단',
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -378,12 +512,12 @@ class _HomeBodyState extends State<HomeBodyWidget> {
       children: [
         CircleAvatar(
           radius: 5, // 원 크기 바꿀 필요 없기에 고정값으로
-          backgroundColor: _style.mainContainerColor,
+          backgroundColor: _style.mainLineColor,
         ),
         Container(
           width: 2, // 두께라서 고정값으로
           height: maxHeight * 0.2, // 타임라인 길이 설정 (->0.19)
-          color: _style.mainContainerColor,
+          color: _style.mainLineColor,
         ),
       ],
     );
@@ -423,7 +557,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
       padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
       child: Container(
         width: maxWidth, // 상세 사진(회색) 가로 사이즈
-        height: maxHeight * 0.15, // 세로 사이즈
+        height: maxHeight * 0.13, // 세로 사이즈
         margin: EdgeInsets.only(right: 10),
         decoration: _style.eventGalleryBox,
         child: ListView.builder(
@@ -439,15 +573,10 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     return Align(
       alignment: Alignment.center,
       child: Container(
-        width: maxHeight * 0.12, // 내부 상세사진(보라) 높이
-        height: maxHeight * 0.12, // 세로 높이
+        width: maxHeight * 0.10, // 내부 상세사진(보라) 높이
+        height: maxHeight * 0.10, // 세로 높이
         decoration: _style.galleryBox,
-        margin: EdgeInsets.fromLTRB(
-          index == 0 ? 20.0 : 10.0,
-          0.0,
-          10.0,
-          0.0,
-        ),
+        margin: EdgeInsets.only(left:10),
       ),
     );
   }
