@@ -5,6 +5,7 @@ from view.parsers import Head_Parser
 
 from controller import Upload_Controller
 from controller import Core_Controller
+from controller import Image_Controller
 import json
 
 class Core_Service_View(Master_View):
@@ -44,6 +45,17 @@ class Core_Service_View(Master_View):
                 detail="success", upload_token= result['token'], bid= result['bid'],
                 iid=result['iid']
             )
+            return response.make_send_data()
+
+        @self.__app.post(endpoint+"/image_detail_page") #request: uid, iid, *bid, *schedule_name
+        def upload_new_post(request:dict):
+            
+            image_Controller=image_Controller(self.__database)
+
+            result= core_Controller.get_image_detail(request)
+
+            response = Response_Result( result )
+            
             return response.make_send_data()
 
 

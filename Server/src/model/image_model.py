@@ -71,26 +71,56 @@ class Image_Model:
         result =[]
         iids = self.__database.get_iid_with_sid(sid) #select iid from ImageSchedule where sid=sid  / sid로 iid를 찾아서 list로 반환
         for iid in iids:
-            image_data = database.get_image_data_with_iid(iid)  # iid로 image 데이터 가져오기 slect * 
+            image_data = self.__database.get_image_data_with_iid(iid)  # iid로 image 데이터 가져오기 slect * 
             result.append(Image(image_data))
 
         return result
 
+    def make_image_data_with_iid(self,iid) -> None:
+        image_data = self.__database.get_image_data_with_iid(iid)
+        self.__images = Image(image_data)
 
+        schedule_data = self.__database.get_schedule_data_with_sid(image.get_sid()) ##
+        self.__schedules = Schedule(schedule_data)##########################
+        return
+    
+        def get_home_body_image_list(self):
+        image_data={ 
+            'scheduleName':self.__images.get_schedule_name(),
+            'type':self.__images.get_image_type(), 
+            #'image_url':self.__images.get_image_url()   #image url 없음
+            'image_url':['/1234.png']
+        }
+        return image_data
+    
+    def get_detail_image_data(self,data):
+        image_data = { 
+            'iid': self.__images.get_iid(),
+            'upload_date':self.__images.get_uploaded_date(),
+            'schedule': {
+                'date': self.__schedules.get_date(),
+                'name': self.__schedules.get_name,
+                'location': self.__schedules.get_location
+            }
+        }
+
+        return image_data
 
 
 class Image:
-    def __init__(self,iid,iname,bid,image_type,uid,image_info,location,uploaded_date,schedule_date,schedule_name) -> None:
-        self.__iid = iid
-        self.__iname = iname
-        self.__bid = bid
-        self.__iamge_type = image_type
-        self.__uid = uid
-        self.__image_info = image_info
-        self.__location = location
-        self.__uploaded_date = uploaded_date
-        self.__schedule_date = schedule_date
-        self.__schedule_name = schedule_name
+    def __init__(self,image_data:dict) -> None:
+        self.__iid = image_data['iid']
+        self.__iname = image_data['iname']
+        self.__bid = image_data['bid']
+        self.__iamge_type = image_data['image_type']
+        self.__uid = image_data['uid']
+        self.__image_info = image_data['image_info']
+        self.__location = image_data['location']
+        self.__uploaded_date = image_data['uploaded_date']
+        self.__schedule_date = image_data['schedule_date']
+        self.__schedule_name = image_data['schedule_name']
+
+        self.__sid = image_data['sid']
         pass
 
     def set_iid(self, iids):

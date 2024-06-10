@@ -19,7 +19,7 @@ class Bias_Model:
 
         return bids[latest_index]
 
-    def make_schedule_list(self,bid):
+    def make_schedule_list(self,bid) -> None:
         result = []
         '''
         bias_data = self.__database.get_bid_data(bid)
@@ -31,16 +31,29 @@ class Bias_Model:
             schedule_data = self.__database.get_schedule_with_sid(sid) #sid로 schedule의 모든 데이터를 받아옴 slect *
             result.append(Schedule(schedule_data))
 
-        return result
+        return
 
     def get_schedules(self):
         return self.__schedules
+
+    def make_bias_data_with_bid(self,bid) -> None:
+        bias_data = self.__database.get_bias_Data_with_bid(bid)
+        bias = Bias(bias_data)
+        return
+    
+    def get_image_by_date(self):
+        image_by_date={
+            'date':self.__schedules.get_date(),
+            'bias':self.__schedules.get_bid(),
+        }
+        return image_by_date
+    
     
 class Bias:
-    def __init__(self,bid,sid,name) -> None:
-            self.__bid = bid
-            self.__sid = sid 
-            self.__name = name
+    def __init__(self,bias_data:dict) -> None:
+            self.__bid = bias_data['bid']
+            self.__sid = bias_data['sid'] 
+            self.__name = bias_data['name']
     
     def get_bid(self):
         return self.__bid
@@ -57,12 +70,12 @@ class Bias:
         self.__name=name
 
 class Schedule: 
-    def __init__(self,sid,bid,date,name,location) -> None:
-            self.__sid = sid
-            self.__bid = bid
-            self.__date = date
-            self.__name = name
-            self.__location = location
+    def __init__(self,schedule_data:dict) -> None:
+            self.__sid = schedule_data['sid']
+            self.__bid = schedule_data['bid']
+            self.__date = schedule_data['date']
+            self.__name = schedule_data['name']
+            self.__location = schedule_data['location']
     
     def get_sid(self):
         return self.__sid
