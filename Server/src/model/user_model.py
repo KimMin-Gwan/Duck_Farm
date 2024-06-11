@@ -7,6 +7,7 @@ class User_Model:
         self.__database:Local_Database = database
         self.__user = None
 
+    #DB에 유저 정보가 있는지 확인
     def is_vaild_user(self,uid):
         result = False
         user_data = self.__database.find_user_with_uid(uid)
@@ -16,11 +17,11 @@ class User_Model:
         result = True
         return result
     
-    def get_uid(self):
-        return self.__user.get_uid()
+    def get_user(self):
+        return self.__user
     
-    def get_bias(self):
-        return self.__user.get_bias()
+    def get_user(self,user):
+        self.__user = user
     
 
 class User:
@@ -32,9 +33,6 @@ class User:
         self.__birthday = user_data['birthday']
         self.__bias = user_data['bias']
 
-    def set_bias(self, bias):
-        self.__bias = bias
-        return
 
     def get_bias(self):
         return self.__bias
@@ -65,4 +63,8 @@ class User:
 
     def set_password(self, password):
         self.__password = password 
+        return
+    
+    def set_bias(self, bias):
+        self.__bias = bias
         return

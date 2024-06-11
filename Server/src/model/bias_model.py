@@ -5,7 +5,7 @@ class Bias_Model:
     def __init__(self, database) -> None:
         self.__database = database 
         self.__bias = None
-        self.__schedules = []
+        self.__schedules = None
 
 
     # 받아온 bid 리스트에서 가장 최근에 업데이트된 bid를 반환
@@ -20,38 +20,45 @@ class Bias_Model:
 
         return bids[latest_index]
 
+    #bid로 bias정보를 받아 저장된 sid들을 통해 모든 스케쥴 데이터를 불러옴
     def make_schedule_list(self,bid) -> None:
-        '''
-        bias_data = self.__database.get_bid_data(bid)
-        this.bias = Bias(bias_data)
-        '''
-        sids = self.__database.get_sid_with_bid(bid) #select sid from BiasSchedule where bid=bid  db에서 받은 sid를 list로 변환하여 받음
 
-        for sid in sids():
+        bias_data = self.__database.get_bias_data_with_bid(bid)
+        self.__bias = Bias(bias_data)
+
+        for sid in self.__bias().get_sid():
             schedule_data = self.__database.get_schedule_with_sid(sid) #sid로 schedule의 모든 데이터를 받아옴 slect *
             self.__schedules.append(Schedule(schedule_data))
 
         return
 
-    def get_schedules(self):
-        return self.__schedules
-
+    #bid로 bais 데이터 받아오기 (객체에 저장됨)
     def make_bias_data_with_bid(self,bid) -> None:
         bias_data = self.__database.get_bias_Data_with_bid(bid)
         self.__bias = Bias(bias_data)
         return
     
-    # 스케줄 날짜를 뽑아냄
+    # 스케줄 날짜들을 뽑아냄 
     def get_image_by_date(self):
         date_list = []
         for schedule in self.__schedules:
             image_by_date={
-                'date': schedule.get_date(),
+                'date':schedule.get_date(),
                 'bias':self.__bias.get_bid()
             }
             date_list.append(image_by_date)
 
         return date_list
+    
+    def get_bias(self):
+        return self.__bias 
+    def get_schedules(self):
+        return self.__schedules
+    
+    def set_bias(self,bias):
+        self.__bias = bias
+    def set_schedules(self,schedules):
+        self.__schedules=schedules
     
     
 class Bias:
