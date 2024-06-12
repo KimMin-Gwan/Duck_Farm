@@ -54,8 +54,12 @@ class _TopBarWidgetState extends State<TopBarWidget> {
     double queryHeight = MediaQuery.of(context).size.height;
     // 세로 최대 길이를 1200으로  한정
     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
-
-    return Container(
+    
+    
+    return BlocBuilder<CoreBloc, CoreState>(
+      builder: (context, state){
+        if (if state is ImageDetailState){
+       return Container(
       child: Column(
         children: [
           SizedBox(
@@ -83,7 +87,13 @@ class _TopBarWidgetState extends State<TopBarWidget> {
         ],
       ),
 
-    );
+    ); } else{
+          return Contariner(
+            child : Text("로딩중")
+            );
+        }
+       }
+    ):
   }
 }
 
