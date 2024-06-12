@@ -4,8 +4,8 @@ from fake_database import Local_Database
 from datetime import datetime
 import json
 
-HOST = '192.168.55.213'
-#HOST = '127.0.0.1'
+#HOST = '192.168.55.213'
+HOST = '127.0.0.1'
 PORT = 5000
 
 class Controller:
