@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
           children: [
             Center(
               child: ElevatedButton(
-                child: Text("bloc 패턴"),
+                child: Text('bloc 패턴'),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
                     return BlocDisplayWidget();

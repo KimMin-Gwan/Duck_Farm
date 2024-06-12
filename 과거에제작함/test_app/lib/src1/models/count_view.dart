@@ -7,7 +7,7 @@ class CountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("CountView Build!!");
+    print('CountView Build!!');
     return Center(
       child: StreamBuilder(
         stream: countBloc.count,

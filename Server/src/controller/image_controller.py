@@ -14,8 +14,8 @@ class Image_Controller:
         result = {}
         if not user_model.is_vaild_user(request['uid']) :
             result = {
-                "state_code" : "208",
-                "detail" : "permision denied",
+                'state_code' : '208',
+                'detail' : 'permision denied',
             }
             return result
 

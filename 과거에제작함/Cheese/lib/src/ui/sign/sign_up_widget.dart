@@ -60,14 +60,14 @@ class _TermWidgetState extends State<TermWidget> {
           Container(
             width: width,
             height : 30,
-            child: Text("약관 동의", style: _style.getMainText())
+            child: Text('약관 동의', style: _style.getMainText())
           ),
           Container(
             alignment: Alignment.center,
             width: width * 0.8,
             height : height* 0.6,
             color: _style.getWhiteGray(),
-            child: Text("약관")
+            child: Text('약관')
           ),
           Container(
               margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
@@ -214,7 +214,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 );
               }else{
                 setState(() {
-                  _emailValidation = "잘못된 이메일 형식입니다.";
+                  _emailValidation = '잘못된 이메일 형식입니다.';
                 });
               }
             },
@@ -234,7 +234,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         alignment: Alignment.centerLeft,
         width: width,
         height: 70,
-        child: Text("이메일을 알려주세요", style: _style.getMainText()),
+        child: Text('이메일을 알려주세요', style: _style.getMainText()),
       ),
       Container(
         width: width,
@@ -258,7 +258,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             style: _style.getEmailTextFieldLabelTextStyle(),
             onTap: () {
               _isEmailVisible= false;
-              _emailValidation = "";
+              _emailValidation = '';
             },
             onChanged: (value) {
               setState((){
@@ -300,7 +300,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
           alignment: Alignment.centerLeft,
           width: width,
           height: 70,
-          child: Text("생년월일을 알려주세요", style: _style.getMainText()),
+          child: Text('생년월일을 알려주세요', style: _style.getMainText()),
         ),
         Container(
           width: width,
@@ -357,7 +357,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   alignment: Alignment.bottomLeft,
                   width: width * 0.12,
                   height: 43,
-                  child:Text("년", style: _style.getBirthdayTextFieldLabelTextStyle())
+                  child:Text('년', style: _style.getBirthdayTextFieldLabelTextStyle())
                 ),
                 Container(
                     alignment: Alignment.center,
@@ -405,7 +405,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     alignment: Alignment.bottomLeft,
                     width: width * 0.12,
                     height: 43,
-                    child:Text("월", style: _style.getBirthdayTextFieldLabelTextStyle())
+                    child:Text('월', style: _style.getBirthdayTextFieldLabelTextStyle())
                 ),
                 Container(
                     alignment: Alignment.center,
@@ -455,7 +455,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     alignment: Alignment.bottomLeft,
                     width: width * 0.12,
                     height: 55,
-                    child:Text("일", style: _style.getBirthdayTextFieldLabelTextStyle())
+                    child:Text('일', style: _style.getBirthdayTextFieldLabelTextStyle())
                 )
               ]
             )
@@ -486,7 +486,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             alignment: Alignment.centerLeft,
             width: width,
             height: 70,
-            child: Text("성별을 알려주세요", style: _style.getMainText()),
+            child: Text('성별을 알려주세요', style: _style.getMainText()),
           ),
           Container(
             width: width,
@@ -697,24 +697,24 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                           // 버튼 색을 다시 끄고
                           _buttonColorSwitch = false;
                           // 버튼에 출력할 글자를 완료로 바꾸어줌
-                          _buttonText = "완료";
+                          _buttonText = '완료';
                           // 컨펌 입력단계에서 입력한 글자가 있다면 버튼색을 바꿔야함
                           if(confirmController.text.length > 0){
                             _buttonColorSwitch = true;
                             // 컨펌결과가 일치하면 로그인을 시도해야함
                             if(passwordController.text == confirmController.text){
                               _confirmValidChecker = true;
-                              print("회원가입에 성공하였습니다.");
+                              print('회원가입에 성공하였습니다.');
                               // 회원가입 시도
                               //_signUpBloC.fetchOTP();
                             }else{
-                              _confirmValidation = "비밀번호가 일치하지 않습니다";
+                              _confirmValidation = '비밀번호가 일치하지 않습니다';
                             }
                           }
                         }
                         else{ //비밀번호 입력 단계에서 입력한 비밀번호가 정규식에서 어긋났을때
-                          _buttonText = "다음";
-                          _passwordValidation = "영어 대,소문자 및 숫자를 포함하여 8~16자로 설정해 주세요";
+                          _buttonText = '다음';
+                          _passwordValidation = '영어 대,소문자 및 숫자를 포함하여 8~16자로 설정해 주세요';
                         }
                       }
                     });
@@ -733,7 +733,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                 alignment: Alignment.centerLeft,
                 width: width,
                 height: 70,
-                child: Text("비밀번호를 다시 입력해 주세요", style: _style.getMainText()),
+                child: Text('비밀번호를 다시 입력해 주세요', style: _style.getMainText()),
               ),
               Container(
                   width: width,
@@ -758,7 +758,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                         onChanged: (value) {
                           setState((){
                             // 글자가 들어오면 버든 색을 바꿔야해서
-                            _confirmValidation = "";
+                            _confirmValidation = '';
                             if(passwordController.text.length > 0)
                               if(confirmController.text.length > 0){
                                 _buttonColorSwitch = true;
@@ -793,7 +793,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               alignment: Alignment.centerLeft,
               width: width,
               height: 70,
-              child: Text("비밀번호를 설정해 주세요", style: _style.getMainText()),
+              child: Text('비밀번호를 설정해 주세요', style: _style.getMainText()),
             ),
             Container(
                 width: width,
@@ -818,7 +818,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                       onChanged: (value) {
                         setState((){
                         if(passwordController.text.length > 0){
-                          _passwordValidation = "";
+                          _passwordValidation = '';
                           _buttonColorSwitch = true;
                           if (_passwordValidChecker){
                             // 만약 비밀번호를 다시 적으면 컨펌창이 닫겨야함
@@ -830,7 +830,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                           }
                         }else
                         {
-                          _passwordValidation = "";
+                          _passwordValidation = '';
                           _buttonColorSwitch = false;
                         }
                       });
@@ -856,7 +856,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               alignment: Alignment.centerLeft,
               width: width,
               height: 70,
-              child: Text("인증번호를 입력해 주세요", style: _style.getMainText()),
+              child: Text('인증번호를 입력해 주세요', style: _style.getMainText()),
             ),
             Container(
               alignment: Alignment.bottomLeft,

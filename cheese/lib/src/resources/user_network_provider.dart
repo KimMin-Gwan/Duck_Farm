@@ -11,20 +11,21 @@ class UserApiJsonParser extends MainJsonParser{
 
   UserApiJsonParser(String endpoint):super(){
     __url = Uri(
+      scheme: 'http',
       host:super.host,
       port:super.port,
       path:endpoint,
     );
   }
 
-  Map<String, dynamic> getData() => super.makeSendData(this.body);
+  String getData() => super.makeSendData(this.body);
 
   Uri getUri() => this.__url;
 }
 
 
 class UserNetworkProvider{
-  final String endpoint = "/user/get_user_data";
+  final String endpoint = '/user/get_user_data';
   Client client = Client();
 
   Future<UserModel> fetchUserData(String uid) async {
@@ -33,10 +34,10 @@ class UserNetworkProvider{
 
     final response = await client.post(
         userApiJsonParser.getUri(),
-        headers: {"Content-Type": "application/json"},
+        headers: {'Content-Type': 'application/json'},
         body: userApiJsonParser.getData()
     );
-    print("request status: ${response.statusCode}");
+    print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
       return UserModel.fromJson(json.decode(response.body));
     } else {

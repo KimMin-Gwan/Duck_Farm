@@ -55,7 +55,7 @@ class _SignInWidgetState extends State<SignInWidget> {
               margin: EdgeInsets.fromLTRB(0,20,0,0),
               width: queryWidth,
               height: queryHeight * 0.07,
-              child: Text("로그인",
+              child: Text('로그인',
                 style: _style.getMainText(),
               ),
             ),
@@ -92,7 +92,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                     height: 40,
                     color: _style.getBoxColor(),
                     alignment: Alignment.center,
-                    child: Text("간편 로그인", style: _style.getSimpleLoginText()))
+                    child: Text('간편 로그인', style: _style.getSimpleLoginText()))
               ]
               )
             ),
@@ -107,7 +107,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                   // 간편로그인 API 호출 위치
                   onPressed: (){},
                   icon: Image(
-                    image: AssetImage("assets/kakao.png"),
+                    image: AssetImage('assets/kakao.png'),
                     width: 80,
                     height: 30,
                   )
@@ -256,17 +256,17 @@ class _SignInWidgetState extends State<SignInWidget> {
     }
 
   Widget signInButtonBuild(BuildContext context) {
-    print("sign in try");
+    print('sign in try');
     return StreamBuilder(
         stream: signInBloC.signInModel,
         builder: (BuildContext context, AsyncSnapshot<SignInModel> snapshot){
           if (snapshot.hasData){
             return signInBuild(snapshot);
           } else if(snapshot.hasError) {
-            print("sign in error");
+            print('sign in error');
             return Text(snapshot.error.toString());
           }
-          print("sign in deny");
+          print('sign in deny');
           return Center(child: CircularProgressIndicator());
         },
     );
@@ -275,7 +275,7 @@ class _SignInWidgetState extends State<SignInWidget> {
   Widget signInBuild(AsyncSnapshot<SignInModel> snapshot){
     var data = snapshot.data;
     // 홈화면으로 넘어가야하는데 snapshot.data == _User데이터이기 때문에 이를 활용해야함
-    return Text("Login Success");
+    return Text('Login Success');
   }
 }
 

@@ -8,10 +8,10 @@ class Upload_Controller():
         pass
     def upload_new_post(self,request):
         return_data = {
-            "state-code" : 223,
-            "iid" : [],
-            "token" : "",
-            "bid" : request['bid'],
+            'state-code' : 223,
+            'iid' : [],
+            'token' : '',
+            'bid' : request['bid'],
         }
 
         user_model = User_Model(self.__database)
@@ -26,7 +26,7 @@ class Upload_Controller():
 
         #amazno_s3 = Amazno_S3()
         #tokent = amazon_s3.make_upload_token()
-        token  = "qwer"
+        token  = 'qwer'
         return_data['state-code'] = 222
         return_data['iid'] = iid
         return_data['token'] = token

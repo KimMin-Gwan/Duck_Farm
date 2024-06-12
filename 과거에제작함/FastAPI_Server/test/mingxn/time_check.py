@@ -18,4 +18,4 @@ if(time.day < 10):
 
 uid4 = uid1+uid2+uid3
 
-print(f"[{time}]")
+print(f'[{time}]')

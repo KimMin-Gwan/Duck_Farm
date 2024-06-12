@@ -4,7 +4,7 @@ import 'package:cheese/src/models/user_model.dart';
 
 class FindEmailRepository{
   final findEmailApiProvider = FindEmailApiProvider();
-  String _email = "";
+  String _email = '';
 
   setEmail(email){
     _email = email;
@@ -17,8 +17,8 @@ class FindEmailRepository{
 // 로그인을 위한 레포지토리
 class SignInRepository {
   final signApiProvider = SignInApiProvider();
-  String _email = "";
-  String _password = "";
+  String _email = '';
+  String _password = '';
 
 
   setEmailPassword(email, password){
@@ -32,10 +32,10 @@ class SignInRepository {
 // 회원가입을 위한 레포지토리
 class SignUpRepository{
   final signApiProvider = SignUpApiProvider();
-  String _email = "";
-  String _birthday = "";
-  String _sex = "none";
-  String _password = "";
+  String _email = '';
+  String _birthday = '';
+  String _sex = 'none';
+  String _password = '';
   int _otp = 0;
 
   setEmail(email){_email = email;}

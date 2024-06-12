@@ -10,7 +10,7 @@ class Master_Controller:
         self.model:Master_Model = model
     
     # 유저와 관련된 데이터 처리
-    def sign(self, data:dict, type:str=""):
+    def sign(self, data:dict, type:str=''):
         user_controller = User_Controller(model = self.model)
         result = user_controller.processor(data=data, type=type) 
         return result

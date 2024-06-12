@@ -23,14 +23,14 @@ class User_Model:
     # 이메일 또는 uid로 유저 생성
     # 해당 email 또는 uid가 있는지 확인하는 절차가 필요(선행)
 
-    def set_user(self,email="", uid=0):  #매개변수가 두개거든 email // uid email을 보냈어 controller 에서는 
-        #재사용가능한 코드를 만들라고 email // uid email 가지고 처리하고 uid ==0 이면 email로 찾고 email =="" 이면   user 를 만들어서 set을 해준다.
-        sql=f"SELECT * FROM user_total_info WHERE "
-        if email=="":
-            sql+="uid = %s"
+    def set_user(self,email='', uid=0):  #매개변수가 두개거든 email // uid email을 보냈어 controller 에서는 
+        #재사용가능한 코드를 만들라고 email // uid email 가지고 처리하고 uid ==0 이면 email로 찾고 email =='' 이면   user 를 만들어서 set을 해준다.
+        sql=f'SELECT * FROM user_total_info WHERE '
+        if email=='':
+            sql+='uid = %s'
             data=(uid)
         elif uid==0:
-            sql+="email = %s" 
+            sql+='email = %s' 
             data=(email) 
             
         self.db.cur.execute(sql,data)
@@ -43,7 +43,7 @@ class User_Model:
     # 잠깐 사용할 용도 : self.otp, 저장하고 확인 용도: 로컬 DB에 저장
 
     def set_otp(self, email,encrypted_otp):
-        sql=f"INSERT INTO userTBL (email,otp_code) values (%s , %s)"
+        sql=f'INSERT INTO userTBL (email,otp_code) values (%s , %s)'
         data=(email,encrypted_otp)
         self.localdb.cur.execute(sql,data)
         self.localdb.conn.commit() 
@@ -56,12 +56,12 @@ class User_Model:
     
     # 로컬 db로 부터 찾아오기
     def get_otp_db(self, email) -> bool:
-        sql="SELECT otp_code FROM userTBL WHERE email = %s"
+        sql='SELECT otp_code FROM userTBL WHERE email = %s'
         self.localdb.cur.execute(sql,email)
         result=self.localdb.cur.fetchone()
         self.localdb.conn.commit()
         # email로 검색하여 otp 찾아오기
-        self.otp=""  # otp 초기화를 시켜야하는데 초기화가 안됌 일단
+        self.otp=''  # otp 초기화를 시켜야하는데 초기화가 안됌 일단
         if(result):
             self.otp=result[0]
             return result[0]
@@ -70,8 +70,8 @@ class User_Model:
             
     # uid, email, password, birthday, sex로 유저 만들고 DB에 저장
     def make_user(self, uid,email:str, password:str, birthday:str,phone:str,name:str, sex:str) -> bool:
-        # birthday는  "yy/mm/dd" 형식의 str 데이터
-        # sex는 "male" 또는 "female" 형식의 str 데이터
+        # birthday는  'yy/mm/dd' 형식의 str 데이터
+        # sex는 'male' 또는 'female' 형식의 str 데이터
         # self.user= User()로 만들고 그대로 저장
         try:
             self.user.set_user_data(uid,email,password,birthday,phone,name,sex)
@@ -79,7 +79,7 @@ class User_Model:
         except:
             return False
     def set_user_password(self, email,password:str)->bool :
-        # sql="UPDATE usertbl SET password = %s WHERE email = %s"
+        # sql='UPDATE usertbl SET password = %s WHERE email = %s'
         # data=(password,email)
 
         # self.db.cur.execute(sql,data) 
@@ -103,12 +103,12 @@ class User_Model:
     
     def modify_user_data(self):
         # db로 현재 self.user의 데이터로 수정해서 저장
-        sql="UPDATE usertbl SET email = %s , password= %s  WHERE uid = %s"
+        sql='UPDATE usertbl SET email = %s , password= %s  WHERE uid = %s'
         data=(self.user.get_email(),self.user.get_password(),self.user.get_uid())
         self.db.cur.execute(sql,data)
         self.db.conn.commit()
         if(self.db.cur.rowcount>0):
-            sql_user_info="UPDATE usertbl SET name = %s , tel = %s, birthdate =%s WHERE uid = %s"
+            sql_user_info='UPDATE usertbl SET name = %s , tel = %s, birthdate =%s WHERE uid = %s'
             data_info=(self.user.get_nickname(),self.user.get_phonenumber(),self.user.get_birthday(),self.user.get_uid())
             self.db.cur.execute(sql_user_info,data_info) 
             self.db.conn.commit()

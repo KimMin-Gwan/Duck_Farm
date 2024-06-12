@@ -13,9 +13,9 @@ exit()
 
 # 열거형 상수 비교
 if Color.RED == Color.GREEN:
-    print("두 색은 같습니다.")
+    print('두 색은 같습니다.')
 else:
-    print("두 색은 다릅니다.")
+    print('두 색은 다릅니다.')
 
 # 반복문을 통한 열거형 상수 순회
 for color in Color:

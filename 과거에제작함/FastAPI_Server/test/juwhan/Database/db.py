@@ -7,7 +7,7 @@ class server_db:
         self.cur=self.conn.cursor()     
 
     def select_test(self):
-        self.cur.execute("SELECT * from imgTBL")
+        self.cur.execute('SELECT * from imgTBL')
         while(True):
             row=self.cur.fetchone()
             if row==None:
@@ -16,12 +16,12 @@ class server_db:
             print(data1)
             
     def insert_imgpth(self,useremail,imgpath,imgtype):
-        sql = "CALL insert_imgpath(%s, %s, %s);"
+        sql = 'CALL insert_imgpath(%s, %s, %s);'
         params = (useremail, imgpath, imgtype)
         self.cur.execute(sql, params)
         self.conn.commit()
 
-# if __name__=="__main__":
+# if __name__=='__main__':
 #     my_sql=mysql()
 #     #my_sql.select_test()
-#     my_sql.insert_imgpth("maht","adsfasdf",1)
+#     my_sql.insert_imgpth('maht','adsfasdf',1)

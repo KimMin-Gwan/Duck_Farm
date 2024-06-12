@@ -21,13 +21,13 @@ class SignInBloC {
   final _signFetcher = PublishSubject<SignInModel>();
 
   // 로그인 시도
-  String _email = "";
+  String _email = '';
   RegExp _regex = RegExp(r'@[A-Za-z0-9_]{5,}.*\.[A-Za-z]{2,}');
-  String _password = "";
+  String _password = '';
 
   Stream<SignInModel> get signInModel => _signFetcher.stream;
   // 로그인 시도 결과
-  String message = "";
+  String message = '';
 
   // Email 세팅
   // return 1이면 정상, return 0 이면 비정상
@@ -141,26 +141,26 @@ class SignUpBloC{
 
 
   // Year받기
-  String _sYear = "";
+  String _sYear = '';
   setYear(String year){
     _sYear = year.toString();
   }
 
   // Month 받기
-  String _sMonth= "";
+  String _sMonth= '';
   setMonth(String month){
     _sMonth= month.toString();
   }
 
   // Day 받기
-  String _sDay= "";
+  String _sDay= '';
   setDay(String day){
     _sDay = day.toString();
   }
 
   // birthday 세팅
   setBirthday() {
-    String birthday = _sYear + "/" + _sMonth + "/" + _sDay;
+    String birthday = _sYear + '/' + _sMonth + '/' + _sDay;
       _repository.setBirthday(birthday);
       return 1;
   }

@@ -2,7 +2,7 @@ import random
 
 def main():
 
-    email = "alsrhks2508@naver.com"
+    email = 'alsrhks2508@naver.com'
 
     email1 = ord(email[0])
     email2 = ord(email[1])
@@ -28,6 +28,6 @@ def main():
     
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
 2147483647

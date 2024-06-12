@@ -17,8 +17,8 @@ class JsonParser {
   );
 
   // Server Url은 상황에 맞춰 변경 필수
-  String _server_url = "http://127.0.0.1";
-  String _version = "";
+  String _server_url = 'http://127.0.0.1';
+  String _version = '';
   Map _header = {};
 
   // Constructer
@@ -46,8 +46,8 @@ class JsonParser {
    */
   setHeader(String action, {user = 0, UID = 0}){
     _header['action'] = action;
-    _header['user']["login"] = user;
-    _header['user']["UID"] = UID;
+    _header['user']['login'] = user;
+    _header['user']['UID'] = UID;
   }
 
   // 보내기 가능한 형태로 변경 => json 데이터
@@ -62,7 +62,7 @@ class JsonParser {
   }
 
   // header 받기
-  //Map getHeader() => {"Content-Type" : "application/json"};
+  //Map getHeader() => {'Content-Type' : 'application/json'};
 
   // 서버 url 접근자
   getUrl() => _server_url;

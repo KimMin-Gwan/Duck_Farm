@@ -27,9 +27,9 @@ Map json_data = {
   'body' : {
     'user' :{
       'uid' : 0,
-      'email' : "email@email.com",
-      'password' : "password",
-      'birthday' : "yy/mm/dd",
+      'email' : 'email@email.com',
+      'password' : 'password',
+      'birthday' : 'yy/mm/dd',
       'sex' : 'male',
       'nickname' : 'nick'
     },
@@ -43,7 +43,7 @@ Map json_data = {
 class SignUpModel{
   bool status = false;
   User _user = User();
-  String detail = "Not yet"; //uid 또는 현재 전송 상태 정보
+  String detail = 'Not yet'; //uid 또는 현재 전송 상태 정보
   static final storage = FlutterSecureStorage();
 
   SignUpModel.fromJson(Data){
@@ -85,9 +85,9 @@ Map json_data = {
   'body' : {
     'user' :{
       'uid' : 0,
-      'email' : "email@email.com",
-      'password' : "password",
-      'birthday' : "yy/mm/dd",
+      'email' : 'email@email.com',
+      'password' : 'password',
+      'birthday' : 'yy/mm/dd',
       'sex' : 'male',
       'nickname' : 'nick'
     },
@@ -101,7 +101,7 @@ Map json_data = {
 class SignInModel{
   bool status = false;
   User _user = User();
-  String detail = ""; //uid 저장공간
+  String detail = ''; //uid 저장공간
   static final storage = FlutterSecureStorage();
 
   SignInModel.fromJson(Data){
@@ -139,9 +139,9 @@ Map json_data = {
   'body' : {
     'user' :{
       'uid' : 0,
-      'email' : "email@email.com",
-      'password' : "password",
-      'birthday' : "yy/mm/dd",
+      'email' : 'email@email.com',
+      'password' : 'password',
+      'birthday' : 'yy/mm/dd',
       'sex' : 'male',
       'nickname' : 'nick'
     }
@@ -165,12 +165,12 @@ class Birthday{
 
 // User 데이터 타입
 class User{
-  String _email = "";
-  String _password = "";
+  String _email = '';
+  String _password = '';
   int _uid = 0;
   Sex _sex = Sex.none;
   Birthday _birthday = Birthday();
-  String _nickname = "";
+  String _nickname = '';
 
 
   // contructor

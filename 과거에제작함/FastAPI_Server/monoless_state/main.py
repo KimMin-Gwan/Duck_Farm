@@ -10,10 +10,10 @@ class Main():
         self.app_server = APP_Server(self.controller)
         
     def start_system(self):
-        print("SYSTEM_CALL||RUN_SYSTEM")
+        print('SYSTEM_CALL||RUN_SYSTEM')
         self.app_server.run_system()
         
     
-if __name__ == "__main__":
+if __name__ == '__main__':
     main = Main()
     main.start_system()

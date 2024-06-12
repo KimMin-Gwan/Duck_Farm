@@ -21,8 +21,8 @@ class UserModel{
 }
 
 class User{
-  String __uid = "";
-  String __name = "";
+  String __uid = '';
+  String __name = '';
 
   setUid(String uid){
     this.__uid = uid;

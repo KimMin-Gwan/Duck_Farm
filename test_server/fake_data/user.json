@@ -1,0 +1,18 @@
+[
+    {
+        "uid" : "1234-abcd-5678",
+        "uname" : "테스트 유저",
+        "password" : "1324897",
+        "birthday" : "1998/10/18",
+        "email" : "testUser@naver.com",
+        "bids" : ["1001", "1002"]
+    },
+    {
+        "uid" : "4321-abcd-5678",
+        "uname" : "업로드 유저",
+        "password" : "1324897",
+        "birthday" : "2000/05/16",
+        "email" : "uploadUser@naver.com",
+        "bids" : ["1002"]
+    }
+]

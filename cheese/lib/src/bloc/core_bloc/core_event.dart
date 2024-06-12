@@ -14,10 +14,16 @@ class InitCoreEvent extends CoreEvent{
 }
 
 class NoneBiasHomeDataEvent extends CoreEvent{
-  final UserModel userModel;
-
-  NoneBiasHomeDataEvent(this.userModel);
-
   @override
   List<Object> get props => [];
+}
+
+class DetailImageDataEvent extends CoreEvent{
+  final String iid;
+
+  DetailImageDataEvent(this.iid);
+
+  @override
+  List<Object> get props => [iid];
+
 }

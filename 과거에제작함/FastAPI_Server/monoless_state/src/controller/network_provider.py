@@ -10,14 +10,14 @@ class Json_Parser:
             'content-type': 'application/json'
         }
         self.body = {
-            "status" : 0,
-            "tip" : "default set"
+            'status' : 0,
+            'tip' : 'default set'
         }
 
 
 
     # 헤더 작성 부분
-    def set_header(self, action:str = "") -> None:
+    def set_header(self, action:str = '') -> None:
         # action 설정
         self.header['action'] = action
 
@@ -32,8 +32,8 @@ class Json_Parser:
     # 포멧에 맞춰 정규화 -> json
     def set_data(self, body:dict):
         data = {
-            "header" : self.header,
-            "body" : body
+            'header' : self.header,
+            'body' : body
         }
         json_data = self.json_parsing(data=data)
         return json_data
@@ -54,7 +54,7 @@ class Error_Json_Parser(Json_Parser):
 
     def set_body(self, tip):
         self.set_header(action='error')
-        self.body['status'] = "bad_access"
+        self.body['status'] = 'bad_access'
         self.body['tip'] = tip
 
 

@@ -21,7 +21,7 @@ class _BlocDisplayWidgetState extends State<BlocDisplayWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("bloc 패턴"),
+        title: Text('bloc 패턴'),
       ),
       body: CountView(countBloc: countBloc),
       floatingActionButton: FloatingActionButton(

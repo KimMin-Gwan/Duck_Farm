@@ -1,14 +1,14 @@
 // Microsoft Visual C++ generated resource script.
 //
 #pragma code_page(65001)
-#include "resource.h"
+#include 'resource.h'
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "winres.h"
+#include 'winres.h'
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -27,19 +27,19 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 1 TEXTINCLUDE
 BEGIN
-    "resource.h\0"
+    'resource.h\0'
 END
 
 2 TEXTINCLUDE
 BEGIN
-    "#include ""winres.h""\r\n"
-    "\0"
+    '#include ''winres.h''\r\n'
+    '\0'
 END
 
 3 TEXTINCLUDE
 BEGIN
-    "\r\n"
-    "\0"
+    '\r\n'
+    '\0'
 END
 
 #endif    // APSTUDIO_INVOKED
@@ -52,7 +52,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_APP_ICON            ICON                    "resources\\app_icon.ico"
+IDI_APP_ICON            ICON                    'resources\\app_icon.ico'
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ IDI_APP_ICON            ICON                    "resources\\app_icon.ico"
 #if defined(FLUTTER_VERSION)
 #define VERSION_AS_STRING FLUTTER_VERSION
 #else
-#define VERSION_AS_STRING "1.0.0"
+#define VERSION_AS_STRING '1.0.0'
 #endif
 
 VS_VERSION_INFO VERSIONINFO
@@ -85,23 +85,23 @@ VS_VERSION_INFO VERSIONINFO
  FILETYPE VFT_APP
  FILESUBTYPE 0x0L
 BEGIN
-    BLOCK "StringFileInfo"
+    BLOCK 'StringFileInfo'
     BEGIN
-        BLOCK "040904e4"
+        BLOCK '040904e4'
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "test_app" "\0"
-            VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "test_app" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "test_app.exe" "\0"
-            VALUE "ProductName", "test_app" "\0"
-            VALUE "ProductVersion", VERSION_AS_STRING "\0"
+            VALUE 'CompanyName', 'com.example' '\0'
+            VALUE 'FileDescription', 'test_app' '\0'
+            VALUE 'FileVersion', VERSION_AS_STRING '\0'
+            VALUE 'InternalName', 'test_app' '\0'
+            VALUE 'LegalCopyright', 'Copyright (C) 2024 com.example. All rights reserved.' '\0'
+            VALUE 'OriginalFilename', 'test_app.exe' '\0'
+            VALUE 'ProductName', 'test_app' '\0'
+            VALUE 'ProductVersion', VERSION_AS_STRING '\0'
         END
     END
-    BLOCK "VarFileInfo"
+    BLOCK 'VarFileInfo'
     BEGIN
-        VALUE "Translation", 0x409, 1252
+        VALUE 'Translation', 0x409, 1252
     END
 END
 

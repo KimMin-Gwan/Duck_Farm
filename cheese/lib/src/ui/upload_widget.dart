@@ -61,7 +61,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                 alignment: Alignment.centerRight,
                 child: InkWell(
                   onTap: (){},
-                  child: Text("완료",style: _style.completeButton),
+                  child: Text('완료',style: _style.completeButton),
                 )
               )
             ],
@@ -178,8 +178,8 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
               child: RichText(
                   text: TextSpan(
                       children: [
-                        TextSpan(text: "최애",style: _style.infoTitleText),
-                        TextSpan(text: "*",style: _style.essentialStarText),
+                        TextSpan(text: '최애',style: _style.infoTitleText),
+                        TextSpan(text: '*',style: _style.essentialStarText),
                       ]
                   )
               )
@@ -191,7 +191,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
             child: TextField(
               controller: biasTextController,
               decoration: InputDecoration(
-                hintText: "최애를 입력해주세요.",
+                hintText: '최애를 입력해주세요.',
                   hintStyle: _style.emptyDataText
               ),
             )
@@ -215,8 +215,8 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
                 child: RichText(
                     text: TextSpan(
                         children: [
-                          TextSpan(text: "일정",style: _style.infoTitleText),
-                          TextSpan(text: "*",style: _style.essentialStarText),
+                          TextSpan(text: '일정',style: _style.infoTitleText),
+                          TextSpan(text: '*',style: _style.essentialStarText),
                         ]
                     )
                 )
@@ -228,7 +228,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
               child: TextField(
                 controller: scheduleTextController,
                 decoration: InputDecoration(
-                    hintText: "일정을 입력해주세요.",
+                    hintText: '일정을 입력해주세요.',
                     hintStyle: _style.emptyDataText
                 ),
               )
@@ -252,8 +252,8 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
               child: RichText(
                 text: TextSpan(
                   children: [
-                    TextSpan(text: "날짜",style: _style.infoTitleText),
-                    TextSpan(text: "*",style: _style.essentialStarText),
+                    TextSpan(text: '날짜',style: _style.infoTitleText),
+                    TextSpan(text: '*',style: _style.essentialStarText),
                   ]
                 )
               )
@@ -265,7 +265,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
               child: TextField(
                   controller: dateTextController,
                   decoration: InputDecoration(
-                      hintText: "날짜를 입력해주세요.",
+                      hintText: '날짜를 입력해주세요.',
                       hintStyle: _style.emptyDataText
                   )
               ),
@@ -286,7 +286,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
             Container(
               height: height * 0.03,
               padding: EdgeInsets.only(left: 25),
-              child: Text("내용",style: _style.infoTitleText,),
+              child: Text('내용',style: _style.infoTitleText,),
             ),
             Container(
               padding: const EdgeInsets.only(left: 30),
@@ -296,7 +296,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
                 controller: detailTextController,
                 maxLength: maxLength,
                 decoration: InputDecoration(
-                    hintText: "내용을 작성해주세요.",
+                    hintText: '내용을 작성해주세요.',
                     hintStyle: _style.emptyDataText,
                     counterText: '',
                     suffix: Padding(
@@ -329,7 +329,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
             Container(
               height: height * 0.03,
               padding: EdgeInsets.only(left: 25),
-              child: Text("링크",style: _style.infoTitleText,),
+              child: Text('링크',style: _style.infoTitleText,),
             ),
             Container(
               padding: EdgeInsets.only(left: 30),
@@ -338,7 +338,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
               child: TextField(
                   controller: linkTextController,
                   decoration: InputDecoration(
-                      hintText: "링크를 추가해주세요.",
+                      hintText: '링크를 추가해주세요.',
                       hintStyle: _style.emptyDataText
                   )
               ),
@@ -359,7 +359,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
             Container(
               height: height * 0.03,
               padding: EdgeInsets.only(left: 25),
-              child: Text("위치",style: _style.infoTitleText,),
+              child: Text('위치',style: _style.infoTitleText,),
             ),
             Container(
               child: Row(
@@ -371,7 +371,7 @@ class _InfoOptionWidgetState extends State<InfoOptionWidget> {
                     child: TextField(
                         controller: locationTextController,
                         decoration: InputDecoration(
-                          hintText: "위치를 추가해주세요.",
+                          hintText: '위치를 추가해주세요.',
                           hintStyle: _style.emptyDataText,
                           suffixIcon: Icon(Icons.search, color: Colors.grey,),
                         )

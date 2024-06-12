@@ -1,9 +1,9 @@
-#include "win32_window.h"
+#include 'win32_window.h'
 
 #include <dwmapi.h>
 #include <flutter_windows.h>
 
-#include "resource.h"
+#include 'resource.h'
 
 namespace {
 
@@ -16,15 +16,15 @@ namespace {
 #define DWMWA_USE_IMMERSIVE_DARK_MODE 20
 #endif
 
-constexpr const wchar_t kWindowClassName[] = L"FLUTTER_RUNNER_WIN32_WINDOW";
+constexpr const wchar_t kWindowClassName[] = L'FLUTTER_RUNNER_WIN32_WINDOW';
 
 /// Registry key for app theme preference.
 ///
 /// A value of 0 indicates apps should use dark mode. A non-zero or missing
 /// value indicates apps should use light mode.
 constexpr const wchar_t kGetPreferredBrightnessRegKey[] =
-  L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
-constexpr const wchar_t kGetPreferredBrightnessRegValue[] = L"AppsUseLightTheme";
+  L'Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize';
+constexpr const wchar_t kGetPreferredBrightnessRegValue[] = L'AppsUseLightTheme';
 
 // The number of Win32Window objects that currently exist.
 static int g_active_window_count = 0;
@@ -40,13 +40,13 @@ int Scale(int source, double scale_factor) {
 // Dynamically loads the |EnableNonClientDpiScaling| from the User32 module.
 // This API is only needed for PerMonitor V1 awareness mode.
 void EnableFullDpiSupportIfAvailable(HWND hwnd) {
-  HMODULE user32_module = LoadLibraryA("User32.dll");
+  HMODULE user32_module = LoadLibraryA('User32.dll');
   if (!user32_module) {
     return;
   }
   auto enable_non_client_dpi_scaling =
       reinterpret_cast<EnableNonClientDpiScaling*>(
-          GetProcAddress(user32_module, "EnableNonClientDpiScaling"));
+          GetProcAddress(user32_module, 'EnableNonClientDpiScaling'));
   if (enable_non_client_dpi_scaling != nullptr) {
     enable_non_client_dpi_scaling(hwnd);
   }

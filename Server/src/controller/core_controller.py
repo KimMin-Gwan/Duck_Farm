@@ -18,8 +18,8 @@ class Core_Controller:
         result = {}
         if not user_model.is_vaild_user(request['uid']) :   #유저 확인
             result = {
-                "state_code" : "501",
-                "detail" : "permision denied",
+                'state_code' : '501',
+                'detail' : 'permision denied',
             }
             return result
 
@@ -83,8 +83,8 @@ class Core_Controller:
 
         result = {
             'state_code': '201',
-            "“image_by_date”" : image_by_date,
-            "detail" : 'none-bias-home-date-returned',
+            '“image_by_date”' : image_by_date,
+            'detail' : 'none-bias-home-date-returned',
             '“latest_image”':latest_image
         }
 

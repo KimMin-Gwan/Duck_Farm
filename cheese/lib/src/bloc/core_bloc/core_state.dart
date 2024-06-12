@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:cheese/src/model/bias_model.dart';
+import 'package:cheese/src/model/home_data_model.dart';
 
 
 abstract class CoreState extends Equatable{
@@ -13,20 +14,21 @@ class InitCoreState extends CoreState{
 }
 
 class NoneBiasState extends CoreState{
-  final List<Bias>bias;
-  NoneBiasState(this.bias);
+  final HomeDataModel homeDataModel;
+  NoneBiasState(this.homeDataModel);
 
   @override
-  List<Object> get props => [bias];
+  List<Object> get props => [homeDataModel];
 }
 
-class BiasState extends CoreState{
-  final List<Bias>bias;
-  BiasState(this.bias);
+
+class DetailImageState extends CoreState{
+  final DetailImageModel detailImageModel;
+
+  DetailImageState(this.detailImageModel);
 
   @override
-  List<Object> get props => [bias];
+  List<Object> get props => [detailImageModel];
 }
-
 
 

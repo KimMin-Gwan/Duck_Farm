@@ -1,0 +1,102 @@
+[
+    {
+        "iid" : "1001-1",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "1",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/05/22",
+        "location" : ""
+    },
+    {
+        "iid" : "1001-2",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "1",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/05/22",
+        "location" : ""
+    },
+    {
+        "iid" : "1001-3",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "1",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/05/22",
+        "location" : ""
+    },
+    {
+        "iid" : "1001-4",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "1",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/05/22",
+        "location" : ""
+    },
+    {
+        "iid" : "1001-5",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "2",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/06/07",
+        "location" : ""
+    },
+    {
+        "iid" : "1001-6",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "2",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/06/07",
+        "location" : ""
+    },
+    {
+        "iid" : "1001-7",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "2",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/06/07",
+        "location" : ""
+    },
+    {
+        "iid" : "1002-1",
+        "bid" : "1002",
+        "uid" : "1234-abcd-5678",
+        "sid" : "2",
+        "image_type" : "jpg",
+        "image_detail" : "히나 사진 입니다요",
+        "upload_date" : "2024/04/20",
+        "location" : ""
+    },
+    {
+        "iid" : "1002-2",
+        "bid" : "1002",
+        "uid" : "1234-abcd-5678",
+        "sid" : "2",
+        "image_type" : "jpg",
+        "image_detail" : "히나 사진 입니다요",
+        "upload_date" : "2024/04/20",
+        "location" : ""
+    },
+    {
+        "iid" : "1002-3",
+        "bid" : "1002",
+        "uid" : "1234-abcd-5678",
+        "sid" : "2",
+        "image_type" : "jpg",
+        "image_detail" : "히나 사진 입니다요",
+        "upload_date" : "2024/04/20",
+        "location" : ""
+    }
+]

@@ -1,11 +1,11 @@
 import os
-path = "C:/Users/MZC-USER/Desktop/sample_data/etc"
+path = 'C:/Users/MZC-USER/Desktop/sample_data/etc'
 def rename_files():
   i = 1
 
   
   for filename in os.listdir(path):
-    dst = str(i) + ".jpg"
+    dst = str(i) + '.jpg'
     src = path + '/'  + filename
     dst = path +'/'  +  dst
       

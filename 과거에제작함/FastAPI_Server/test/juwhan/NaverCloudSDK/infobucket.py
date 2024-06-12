@@ -1,9 +1,9 @@
 import boto3
 import requests
 from PIL import Image
-ACCESS_KEY="eeJ2HV8gE5XTjmrBCi48"
-SECRET_KEY="zAGUlUjXMup1aSpG6SudbNDzPEXHITNkEUDcOGnv"
-CDN_DOMAIN="kibxopaerykk22247051.cdn.ntruss.com"
+ACCESS_KEY='eeJ2HV8gE5XTjmrBCi48'
+SECRET_KEY='zAGUlUjXMup1aSpG6SudbNDzPEXHITNkEUDcOGnv'
+CDN_DOMAIN='kibxopaerykk22247051.cdn.ntruss.com'
 service_name = 's3'
 endpoint_url = 'https://kr.object.ncloudstorage.com'
 #endpoint_url = 'kibxopaerykk22247051.cdn.ntruss.com'
@@ -20,7 +20,7 @@ class bucket:
         
         
     def cors(self):   # Cors 설정 해주는 함수 클래스 생성시 자동으로 실행되게 하고 
-        bucket_name="baekhyun-test"
+        bucket_name='baekhyun-test'
         cors_configuration = {
         'CORSRules': [{
             'AllowedHeaders': ['*'],
@@ -39,8 +39,8 @@ class bucket:
             print(bucket.get('Name'))
             
     def put_bucket(self,local_file_path):  #저장소에 올리는 함수 
-        bucket_name="baekhyun-test"
-        #object_name="sample-folder/"
+        bucket_name='baekhyun-test'
+        #object_name='sample-folder/'
         #self.s3.put_object(Bucket=bucket_name ,Key=object_name)
         
 
@@ -49,14 +49,14 @@ class bucket:
         self.img_num+=1
         self.s3.upload_file(local_file_path,bucket_name,object_name)
     def delete_bucket_file(self):  #저장소 내 파일 삭제 하는 함수
-        bucket_name="test0.1"
+        bucket_name='test0.1'
         object_name='test사인2'
         self.s3.delete_object(Bucket=bucket_name,Key=object_name)
     def find_file(self) :
-        bucket_name="baekhyun-test"
-        object_key="/sample/1.jpg"
+        bucket_name='baekhyun-test'
+        object_key='/sample/1.jpg'
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     buc=bucket()
     #buc.show_bucket()
 

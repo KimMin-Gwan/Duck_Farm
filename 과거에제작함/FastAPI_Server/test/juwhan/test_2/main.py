@@ -12,8 +12,8 @@ class Master:
     def get_local_data(self):
         return self.local_data
 
-if __name__=="__main__":
+if __name__=='__main__':
     master=Master()
-    master.db.write_data("","")
-    result=master.db.send_query("","")
+    master.db.write_data('','')
+    result=master.db.send_query('','')
     print(result)

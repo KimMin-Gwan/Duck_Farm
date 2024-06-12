@@ -3,11 +3,11 @@ import json
 
 class Local_Database:
     def __init__(self) -> None:
-        self.__db_file_path = "./model/fake_data/"
+        self.__db_file_path = './model/fake_data/'
         self.__data_files = {
-            "user_file" : "user.json",
-            "image_file" : "image.json",
-            "bias_file" : "bias.json",
+            'user_file' : 'user.json',
+            'image_file' : 'image.json',
+            'bias_file' : 'bias.json',
         }
         self.__read_json()
 
@@ -24,7 +24,7 @@ class Local_Database:
 
     def __save_json(self, file_name, data):
         path = self.__db_file_path
-        with open(path+file_name, "w", encoding='utf-8') as f:
+        with open(path+file_name, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
         return
     

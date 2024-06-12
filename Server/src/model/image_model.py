@@ -6,7 +6,7 @@ class Image_Model:
         self.__images = None
         self.__schedules = None
 
-    """
+    '''
     1. 이미지 아이디 만들기
     1.1 db한테 bias앞으로 된 사진 갯수 받아오니
     1.2 사진 이름을 bias + - + 사진 갯수 + n  으로 반복문 
@@ -18,7 +18,7 @@ class Image_Model:
     2.3 db에 저장
 
     3. iid 리턴
-    """
+    '''
 
     def make_image_data(self, request):
         iids = []
@@ -26,7 +26,7 @@ class Image_Model:
         upload_image_num = len(request['image_filenames'])
 
         for n in range (upload_image_num):
-            iid = request['bid'] + "-" + str(db_image_num + n)
+            iid = request['bid'] + '-' + str(db_image_num + n)
             iids.append(iid)
 
         self.__database.add_bias_image_num(upload_image_num)
@@ -39,9 +39,9 @@ class Image_Model:
 
 
     def get_bias_image_data(self, bid):
-        #bid = "0000" # 디폴트
+        #bid = '0000' # 디폴트
         #loop
-        """    
+        '''    
         bias = Bias(bid)
         bias_data = bias.get_bias_data()
 
@@ -52,7 +52,7 @@ class Image_Model:
         #image_lsit=db.get_image_by_sid(schedule.get_sid()) #전부 다 찾을 때 까지 반복
 
         #result == schedule_data + image_list
-        """
+        '''
         result = self.__database.find_image_with_bid(bid) #bid로 iid찾기 근데 이거 쓰는 함수인가?
 
         return result

@@ -7,7 +7,7 @@ class Local:
         self.cur=None
         self.__connect_db() 
     def __connect_db(self):
-        print("reun __connect_local")
+        print('reun __connect_local')
         self.conn=pymysql.connect(host=HOST,user=USER,password=PASSWORD,db=DB_NAME,charset='utf8')
         self.cur=self.conn.cursor()      
 

@@ -10,8 +10,8 @@ class BiasModel {
 
 
 class Bias {
-  String bid = "";
-  String name = "";
+  String bid = '';
+  String name = '';
 
   void setBid(String bid){
     this.bid = bid;

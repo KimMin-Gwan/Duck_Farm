@@ -11,26 +11,26 @@ class User_Controller:
         self.user_data = User() #  초기화된 상태로 생성
         self.model:User_Model= model # Model
         sign_in_flag = False
-        """ # uid가 있으면 따로 처리해야함
+        ''' # uid가 있으면 따로 처리해야함
         if uid:
             if self.get_user_data(uid):
-                print(f"System_Error||{uid}_user_sign_in")
+                print(f'System_Error||{uid}_user_sign_in')
             else:
-                print("System_Error||User_Data_could_not_found")
-        """
+                print('System_Error||User_Data_could_not_found')
+        '''
 
     # 프로세싱 (data : json데이터, type: 어떤 형식)
-    def processor(self, data:dict, type:str = ""):
+    def processor(self, data:dict, type:str = ''):
         body:dict = data['body'] #json 바디 데이터
         try:
             action = self.data['header']['action']
-            if action == "sign_in":
+            if action == 'sign_in':
                 result = self.try_sign_in(data=body) # json데이터 
-            if action == "sign_up": # 구축중
+            if action == 'sign_up': # 구축중
                 result = self.try_sign_in(data=body, type = type)
-            if action == "find_email":
+            if action == 'find_email':
                 result = self.try_find_email(data=body)
-            if action == "find_password":
+            if action == 'find_password':
                 result = self.try_find_password(data=body, type=type)
         except Exception as error_message:
             error_controller = Error_Controller(Error_type=error_message)
@@ -43,7 +43,7 @@ class User_Controller:
         sign_in = Sign_In(model=self.model) # sign_in
         status, tip = sign_in.try_login(data) #function
         parser = Sign_In_Json_Parser()
-        parser.set_header(action="sign_in")
+        parser.set_header(action='sign_in')
         parser.set_body(user_data=self.model.get_user(),  # body data setting
                         status=status, about = tip)
         result = parser.get_data() # json parsing
@@ -54,12 +54,12 @@ class User_Controller:
         sign_up = Sign_Up(model=self.model)
         status, tip = sign_up.try_sign_up(data=data, type=type)
         parser = Sign_Up_Json_Parser()
-        if type == "email":
-            parser.set_header(action="sign_up")
+        if type == 'email':
+            parser.set_header(action='sign_up')
             parser.set_otp_body(otp=self.model.get_otp(), # set_opt가 선행되어야함
                                  status=status, about=tip)
-        if type == "password":
-            parser.set_header(action="sign_up")
+        if type == 'password':
+            parser.set_header(action='sign_up')
             parser.set_password_body(user_data=self.model.get_user(),
                                      status=status, about=tip)
         result = parser.get_data()
@@ -79,12 +79,12 @@ class User_Controller:
         find_password = Find_Password(model=self.model)
         status, tip = find_password.try_find_password(data=data, type=type)
         parser = Find_Password_Json_Parser()
-        if type == "email":
-            parser.set_header(action="find_password")
+        if type == 'email':
+            parser.set_header(action='find_password')
             parser.set_otp_body(otp=self.model.get_otp(), # set_opt가 선행되어야함
                                  status=status, about=tip)
-        if type == "password":
-            parser.set_header(action="find_password")
+        if type == 'password':
+            parser.set_header(action='find_password')
             parser.set_password_body(status=status, about=tip)
         result = parser.get_data()
         return result
@@ -122,9 +122,9 @@ class Sign_Up:
         result: int= False
         email = data['email']
         email_result:bool = False
-        if type == "email":
+        if type == 'email':
             result, tip = self.__type_email(self, data)
-        if type == "password":
+        if type == 'password':
             result, tip = self.__type_password(self, data)
 
         return result, tip
@@ -134,13 +134,13 @@ class Sign_Up:
         result = 0
         if email_result:
             result = 0
-            tip = "email duplicated"
+            tip = 'email duplicated'
         else:
             otp_maker = OTP_Maker(self.model)
             otp_maker.otp_making(email=email)
             # otp_maker.send_otp(email=email) otp 보내야함
             result = 1,
-            tip = "otp send to email"
+            tip = 'otp send to email'
 
         return result , tip
 
@@ -150,7 +150,7 @@ class Sign_Up:
         otp = data['otp']
         if otp!=rex_otp:
             result = 0
-            tip = "bad access => wrong otp"
+            tip = 'bad access => wrong otp'
         else:
             # 03/02 오후에 작업할 부분
             uid = self.__make_uid()
@@ -161,7 +161,7 @@ class Sign_Up:
             self.model.make_user(uid=uid, email=email, pssowrd= password,
                                     birthday=birthday, sex=sex)
             result = 1
-            tip = "sign up successfully"
+            tip = 'sign up successfully'
         return result, tip
     
     def __make_uid(self):
@@ -184,11 +184,11 @@ class Sign_In:
             # 이 함수는 논의가 필요
             if password == self.model.get_user().get_password():
                 result = 1
-                tip:str = "sign up successfully"
+                tip:str = 'sign up successfully'
             else:
-                tip:str = "Password not match"
+                tip:str = 'Password not match'
         else:
-            tip:str = "Email does not exist"
+            tip:str = 'Email does not exist'
 
         return result, tip
                 
@@ -204,10 +204,10 @@ class Find_Email:
         email_result = self.model.find_email(email)
         if email_result:
             result= 1
-            tip:str = "email exist"
+            tip:str = 'email exist'
         else:
             resul= 0
-            tip:str = "email does not exist"
+            tip:str = 'email does not exist'
         return result, tip
     
 
@@ -222,16 +222,16 @@ class Find_Password(Sign_Up):
         otp = data['otp']
         if otp!=rex_otp:
             result = 0
-            tip = "bad access => wrong otp"
+            tip = 'bad access => wrong otp'
         else:
             password = data['password']
             self.model.set_user_password(password) # 변경 
             if self.model.modify_user_data(): # 수정한 내용 저장
                 result = 1
-                tip = "sign up successfully"
+                tip = 'sign up successfully'
             else:
                 result = 0
-                tip = "Database not work"
+                tip = 'Database not work'
         return result, tip
     
     # 이걸 써야됨

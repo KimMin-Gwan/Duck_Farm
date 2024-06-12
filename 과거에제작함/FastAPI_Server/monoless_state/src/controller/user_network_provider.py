@@ -8,15 +8,15 @@ class Sign_In_Json_Parser(Json_Parser):
     def __init__(self):
         super.__init__()
         self.body:dict = {
-            "user" : {
+            'user' : {
                 'uid' : 0, # 유저 번호
-                'email' : "email@email.com",  # 이메일 정보
-                'birthday' : "yy/mm/dd",  # 날짜 타입
+                'email' : 'email@email.com',  # 이메일 정보
+                'birthday' : 'yy/mm/dd',  # 날짜 타입
                 'sex' : 'male',  # male vs female
                 'nickname' : 'nick' # 닉네임
             }, 
-            "status" : 0, # 처리결과 int
-            "about" : "tips" # 처리 결과에 대한 주석
+            'status' : 0, # 처리결과 int
+            'about' : 'tips' # 처리 결과에 대한 주석
         }
 
     def set_body(self, user_data:User, status:int, about:str) -> None:
@@ -38,8 +38,8 @@ class Sign_Up_Json_Parser(Json_Parser):
     def __init__(self):
         super.__init__()
         self.body:dict = {
-            "status" : 0, # 처리결과 int
-            "about" : "tips" # 처리 결과에 대한 주석
+            'status' : 0, # 처리결과 int
+            'about' : 'tips' # 처리 결과에 대한 주석
         }
 
     # 회원가입시 사용하는 set_otp, 비밀번호 찾기도 이것을 사용
@@ -77,8 +77,8 @@ class Find_Email_Json_Parser(Json_Parser):
     def __init__(self):
         super.__init__()
         self.body:dict = {
-            "status" : 0, # 처리결과 int
-            "about" : "tips" # 처리 결과에 대한 주석
+            'status' : 0, # 처리결과 int
+            'about' : 'tips' # 처리 결과에 대한 주석
         }
 
 

@@ -64,7 +64,7 @@ class _FindEmailWidgetState extends State<FindEmailWidget> {
           alignment: Alignment.centerLeft,
           width: width,
           height: 100,
-          child: Text("ID 찾기", style: _style.getMainText()),
+          child: Text('ID 찾기', style: _style.getMainText()),
         ),
         Container(
             width: width,
@@ -114,9 +114,9 @@ class _FindEmailWidgetState extends State<FindEmailWidget> {
               FindEmailModel findEmailModel = await findEmailBloC.fetchEmail();
               if (findEmailModel.getResult()){
                 // 이곳에 Email 결과에 따른 창을 작성
-                print("존재하는 Email 입니다");
+                print('존재하는 Email 입니다');
               }else{
-                print("존재하지 않는 Email 입니다");
+                print('존재하지 않는 Email 입니다');
               }
             },
           )
@@ -184,7 +184,7 @@ class _FindPasswordWidget extends State<FindPasswordWidget> {
           alignment: Alignment.centerLeft,
           width: width,
           height: 100,
-          child: Text("비밀번호 찾기", style: _style.getMainText()),
+          child: Text('비밀번호 찾기', style: _style.getMainText()),
         ),
         Container(
             width: width,
@@ -235,10 +235,10 @@ class _FindPasswordWidget extends State<FindPasswordWidget> {
                 /*
                 if (findEmailModel.getResult()){
                   // 이곳에 Email 결과에 따른 창을 작성
-                  print("존재하는 Email 입니다");
+                  print('존재하는 Email 입니다');
                   //signUpBloC.setEmail(emailController.text);
                 }else{
-                  print("존재하지 않는 Email 입니다");
+                  print('존재하지 않는 Email 입니다');
                 }
                  */
                 //Navigator는 위의 조건문으로 올라가야함

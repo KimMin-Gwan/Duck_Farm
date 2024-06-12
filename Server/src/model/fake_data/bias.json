@@ -1,8 +1,8 @@
 [
     {
-        "bid" : "1001",
-        "bname" : "hina",
-        "image_num" : "3",
-        "latest_image_date_time" : "2024/05/15"
+        'bid' : '1001',
+        'bname' : 'hina',
+        'image_num' : '3',
+        'latest_image_date_time' : '2024/05/15'
     }
 ]

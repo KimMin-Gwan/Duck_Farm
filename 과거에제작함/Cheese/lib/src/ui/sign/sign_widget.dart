@@ -33,7 +33,7 @@ class _SignWidgetState extends State<Sign_Widget> {
     else {
       width = queryWidth / 2;
     }
-    print("SignUp : ${width}");
+    print('SignUp : ${width}');
     return width;
   }
 
@@ -48,14 +48,14 @@ class _SignWidgetState extends State<Sign_Widget> {
     else {
         width = queryWidth / 2;
       }
-    print("SignIn : ${width}");
+    print('SignIn : ${width}');
     return width;
   }
 
   signUp() => Column(
     mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("회원 가입", style: _style.getMainText()),
+        Text('회원 가입', style: _style.getMainText()),
         Container(
         padding: EdgeInsets.all(40),
         child: Icon(Icons.arrow_forward,
@@ -70,7 +70,7 @@ class _SignWidgetState extends State<Sign_Widget> {
   signIn() => Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
-    Text("로그인", style: _style.getMainText()),
+    Text('로그인', style: _style.getMainText()),
     Container(
       padding: EdgeInsets.all(40),
       child: Icon(Icons.arrow_back,
@@ -167,7 +167,7 @@ class _SignWidgetState extends State<Sign_Widget> {
                   width: queryWidth,
                   height: height2,
                   alignment: Alignment.center,
-                  child: Text("South Korea", style: _style.getLangText()),
+                  child: Text('South Korea', style: _style.getLangText()),
               )
             ]
         )

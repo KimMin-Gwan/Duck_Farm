@@ -52,7 +52,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             elevation: 0,
             title: IconButton(
               icon: Image(
-                image: AssetImage("assets/homeIcon.png"),
+                image: AssetImage('assets/homeIcon.png'),
                 width: 200,
               ),
               onPressed: () {},
@@ -137,25 +137,25 @@ class _HomeWidgetState extends State<HomeWidget> {
             backgroundColor: _style.getGrayBlack(),
             icon: selectedIndexFinder(0) ? Icon(Icons.person) : Icon(
                 Icons.person_outlined),
-            label: "홈",
+            label: '홈',
           ),
           BottomNavigationBarItem(
               backgroundColor: _style.getGrayBlack(),
               icon: selectedIndexFinder(1) ? Icon(Icons.search_sharp) : Icon(
                   Icons.search),
-              label: "검색"
+              label: '검색'
           ),
           BottomNavigationBarItem(
               backgroundColor: _style.getGrayBlack(),
               icon: selectedIndexFinder(2) ? Icon(Icons.person) : Icon(
                   Icons.person_outlined),
-              label: "알림"
+              label: '알림'
           ),
           BottomNavigationBarItem(
             backgroundColor: _style.getGrayBlack(),
             icon: selectedIndexFinder(3) ? Icon(Icons.person) : Icon(
                 Icons.person_outlined),
-            label: "마이페이지",
+            label: '마이페이지',
           ),
         ]
     );

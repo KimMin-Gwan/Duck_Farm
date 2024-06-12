@@ -16,34 +16,34 @@ my_bucket=bucket()
 # CORS 설정
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=['*'],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=['*'],
+    allow_headers=['*'],
 )
 
 
 
 # 정적 파일 경로 설정
-templates = Jinja2Templates(directory="templates")
-#app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory='templates')
+#app.mount('/static', StaticFiles(directory='static'), name='static')
 
 
 
-@app.get("/", response_class=HTMLResponse)
+@app.get('/', response_class=HTMLResponse)
 async def get_upload_form():
-    file_path = "static/upload_form.html"
-    return FileResponse(file_path, media_type="text/html")
+    file_path = 'static/upload_form.html'
+    return FileResponse(file_path, media_type='text/html')
 
 
-@app.get("/up", response_class=HTMLResponse)
+@app.get('/up', response_class=HTMLResponse)
 async def start(request:Request):
-    file_path = "templates/find.html"
+    file_path = 'templates/find.html'
     return templates.TemplateResponse('find.html',context={'request':request})
 
 
 
-@app.get("/up_2", response_class=HTMLResponse)
+@app.get('/up_2', response_class=HTMLResponse)
 async def get_upload_form(request :Request):
     # cdn_urls=[
     #         f'kibxopaerykk22247051.cdn.ntruss.com/sample/1.jpg',
@@ -53,21 +53,21 @@ async def get_upload_form(request :Request):
     #         f'kibxopaerykk22247051.cdn.ntruss.com/sample/3.jpg',
     #     ]
     cdn_urls='https://kibxopaerykk22247051.cdn.ntruss.com/sample/3.jpg',
-    return templates.TemplateResponse('find.html' ,context={'request':request ,"search_result":cdn_urls})
+    return templates.TemplateResponse('find.html' ,context={'request':request ,'search_result':cdn_urls})
 
 
-@app.post("/upload/")
+@app.post('/upload/')
 async def upload_images(files: List[UploadFile] = File(...)):
     try:
         for file in files:
             my_bucket.put_bucket(file.file)
-            my_db.insert_imgpth("user_email_test","경로 test",1)
-        return {"status": "success", "message": "이미지가 업로드되었습니다."}
+            my_db.insert_imgpth('user_email_test','경로 test',1)
+        return {'status': 'success', 'message': '이미지가 업로드되었습니다.'}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
 
-@app.post("/search/")
+@app.post('/search/')
 async def search_image(request:Request,query:str=Form(...)):
     print()
     try:
@@ -79,7 +79,7 @@ async def search_image(request:Request,query:str=Form(...)):
             'https://kibxopaerykk22247051.cdn.ntruss.com/sample/12.jpg',
         ]
 
-        return templates.TemplateResponse('find.html' ,context={'request':request ,"search_result":cdn_urls})
+        return templates.TemplateResponse('find.html' ,context={'request':request ,'search_result':cdn_urls})
     except Exception as e:
-        return {"error":str(e)}
+        return {'error':str(e)}
     

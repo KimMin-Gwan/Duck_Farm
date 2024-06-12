@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:cheese/src/ui/styles/home_theme.dart';
+import 'package:cheese/src/ui/image_detail_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -127,29 +128,41 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-              child: BiasWidget(),
-            ),
+    BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent());
 
-            Padding(
-              padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
-              child: CalendarWidget(),
-            ),
+    return BlocBuilder<CoreBloc, CoreState>(
+      builder: (context, state)
+    {
+      if (state is NoneBiasState) {
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                child: BiasWidget(),
+              ),
 
-            // BiasWidget
-            Padding(
-              padding: EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 20.0),
-              child:
-              HomeBodyWidget(selectedDate: DateTime.now()), // 오늘 날짜를 임의로 넣음
-            ),
-            // 다른 위젯 추가
-          ],
-        ),
-    );
+              Padding(
+                padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
+                child: CalendarWidget(),
+              ),
+
+              // BiasWidget
+              Padding(
+                padding: EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 20.0),
+                child:
+                HomeBodyWidget(selectedDate: DateTime.now()), // 오늘 날짜를 임의로 넣음
+              ),
+              // 다른 위젯 추가
+            ],
+          ),
+        );
+      } else {
+        return Container(
+            child: Text('로딩 중 ~~')
+        );
+      }
+    });
   }
 }
 
@@ -175,11 +188,6 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
     );
   }
 }
-
-
-
-
-
 
 
 // BiasWidget
@@ -217,23 +225,15 @@ class _BiasState extends State<BiasWidget> {
         queryHeight * 0.18, minHeight); // minHeight와 비교하여 더 큰 값을 선택
 
     return BlocBuilder<CoreBloc, CoreState>(
-        builder: (context, state) {
-          if (state is NoneBiasState || state is BiasState) {
-            return biasWidgetBody(queryWidth, mainHeight, state);
-          }
-          else if (state is InitCoreState){
-            return Container(
-              child: Text("로딩 중")
-            );
-          }
-          else{
-            return Container(); // 오류
-          }
-        }
+      builder: (context, state) {
+        return biasWidgetBody(queryWidth, mainHeight, state);
+      }
     );
   }
 
   Widget biasWidgetBody(queryWidth, mainHeight, state){
+      print(state.homeDataModel.biases[0]);
+
       return ConstrainedBox(
         // minHeight를 보장하기 위한 ConstrainedBox 추가
         constraints: BoxConstraints(minHeight: minHeight), // 최소 높이 설정
@@ -264,7 +264,8 @@ class _BiasState extends State<BiasWidget> {
                   height: mainHeight * 0.50, // 높이를 지정하여 스크롤 가능하도록 설정
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal, // 가로 스크롤 설정
-                    itemCount: _items.length,
+                    //itemCount: _items.length,
+                    itemCount: state.homeDataModel.biases.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(
@@ -272,8 +273,9 @@ class _BiasState extends State<BiasWidget> {
                         child: _biasProfile(
                           width: queryWidth,
                           height: mainHeight,
-                          biasName: '쵸단', // 실제 데이터로 변경 가능
-                          biasId: _items[index], // 실제 데이터로 변경 가능
+                          biasName: state.homeDataModel.biases[index].bname, // 실제 데이터로 변경 가능
+                          biasId: state.homeDataModel.biases[index].bid, // 실제 데이터로 변경 가능
+                          url: state.homeDataModel.biases[index].bid
                         ),
                       );
                     },
@@ -291,6 +293,7 @@ class _BiasState extends State<BiasWidget> {
     required double height,
     required String biasName,
     required String biasId,
+    required String url,
   }) {
     return Column(
       children: [
@@ -301,7 +304,8 @@ class _BiasState extends State<BiasWidget> {
           ),
           child: CircleAvatar(
             radius: height * 0.18, // 원의 크기 설정
-            backgroundImage: AssetImage('images/assets/chodan.jpg'), // 이미지 경로
+            //backgroundImage: AssetImage('images/assets/chodan.jpg'), // 이미지 경로
+            backgroundImage: NetworkImage("http://192.168.55.213/images/${url}-1.jpg")
           ),
         ),
         Padding(
@@ -443,18 +447,22 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     String weekDay = _weekDays[widget.selectedDate.weekday - 1];
     String formattedDate = DateFormat('dd').format(widget.selectedDate);
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-      child: Column(
-        children: [
-          // 첫 번째 파트: 날짜와 요일
-          _buildDateAndWeekDay(formattedDate, weekDay),
-          // 두 번째 파트: 사진이랑 이름
-          _buildProfileSection(),
-          // 세 번째 파트: 타임라인
-          _buildTimelineSection(context),
-        ],
-      ),
+    return BlocBuilder<CoreBloc, CoreState>(
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+            child: Column(
+              children: [
+                // 첫 번째 파트: 날짜와 요일
+                _buildDateAndWeekDay(formattedDate, weekDay),
+                // 두 번째 파트: 사진이랑 이름
+                _buildProfileSection(state),
+                // 세 번째 파트: 타임라인
+                _buildTimelineSection(context, state),
+              ],
+            ),
+          );
+        }
     );
   }
 
@@ -472,20 +480,21 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     );
   }
 
-  Padding _buildProfileSection() {
+  Padding _buildProfileSection(state) {
+    Map core_data= state.homeDataModel.homeBodyData[0];
     return Padding(
       padding: const EdgeInsets.fromLTRB(5.0, 15.0, 0.0, 0.0),
       child: Row(
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage:
-                AssetImage('images/assets/chodan.jpg'), // 이미지 경로 수정 필요
+            backgroundImage: NetworkImage("http://192.168.55.213/images/${core_data['bid']}-1.jpg")
+                //AssetImage('images/assets/chodan.jpg'), // 이미지 경로 수정 필요
           ),
           Padding(
             padding: const EdgeInsets.only(left: 5.0),
             child: Text(
-              '쵸단',
+              core_data['bname'],
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -494,14 +503,15 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     );
   }
 
-  Padding _buildTimelineSection(BuildContext context) {
+  Padding _buildTimelineSection(BuildContext context, state) {
+    Map core_data= state.homeDataModel.homeBodyData[0];
     return Padding(
       padding: EdgeInsets.fromLTRB(10.0, 20.0, 0.0, 0.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildTimelineDotLine(),
-          Expanded(child: _buildEventSection(context)), // 추가: 남은 공간을 차지하도록 확장
+          Expanded(child: _buildEventSection(context, core_data)), // 추가: 남은 공간을 차지하도록 확장
         ],
       ),
     );
@@ -523,24 +533,24 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     );
   }
 
-  Column _buildEventSection(BuildContext context) {
+  Column _buildEventSection(BuildContext context, core_data) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildEventTitle(context),
-        _buildEventGallery(context),
+        _buildEventTitle(context, core_data),
+        _buildEventGallery(context, core_data),
       ],
     );
   }
 
-  Padding _buildEventTitle(BuildContext context) {
+  Padding _buildEventTitle(BuildContext context, core_data) {
     return Padding(
       padding: const EdgeInsets.only(left: 15.0), // 오른쪽 여백 추가
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '2023 더팩트 뮤직 어워드',
+            core_data['schedule_data'][0]['schedule_name'],
             style: _style.eventTitle,
           ),
           Icon(
@@ -552,7 +562,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     );
   }
 
-  Padding _buildEventGallery(BuildContext context) {
+  Padding _buildEventGallery(BuildContext context, core_data) {
     return Padding(
       padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
       child: Container(
@@ -562,22 +572,32 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         decoration: _style.eventGalleryBox,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 10, // 내부 사각형 개수 -> 추후 바꾸기
-          itemBuilder: (context, index) => _buildGalleryItem(index),
+          itemCount: core_data['schedule_data'][0]['image_url'].length, // 내부 사각형 개수 -> 추후 바꾸기
+          itemBuilder: (context, index) => _buildGalleryItem(index, core_data),
         ),
       ),
     );
   }
 
-  Align _buildGalleryItem(int index) {
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        width: maxHeight * 0.10, // 내부 상세사진(보라) 높이
-        height: maxHeight * 0.10, // 세로 높이
-        decoration: _style.galleryBox,
-        margin: EdgeInsets.only(left:10),
-      ),
+  Widget _buildGalleryItem(int index, core_data) {
+    String url =  core_data['schedule_data'][0]['image_url'][index];
+    return InkWell(
+      onTap:(){
+        BlocProvider.of<CoreBloc>(context).add(DetailImageDataEvent(url));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ImageDetailWidget())
+        );
+      },
+        child:Align(
+          alignment: Alignment.center,
+          child: Container(
+              width: maxHeight * 0.10, // 내부 상세사진(보라) 높이
+              height: maxHeight * 0.10, // 세로 높이
+              decoration: _style.galleryBox,
+              margin: EdgeInsets.only(left:10),
+              child:Image.network("http://192.168.55.213/images/${url}", fit:BoxFit.cover)
+          ),
+        )
     );
   }
 }

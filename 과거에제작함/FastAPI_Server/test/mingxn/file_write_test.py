@@ -1,5 +1,5 @@
 
 
-f = open(file="./test.txt", mode="a")
+f = open(file='./test.txt', mode='a')
 
-f.write("helloworld" + "\n")
+f.write('helloworld' + '\n')

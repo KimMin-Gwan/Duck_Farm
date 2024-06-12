@@ -5,6 +5,6 @@
         "password" : "qwer",
         "birthday" : "1998/10/18",
         "email" : "chodan@naver.com",
-        "bid" : ["1001"]
+        "bid" : ["1001", "1002"]
     }
 ]
