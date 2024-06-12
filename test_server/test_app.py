@@ -144,7 +144,6 @@ class Controller:
             },
             'body' : body
         }
-        print(form)
         response = json.dumps(form, ensure_ascii=False)
         #response = response.encode()
         return response
@@ -180,9 +179,11 @@ class Controller:
 
         body = {
             'iid' : image_data['iid'],
-            'bias_name' : bias_data['bid'],
+            'bias_name' : bias_data['bname'],
+            'user_name' : "테스트 업로더",
             'user_owner' : user_owner,
             'upload_date' : image_data['upload_date'],
+            'image_detail' : image_data['image_detail'],
             'schedule' : {
                 'date' : schedule_data['date'],
                 'name' : schedule_data['sname'],
@@ -212,7 +213,6 @@ class View:
         
         @self.__app.post('/test_data')
         def test_data(request:dict):
-            print(request)
             controller = Controller()
             response = controller.get_bias_data(self.__database, request)
             return response
@@ -226,7 +226,6 @@ class View:
 
         @self.__app.post('/core_system/image_detail')
         def get_image_detail(request:dict):
-            print(request)
             controller = Controller()
             response = controller.get_image_detail(self.__database, request['body'])
             return response

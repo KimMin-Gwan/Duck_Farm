@@ -1,6 +1,6 @@
 # cheese
 
-for all fans
+cheese prototype.
 
 ## Getting Started
 

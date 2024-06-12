@@ -1,5 +1,9 @@
 import 'package:cheese/src/ui/styles/upload_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
+import 'package:cheese/src/bloc/core_bloc/core_event.dart';
+import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 
 // 이미지 업로드 메인 위젯
 class ImageUploadWidget extends StatefulWidget {
@@ -51,7 +55,10 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                   alignment: Alignment.centerLeft,
                   child: IconButton(
                       icon: Icon(Icons.chevron_left),
-                      onPressed: (){}),
+                      onPressed: (){
+                        BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
+                        Navigator.pop(context);
+                      }),
               ),
               Container(
                 width: width * 0.7,

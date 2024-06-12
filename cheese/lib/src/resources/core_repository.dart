@@ -7,6 +7,6 @@ class CoreRepository{
   final CoreNetworkProvider coreNetworkProvider = CoreNetworkProvider();
 
 
-  Future<HomeDataModel> fetchNoneBiasHomeData(uid) => coreNetworkProvider.fetchNoneBiasHome(uid);
+  Future<HomeDataModel> fetchNoneBiasHomeData(uid, date) => coreNetworkProvider.fetchNoneBiasHome(uid, date);
   Future<DetailImageModel> fetchDetailImageData(uid, iid) => coreNetworkProvider.fetchImageDetail(uid, iid);
 }

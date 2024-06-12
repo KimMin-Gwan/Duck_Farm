@@ -8,6 +8,7 @@ import 'package:cheese/src/model/image_model.dart';
 import 'package:cheese/src/model/schedule_model.dart';
 import 'package:cheese/src/model/bias_model.dart';
 import 'package:cheese/src/resources/core_repository.dart';
+import 'package:intl/intl.dart';
 
 class CoreBloc extends Bloc<CoreEvent, CoreState>{
   final UserRepository _userRepository;
@@ -27,8 +28,8 @@ class CoreBloc extends Bloc<CoreEvent, CoreState>{
    */
 
   Future<void> _onNoneBiasHomeDataEvent(NoneBiasHomeDataEvent event, Emitter<CoreState> emit) async {
-    HomeDataModel homeDataModel = await _coreRepository.fetchNoneBiasHomeData(_userRepository.uid);
-    emit(NoneBiasState(homeDataModel));
+    HomeDataModel homeDataModel = await _coreRepository.fetchNoneBiasHomeData(_userRepository.uid, event.date);
+    emit(NoneBiasState(homeDataModel, event.date));
   }
 
   Future<void> _onDetailImageEvent(DetailImageDataEvent event, Emitter<CoreState> emit) async {

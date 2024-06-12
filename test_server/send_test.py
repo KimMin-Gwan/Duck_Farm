@@ -5,17 +5,19 @@ HOST = '192.168.55.213'
 PORT = 5000
 
 def send_data():
-    #url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
-    url = f'http://{HOST}:{str(PORT)}/core_system/image_detail'
+    url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/image_detail'
 
+    send_data = {
+        "body" : {
+            'uid' : '1234-abcd-5678',
+            'date' : '2024/06/12'
+        }
+    }
     #send_data = {
         #'uid' : '1234-abcd-5678',
-        #'date' : '2024/05/19'
+        #'iid' : '1001-1'
     #}
-    send_data = {
-        'uid' : '1234-abcd-5678',
-        'iid' : '1001-1'
-    }
     headers = {
         'Content-Type': 'application/json'
     }

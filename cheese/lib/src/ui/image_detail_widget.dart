@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/ui/styles/image_detail_theme.dart';
+import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
+import 'package:cheese/src/bloc/core_bloc/core_event.dart';
+import 'package:cheese/src/bloc/core_bloc/core_state.dart';
+
+
 
 class ImageDetailWidget extends StatefulWidget {
   const ImageDetailWidget({super.key});
@@ -58,42 +64,45 @@ class _TopBarWidgetState extends State<TopBarWidget> {
     
     return BlocBuilder<CoreBloc, CoreState>(
       builder: (context, state){
-        if (if state is ImageDetailState){
-       return Container(
-      child: Column(
-        children: [
-          SizedBox(
-            height: queryHeight * 0.03,
-          ),
-          Container(
-            height: queryHeight * 0.05,
-            color: _style.mainWhiteColor,
-            child: Stack(
+        if ( state is DetailImageState){
+          return Container(
+            child: Column(
               children: [
-                Container(
-                  alignment: Alignment.center,
-                  child: Text('QWER',style: _style.idolNameText,),
+                SizedBox(
+                  height: queryHeight * 0.03,
                 ),
                 Container(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    onPressed: (){},
-                    icon: Icon(Icons.chevron_left),
+                  height: queryHeight * 0.05,
+                  color: _style.mainWhiteColor,
+                  child: Stack(
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(state.detailImageModel.bias_name,style: _style.idolNameText,),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                          onPressed: (){
+                            BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.chevron_left),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-
-    ); } else{
-          return Contariner(
+          );
+        } else{
+          return Container(
             child : Text("로딩중")
             );
         }
        }
-    ):
+    );
   }
 }
 
@@ -165,30 +174,37 @@ class _TopDetailWidgetState extends State<TopDetailWidget> {
     // 세로 최대 길이를 1200으로  한정
     if (queryHeight > maxHeight) {queryHeight = maxHeight;}
 
-    return Column(
-      children: [
-        Container(
-          height: queryHeight * 0.08,
-        ),
-        Container(
-          height: 0.5,
-          color: Colors.grey,
-        ),
-        Container(
-          color: _style.mainWhiteColor,
-          width: queryWidth,
-          height: queryHeight,
-          child: Stack(
-            children: [
-              userProfileArea(queryWidth, queryHeight),
-              dataViewArea(queryWidth, queryHeight),
-              threeDotArea(queryWidth, queryHeight),
-              listOptionArea(queryWidth, queryHeight)
-            ],
-          ),
-        )
-      ],
-    );
+    return BlocBuilder<CoreBloc, CoreState>(
+        builder: (context, state){
+      if ( state is DetailImageState){
+        return Column(
+          children: [
+            Container(
+              height: queryHeight * 0.08,
+            ),
+            Container(
+              height: 0.5,
+              color: Colors.grey,
+            ),
+            Container(
+              color: _style.mainWhiteColor,
+              width: queryWidth,
+              height: queryHeight,
+              child: Stack(
+                children: [
+                  userProfileArea(queryWidth, queryHeight,),
+                  dataViewArea(queryWidth, queryHeight, state),
+                  threeDotArea(queryWidth, queryHeight),
+                  listOptionArea(queryWidth, queryHeight)
+                ],
+              ),
+            )
+          ],
+        );
+      } else{
+        return Container();
+      }
+    });
   }
 
   Widget userProfileArea(width, height) {
@@ -205,7 +221,9 @@ class _TopDetailWidgetState extends State<TopDetailWidget> {
     );
   }
 
-  Widget dataViewArea(width, height){
+  Widget dataViewArea(width, height, state){
+    var model = state.detailImageModel;
+
     return Container(
       alignment: Alignment.centerLeft,
       height: height * 0.07,
@@ -214,12 +232,12 @@ class _TopDetailWidgetState extends State<TopDetailWidget> {
           SizedBox(width: width * 0.17,),
           Container(
             width: width * 0.43,
-            child: Text('북두칠성',style: _style.nickNameText,),
+            child: Text(model.user_name, style: _style.nickNameText,),
           ),
           Container(
             alignment: Alignment.centerRight,
             width: width * 0.3,
-            child: Text('2023/12/06',style: _style.dateText,),
+            child: Text(model.upload_date, style: _style.dateText,),
           ),
         ],
       )
@@ -312,30 +330,41 @@ class _MiddleDetailWidgetState extends State<MiddleDetailWidget> {
     // 세로 최대 길이를 1200으로  한정
     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
 
-    return Column(
-      children: [
-        imageDetailArea(queryWidth, queryHeight),
-        imageViewArea(queryWidth, queryHeight),
-      ],
-    );
+    return BlocBuilder<CoreBloc, CoreState>(
+        builder: (context, state){
+      if (state is DetailImageState) {
+        return Column(
+          children: [
+            imageDetailArea(queryWidth, queryHeight, state),
+            imageViewArea(queryWidth, queryHeight, state),
+          ],
+        );
+      } else{
+        return Container();
+      }
+    });
   }
 
-  Widget imageDetailArea(width, height){
+  Widget imageDetailArea(width, height, state){
+    var model = state.detailImageModel;
+
     return Container(
       height: height * 0.05,
       color: _style.scheduleTitleColor,
       child: Center(
-        child: Text('231010 | 2023 더팩트 뮤직 어워즈(TMA)',style: _style.scheduleTitleText,),
+        child: Text('${model.schedule_date} | ${model.schedule_name}',
+          style: _style.scheduleTitleText,),
       ),
     );
   }
 
-  Widget imageViewArea(width, height){
+  Widget imageViewArea(width, height, state){
+    var model = state.detailImageModel;
     return InkWell(
       onTap: (){},
       child: Container(
         width: width,
-        child: Image(image: AssetImage('images/assets/chodan.jpg'),),
+        child:Image.network("http://192.168.55.213/images/${model.iid}.jpg", fit:BoxFit.cover)
       )
     );
   }
@@ -375,25 +404,32 @@ class _BottomDetailWidgetState extends State<BottomDetailWidget> {
     // 세로 최대 길이를 1200으로  한정
     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
 
-    return Column(
-      children: [
-        Container(
-          height: queryHeight * 0.88,
-        ),
-        upperArea(queryWidth, queryHeight),
-        Container(height: 1, color: Colors.grey),
-        lowerArea(queryWidth, queryHeight),
-      ],
-    );
+    return BlocBuilder<CoreBloc, CoreState>(
+        builder: (context, state){
+      if (state is DetailImageState) {
+        return Column(
+          children: [
+            Container(
+              height: queryHeight * 0.88,
+            ),
+            upperArea(queryWidth, queryHeight,state),
+            Container(height: 1, color: Colors.grey),
+            lowerArea(queryWidth, queryHeight,state),
+          ],
+        );
+      }else{
+        return Container();
+      }
+    });
   }
 
-  Widget upperArea(width, height){
+  Widget upperArea(width, height, state){
     return Container(
       height: height * 0.05,
       color: _style.mainWhiteColor,
       child: Row(
         children: [
-          locationArea(width, height),
+          locationArea(width, height, state),
           likeViewArea(width, height),
           SizedBox(width: 13,),
           actionButtonArea(width, height),
@@ -402,18 +438,20 @@ class _BottomDetailWidgetState extends State<BottomDetailWidget> {
     );
   }
 
-  Widget lowerArea(width, height){
+  Widget lowerArea(width, height, state){
+    var model = state.detailImageModel;
     return Container(
       alignment: Alignment.centerLeft,
       height: height * 0.07,
       width: width,
       color: _style.mainWhiteColor,
       padding: EdgeInsets.only(left: 20),
-      child: Text('이날 #염색 했나봄,,, #레드카펫',style: _style.infoText,),
+      child: Text(model.image_detail,style: _style.infoText,),
     );
   }
 
-  Widget locationArea(width, height){
+  Widget locationArea(width, height, state){
+    var model = state.detailImageModel;
     return Container(
       width: width * 0.3,
       padding: EdgeInsets.only(left: 4),
@@ -425,7 +463,7 @@ class _BottomDetailWidgetState extends State<BottomDetailWidget> {
                 Icon(
                   Icons.fmd_good_outlined,
                   size: height * 0.02,),
-                Text('인천 남동체육관',style: _style.locationText,)
+                Text(model.location,style: _style.locationText,)
               ],
             )
           ),

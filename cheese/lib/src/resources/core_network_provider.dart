@@ -24,9 +24,9 @@ class NoneBiasApiJsonParser extends MainJsonParser{
     );
   }
 
-  void makeBodyData(uid){
+  void makeBodyData(uid, date){
     body['uid'] = uid;
-    body['date'] = '2024/05/19';
+    body['date'] = date;
   }
 
   String getData() => super.makeSendData(this.body);
@@ -52,7 +52,7 @@ class ImageDetailApiJsonParser extends MainJsonParser{
 
   void makeBodyData(uid, iid){
     body['uid'] = uid;
-    body['iid'] = 'iid';
+    body['iid'] = iid;
   }
 
   String getData() => super.makeSendData(this.body);
@@ -66,10 +66,10 @@ class CoreNetworkProvider{
   final String image_detail_endpoint = '/core_system/image_detail';
   Client client = Client();
 
-  Future<HomeDataModel> fetchNoneBiasHome(String uid) async {
+  Future<HomeDataModel> fetchNoneBiasHome(String uid, String date) async {
     NoneBiasApiJsonParser noneBiasApiJsonParser = NoneBiasApiJsonParser(this.none_bias_endpoint);
     noneBiasApiJsonParser.setHeader(uid, none_bias_endpoint);
-    noneBiasApiJsonParser.makeBodyData(uid);
+    noneBiasApiJsonParser.makeBodyData(uid, date);
 
     final response = await client.post(
         noneBiasApiJsonParser.getUri(),
@@ -87,6 +87,7 @@ class CoreNetworkProvider{
   Future<DetailImageModel> fetchImageDetail(String uid, String iid) async {
     ImageDetailApiJsonParser imageDetailApiJsonParser= ImageDetailApiJsonParser(this.image_detail_endpoint);
     imageDetailApiJsonParser.setHeader(uid, image_detail_endpoint);
+    imageDetailApiJsonParser.makeBodyData(uid, iid);
 
     final response = await client.post(
         imageDetailApiJsonParser.getUri(),

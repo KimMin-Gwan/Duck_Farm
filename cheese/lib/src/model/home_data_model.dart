@@ -17,7 +17,6 @@ class HomeDataModel {
       bias.set_bname(response_bias['bname']);
       biases.add(bias);
     }
-
     homeBodyData = Data['body']['home_body_data'];
 
     return HomeDataModel(biases: biases, homeBodyData: homeBodyData);
@@ -28,30 +27,38 @@ class HomeDataModel {
 class DetailImageModel{
   final String iid;
   final String bias_name;
+  final String user_name;
   final bool user_owner;
   final String upload_date;
   final String schedule_date;
+  final String image_detail;
   final String schedule_name;
   final String location;
 
   DetailImageModel({required this.iid,
     required this.bias_name,
+    required this.user_name,
     required this.user_owner,
     required this.upload_date,
     required this.schedule_date,
+    required this.image_detail,
     required this.schedule_name,
     required this.location,
 
   });
 
   factory DetailImageModel.fromJson(Map data){
-    return DetailImageModel(iid: data['iid'],
-        bias_name: data['bias_name'],
-        user_owner: data['user_owner'],
-        upload_date: data['upload_data'],
-        schedule_date: data['schedule']['date'],
-        schedule_name: data['schedule']['name'],
-        location: data['schedule']['location']
+    print(data['body']);
+    return DetailImageModel(
+        iid: data['body']['iid'],
+        bias_name: data['body']['bias_name'],
+        user_name: data['body']['user_name'],
+        user_owner: data['body']['user_owner'],
+        upload_date: data['body']['upload_date'],
+        image_detail: data['body']['image_detail'],
+        schedule_date: data['body']['schedule']['date'],
+        schedule_name: data['body']['schedule']['name'],
+        location: data['body']['schedule']['location']
     );
   }
 }

@@ -15,12 +15,12 @@ class InitCoreState extends CoreState{
 
 class NoneBiasState extends CoreState{
   final HomeDataModel homeDataModel;
-  NoneBiasState(this.homeDataModel);
+  final String date;
+  NoneBiasState(this.homeDataModel, this.date);
 
   @override
-  List<Object> get props => [homeDataModel];
+  List<Object> get props => [homeDataModel, date];
 }
-
 
 class DetailImageState extends CoreState{
   final DetailImageModel detailImageModel;

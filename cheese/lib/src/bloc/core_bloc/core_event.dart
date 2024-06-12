@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:cheese/src/model/user_model.dart';
+import 'package:intl/intl.dart';
 
 
 abstract class CoreEvent extends Equatable{
@@ -14,8 +15,12 @@ class InitCoreEvent extends CoreEvent{
 }
 
 class NoneBiasHomeDataEvent extends CoreEvent{
+  String date = DateFormat('yyyy/MM/dd').format(DateTime.now());
+
+  NoneBiasHomeDataEvent(this.date){}
+  NoneBiasHomeDataEvent.none_date(){}
   @override
-  List<Object> get props => [];
+  List<Object> get props => [date];
 }
 
 class DetailImageDataEvent extends CoreEvent{

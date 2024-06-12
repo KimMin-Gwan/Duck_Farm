@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:cheese/src/ui/upload_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_event.dart';
@@ -8,6 +9,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:cheese/src/ui/styles/home_theme.dart';
 import 'package:cheese/src/ui/image_detail_widget.dart';
+import 'package:cheese/src/ui/upload_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -38,7 +40,11 @@ class _HomePageState extends State<HomePage> {
         height: 80,
         width: 80,
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ImageUploadWidget())
+            );
+          },
           child: Image.asset('images/assets/upload_button.png'),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
           backgroundColor: Colors.transparent,
@@ -128,7 +134,7 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent());
+    BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
 
     return BlocBuilder<CoreBloc, CoreState>(
       builder: (context, state)
@@ -185,6 +191,16 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
       width: queryWidth,
       height: bottomBarHeight,
       color: Color(0xff232323),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Icon(Icons.home, color : Colors.white),
+          Container(
+            width: queryWidth * 0.15,
+          ),
+          Icon(Icons.search, color : Colors.white),
+        ],
+      )
     );
   }
 }
@@ -232,8 +248,6 @@ class _BiasState extends State<BiasWidget> {
   }
 
   Widget biasWidgetBody(queryWidth, mainHeight, state){
-      print(state.homeDataModel.biases[0]);
-
       return ConstrainedBox(
         // minHeight를 보장하기 위한 ConstrainedBox 추가
         constraints: BoxConstraints(minHeight: minHeight), // 최소 높이 설정
@@ -305,7 +319,7 @@ class _BiasState extends State<BiasWidget> {
           child: CircleAvatar(
             radius: height * 0.18, // 원의 크기 설정
             //backgroundImage: AssetImage('images/assets/chodan.jpg'), // 이미지 경로
-            backgroundImage: NetworkImage("http://192.168.55.213/images/${url}-1.jpg")
+            backgroundImage: NetworkImage("http://192.168.55.213/images/${url}.jpg")
           ),
         ),
         Padding(
@@ -399,6 +413,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                     setState(() {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay; // `_focusedDay`도 업데이트
+                      String date = DateFormat('yyyy/MM/dd').format(selectedDay);
+                      print(date);
+                      BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent(date));
+
                     });
                   },
                   calendarFormat: CalendarFormat.month,
@@ -449,24 +467,50 @@ class _HomeBodyState extends State<HomeBodyWidget> {
 
     return BlocBuilder<CoreBloc, CoreState>(
         builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-            child: Column(
-              children: [
-                // 첫 번째 파트: 날짜와 요일
-                _buildDateAndWeekDay(formattedDate, weekDay),
-                // 두 번째 파트: 사진이랑 이름
-                _buildProfileSection(state),
-                // 세 번째 파트: 타임라인
-                _buildTimelineSection(context, state),
-              ],
-            ),
-          );
+          if (state is NoneBiasState){
+              if (state.homeDataModel.homeBodyData.length == 0){
+                return Container(
+                  child : Text("텅~!")
+                );
+              }
+              else{
+                var maked_date = DateFormat('yyyy/MM/dd').parse(state.date);
+                formattedDate = DateFormat('dd').format(maked_date);
+                weekDay = _weekDays[maked_date.weekday - 1];
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+                  child: Column(
+                    children: [
+                      // 첫 번째 파트: 날짜와 요일
+                      _buildDateAndWeekDay(formattedDate, weekDay, state),
+                      // 두 번째 파트: 사진이랑 이름
+                      _buildProfileSection(state),
+                      // 세 번째 파트: 타임라인
+                      _buildTimelineSection(context, state),
+                    ],
+                  ),
+                );
+              }
+          }else{
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+              child: Column(
+                children: [
+                  // 첫 번째 파트: 날짜와 요일
+                  _buildDateAndWeekDay(formattedDate, weekDay, state),
+                  // 두 번째 파트: 사진이랑 이름
+                  _buildProfileSection(state),
+                  // 세 번째 파트: 타임라인
+                  _buildTimelineSection(context, state),
+                ],
+              ),
+            );
+          }
         }
     );
   }
 
-  Padding _buildDateAndWeekDay(String formattedDate, String weekDay) {
+  Padding _buildDateAndWeekDay(String formattedDate, String weekDay, state) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
       child: Row(
@@ -488,7 +532,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: NetworkImage("http://192.168.55.213/images/${core_data['bid']}-1.jpg")
+            backgroundImage: NetworkImage("http://192.168.55.213/images/${core_data['bid']}.jpg")
                 //AssetImage('images/assets/chodan.jpg'), // 이미지 경로 수정 필요
           ),
           Padding(
