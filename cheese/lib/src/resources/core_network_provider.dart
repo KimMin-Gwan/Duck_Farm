@@ -95,7 +95,7 @@ class CoreNetworkProvider{
     );
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
-      return DetailImageModel.fromJson(json.decode(response.body));
+      return DetailImageModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to load post');
     }
