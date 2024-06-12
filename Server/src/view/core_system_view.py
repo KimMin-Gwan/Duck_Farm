@@ -26,11 +26,7 @@ class Core_Service_View(Master_View):
             #result = core_Controller.get_home_data(request) 
             result = core_Controller.get_none_bias_home_data(request) 
 
-            response = Response_Result(######################################
-                request_type='client', state_code=result['state-code'],
-                detail='success', home_image=result['home_image'],
-                bid=result['bid'], date=result['date']
-            )
+            response = Response_Result(result)
 
             return response.make_send_data()
         
@@ -47,7 +43,7 @@ class Core_Service_View(Master_View):
             )
             return response.make_send_data()
 
-        @self.__app.post(endpoint+'/image_detail_page') #request: uid, iid, *bid, *schedule_name
+        @self.__app.post(endpoint+"/image_detail_page")
         def upload_new_post(request:dict):
             
             image_controller=Image_Controller(self.__database)
