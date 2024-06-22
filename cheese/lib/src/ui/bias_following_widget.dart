@@ -83,7 +83,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                 alignment: Alignment.centerRight,
                 child: InkWell(
                   onTap: (){},
-                  child: Text('추가',style: _style.saveTextStyle,),
+                  child: Text('추가',style: _style.addSaveTextStyle,),
                 )
             ),
           ),
@@ -94,7 +94,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                 alignment: Alignment.centerRight,
                 child: InkWell(
                   onTap: (){},
-                  child: Text('저장',style: _style.saveTextStyle,),
+                  child: Text('저장',style: _style.addSaveTextStyle,),
                 )
             ),
           )
@@ -131,12 +131,9 @@ class _BiasListWidgetState extends State<BiasListWidget> {
       children: [
         for(int index =0; index<items.length; index++)
           Container(
+            height: 100,
             key: Key('$index'),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.blue,
-              )
-            ),
+            decoration: _style.listBoxDecoration,
             child: Row(
               children: [
                 Container(
@@ -147,19 +144,22 @@ class _BiasListWidgetState extends State<BiasListWidget> {
                   ),
                 ),
                 Container(
-                    width: 50,
-                    height: 50,
-                    margin: EdgeInsets.only(right: 30),
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        shape:BoxShape.circle
-                    )
+                    width: 70,
+                    height: 70,
+                    margin: EdgeInsets.only(right: 15),
+                    decoration: _style.profileImageBoxDecoration
                 ),
-                Text(items[index]),
-                IconButton(
-                  alignment: Alignment.centerRight,
-                  onPressed: (){},
-                  icon: Icon(Icons.close, size: 15,),
+                Container(
+                  width: queryWidth * 0.55,
+                  child: Text(items[index], style:_style.idolNameTextStyle),
+                ),
+                Container(
+                  width: 32,
+                  child: IconButton(
+                    alignment: Alignment.centerRight,
+                    onPressed: (){},
+                    icon: Icon(Icons.close, size: 15,),
+                  ),
                 )
               ],
             ),
