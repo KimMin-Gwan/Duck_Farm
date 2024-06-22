@@ -137,9 +137,10 @@ class _DetailBodyWidgetState extends State<DetailBodyWidget> {
                 height: queryHeight * 0.15,
               ),
               MiddleDetailWidget(),
+              BottomDetailWidget(),
             ],
           ),
-          BottomDetailWidget(),
+
         ],
       ),
     );
@@ -409,9 +410,8 @@ class _BottomDetailWidgetState extends State<BottomDetailWidget> {
       if (state is DetailImageState) {
         return Column(
           children: [
-            Container(
-              height: queryHeight * 0.88,
-            ),
+            //Container(
+             // height: queryHeight * 0.88),
             upperArea(queryWidth, queryHeight,state),
             Container(height: 1, color: Colors.grey),
             lowerArea(queryWidth, queryHeight,state),
@@ -425,7 +425,8 @@ class _BottomDetailWidgetState extends State<BottomDetailWidget> {
 
   Widget upperArea(width, height, state){
     return Container(
-      height: height * 0.05,
+      //height: height * 0.05,
+      height : 52,
       color: _style.mainWhiteColor,
       child: Row(
         children: [
@@ -442,7 +443,7 @@ class _BottomDetailWidgetState extends State<BottomDetailWidget> {
     var model = state.detailImageModel;
     return Container(
       alignment: Alignment.centerLeft,
-      height: height * 0.07,
+      height: 52,
       width: width,
       color: _style.mainWhiteColor,
       padding: EdgeInsets.only(left: 20),
@@ -455,14 +456,14 @@ class _BottomDetailWidgetState extends State<BottomDetailWidget> {
     return Container(
       width: width * 0.3,
       padding: EdgeInsets.only(left: 4),
-      child: Stack(
+      child: Row(
         children: [
           Container(
             child: Row(
               children: [
                 Icon(
                   Icons.fmd_good_outlined,
-                  size: height * 0.02,),
+                  size: 20,),
                 Text(model.location,style: _style.locationText,)
               ],
             )

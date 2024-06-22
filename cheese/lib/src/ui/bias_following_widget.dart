@@ -23,21 +23,18 @@ class _BiasFollowingWidgetState extends State<BiasFollowingWidget> {
     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
 
     return Scaffold(
-      body: Column(
-        children: [
-          TopBarWidget(),
-          Column(
-            children: [
-              Container(
-                child: BiasListWidget(),
-                height: 200,
-              ),
-              AddButtonWidget(),
-            ]
-          ),
-        ],
-      ),
-
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TopBarWidget(),
+            Container(
+              height: queryHeight,
+              child: BiasListWidget(),
+            ),
+            // AddButtonWidget(),
+          ],
+        ),
+      )
     );
   }
 }
@@ -76,12 +73,24 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             )
           ),
           Container(
-            width: queryWidth * 0.7,
+            width: queryWidth * 0.6,
             child: Text('목록', style: _style.titleTextStyle,),
           ),
           InkWell(
             onTap: (){},
             child: Container(
+              width: queryWidth * 0.1,
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: (){},
+                  child: Text('추가',style: _style.saveTextStyle,),
+                )
+            ),
+          ),
+          InkWell(
+            onTap: (){},
+            child: Container(
+              width: queryWidth * 0.1,
                 alignment: Alignment.centerRight,
                 child: InkWell(
                   onTap: (){},
@@ -107,7 +116,7 @@ class _BiasListWidgetState extends State<BiasListWidget> {
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
   bool interaction = false;
-  List<String> items = ["one","one44","one1","one2","one3","one4","one5","one6","one7","two","two3", "three", "four", "five"];
+  List<String> items = ["one","one4","one5","one6","one7","two","two3", "three", "four", "five"];
 
   @override
   Widget build(BuildContext context) {
@@ -118,27 +127,45 @@ class _BiasListWidgetState extends State<BiasListWidget> {
     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
 
     return ReorderableListView(
-        children: items.map((item) => ListTile(
-            key: ValueKey(item),
-            leading: Icon(Icons.menu, size: 15,),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+      buildDefaultDragHandles: false,
+      children: [
+        for(int index =0; index<items.length; index++)
+          Container(
+            key: Key('$index'),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.blue,
+              )
+            ),
+            child: Row(
               children: [
+                Container(
+                  width: 50,
+                  child: ReorderableDragStartListener(
+                      child: Icon(Icons.menu, size: 16,),
+                      index: index
+                  ),
+                ),
                 Container(
                     width: 50,
                     height: 50,
-                    padding: EdgeInsets.only(right: 25),
+                    margin: EdgeInsets.only(right: 30),
                     decoration: BoxDecoration(
-                      color: Colors.blue,
-                      shape:BoxShape.circle
+                        color: Colors.blue,
+                        shape:BoxShape.circle
                     )
                 ),
-                Text(item),
+                Text(items[index]),
+                IconButton(
+                  alignment: Alignment.centerRight,
+                  onPressed: (){},
+                  icon: Icon(Icons.close, size: 15,),
+                )
               ],
             ),
-            trailing: Icon(Icons.close, size: 15,)
-        )).toList(),
-        onReorder: (oldIndex, newIndex){
+          )
+      ],
+      onReorder: (oldIndex, newIndex){
           setState(() {
             if(oldIndex < newIndex){
               newIndex -= 1;
@@ -147,7 +174,7 @@ class _BiasListWidgetState extends State<BiasListWidget> {
             items.insert(newIndex, item);
           });
         },
-        );
+    );
   }
 }
 
@@ -173,7 +200,7 @@ class _AddButtonWidgetState extends State<AddButtonWidget> {
     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
 
     return Center(
-      child: SizedBox(
+      child: Container(
         width: 50,
         height: 50,
         child: ElevatedButton(
