@@ -18,7 +18,7 @@ class CoreBloc extends Bloc<CoreEvent, CoreState>{
   CoreBloc(this._userRepository, this._coreRepository) : super(InitCoreState()){
     on<NoneBiasHomeDataEvent>(_onNoneBiasHomeDataEvent);
     on<DetailImageDataEvent>(_onDetailImageEvent);
-    on<ImageListByCategory>(_onImageListByCategory);
+    on<ImageListCategoryEvent>(_onImageListCategoryEvent);
   }
 
   /*
@@ -42,12 +42,11 @@ class CoreBloc extends Bloc<CoreEvent, CoreState>{
     emit((DetailImageState(detailImageModel)));
   }
 
-  Future<void> _onImageListByCategory(ImageListByCategory event, Emitter<CoreState> emit) async {
-    String iid_with_type = event.bid;
-    String iid = iid_with_type.split('.').first;
+  Future<void> _onImageListCategoryEvent(ImageListCategoryEvent event, Emitter<CoreState> emit) async {
+    String bid = event.bid;
 
-    DetailImageModel detailImageModel = await _coreRepository.fetchDetailImageData(_userRepository.uid, iid);
-    emit((DetailImageState(detailImageModel)));
+    ImageListCategoryModel imageListCategoryModel = await _coreRepository.fetchImageListCategory(_userRepository.uid, bid);
+    emit((ImageListCategoryState(imageListCategoryModel)));
   }
 
 }

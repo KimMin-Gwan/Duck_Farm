@@ -1,3 +1,4 @@
+import 'package:cheese/src/model/image_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:cheese/src/model/bias_model.dart';
 import 'package:cheese/src/model/home_data_model.dart';
@@ -31,4 +32,12 @@ class DetailImageState extends CoreState{
   List<Object> get props => [detailImageModel];
 }
 
+class ImageListCategoryState extends CoreState{
+  final ImageListCategoryModel imageListCategoryModel;
+
+  ImageListCategoryState(this.imageListCategoryModel);
+
+  @override
+  List<Object> get props => [imageListCategoryModel];
+}
 

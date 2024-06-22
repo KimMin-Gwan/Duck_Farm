@@ -62,36 +62,50 @@ class _TopBarWidgetState extends State<TopBarWidget> {
     double queryHeight = MediaQuery.of(context).size.height;
     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
 
-    return Container(
-      height: queryHeight * 0.08,
-      child: Row(
-        children: [
-          Container(
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                onPressed: (){
-                  BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.chevron_left),
-              )
-          ),
-          Container(
-            alignment: Alignment.center,
-              width: queryWidth * 0.75,
-              child: Text("라이즈",style: _style.biasNameText,),
+
+    return BlocBuilder<CoreBloc, CoreState>(
+        builder: (context, state){
+      if (state is ImageListCategoryState) {
+        return Container(
+          alignment: Alignment.bottomCenter,
+            height: queryHeight * 0.12,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      onPressed: (){
+                        BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.chevron_left),
+                    )
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: queryWidth * 0.75,
+                  child: Text(state.imageListCategoryModel.bname,
+                    style: _style.biasNameText,),
+                ),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      onPressed: (){
+                      },
+                      icon: Icon(Icons.add),
+                    )
+                ),
+              ],
             ),
-          Container(
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                onPressed: (){
-                },
-                icon: Icon(Icons.add),
-              )
-          ),
-        ],
-      ),
-    );
+          );
+      }else{
+        return Container(
+          alignment: Alignment.center,
+          child: const Text("로딩중")
+        );
+      }
+    });
   }
 }
 
@@ -145,8 +159,9 @@ class _BodyWidgetState extends State<BodyWidget> {
               ],
             ),
           ),
+          // 여기 수정
           Container(
-            height: 610.6, child: ImageListWidget(),
+            height: queryHeight * 0.88 - 110, child: ImageListWidget(),
           )
         ],
       ),
@@ -166,10 +181,6 @@ class _ImageListWidgetState extends State<ImageListWidget> {
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
   bool interaction = false;
-  List<String> firstList = ['1001-1', '1001-5','1001-2', '1001-3', '1001-10'];
-  List<String> secondList = ['1001-4', '1001-5', '1001-3','1001-3','1001-6'];
-  List<String> thirdList = ['1001-7', '1001-8', '1001-9','1001-3','1001-5',];
-
   List<Container> firstWidgetList = [];
   List<Container> secondWidgetList = [];
   List<Container> thirdWidgetList = [];
@@ -177,31 +188,42 @@ class _ImageListWidgetState extends State<ImageListWidget> {
   @override
   Widget build(BuildContext context) {
     double queryWidth =  MediaQuery.of(context).size.width;
-    firstWidgetList = makeImageContainerList(queryWidth, firstList);
-    secondWidgetList = makeImageContainerList(queryWidth, secondList);
-    thirdWidgetList = makeImageContainerList(queryWidth, thirdList);
 
-    return SingleChildScrollView(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          singleColumnImageWidget(queryWidth, firstWidgetList),
-          singleColumnImageWidget(queryWidth, secondWidgetList),
-          singleColumnImageWidget(queryWidth, thirdWidgetList)
-        ],
-      )
-    );
+    return BlocBuilder<CoreBloc, CoreState>(
+        builder: (context, state) {
+      if (state is ImageListCategoryState) {
+        firstWidgetList = makeImageContainerList(queryWidth,
+            state.imageListCategoryModel.firstImageList);
+        secondWidgetList = makeImageContainerList(queryWidth,
+            state.imageListCategoryModel.secondImageList);
+        thirdWidgetList = makeImageContainerList(queryWidth,
+            state.imageListCategoryModel.thirdImageList);
+
+        return SingleChildScrollView(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                singleColumnImageWidget(queryWidth, firstWidgetList),
+                singleColumnImageWidget(queryWidth, secondWidgetList),
+                singleColumnImageWidget(queryWidth, thirdWidgetList)
+              ],
+            )
+        );
+      } else{
+        return Container();
+      }
+    });
   }
 
   List<Container> makeImageContainerList(width, iidList){
     List<Container> imageList = [];
 
-    for ( String iid in iidList){
+    for ( Map image in iidList){
       Container container = Container(
         padding: const EdgeInsets.all(4),
         width: width * 0.3,
-        child : Image.network("http://223.130.157.23/images/${iid}.jpg", fit: BoxFit.fitHeight)
+        child : Image.network("http://223.130.157.23/images/${image['iid']}.jpg", fit: BoxFit.fitHeight)
       );
       imageList.add(container);
     }

@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
             children:[
               Container(
                 width: queryWidth,
-                height: 50,
+                height: 68,
               ),
               Container(
                 width: queryWidth,
@@ -96,7 +96,7 @@ class TopBarWidget extends StatefulWidget {
 }
 
 class _TopBarState extends State<TopBarWidget> {
-  final double appBarHeight = 50;
+  final double appBarHeight = 68;
 
   @override
   Widget build(BuildContext context) {
@@ -580,6 +580,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
           ),
           InkWell(
             onTap:(){
+              BlocProvider.of<CoreBloc>(context).add(ImageListCategoryEvent(core_data['bid']));
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ImageListByCategoryWidget())
               );

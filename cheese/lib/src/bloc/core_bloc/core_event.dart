@@ -32,10 +32,12 @@ class DetailImageDataEvent extends CoreEvent{
   List<Object> get props => [iid];
 }
 
-class ImageListByCategory extends CoreEvent{
+class ImageListCategoryEvent extends CoreEvent{
+  // 멤버
   final String bid;
 
-  ImageListByCategory(this.bid);
+  //생성자
+  ImageListCategoryEvent(this.bid);
 
   @override
   List<Object> get props => [bid];

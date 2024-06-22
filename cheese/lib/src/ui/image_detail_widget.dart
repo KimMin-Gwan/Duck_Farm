@@ -68,8 +68,9 @@ class _TopBarWidgetState extends State<TopBarWidget> {
           return Container(
             child: Column(
               children: [
-                SizedBox(
+                Container(
                   height: queryHeight * 0.03,
+                  color: Colors.white,
                 ),
                 Container(
                   height: queryHeight * 0.05,
@@ -128,19 +129,11 @@ class _DetailBodyWidgetState extends State<DetailBodyWidget> {
     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
 
     return SingleChildScrollView(
-      child: Stack(
+      child: Column(
         children: [
           TopDetailWidget(),
-          Column(
-            children: [
-              Container(
-                height: queryHeight * 0.15,
-              ),
-              MiddleDetailWidget(),
-              BottomDetailWidget(),
-            ],
-          ),
-
+          MiddleDetailWidget(),
+          BottomDetailWidget(),
         ],
       ),
     );
@@ -190,13 +183,14 @@ class _TopDetailWidgetState extends State<TopDetailWidget> {
             Container(
               color: _style.mainWhiteColor,
               width: queryWidth,
-              height: queryHeight,
+              height: 100,
               child: Stack(
                 children: [
                   userProfileArea(queryWidth, queryHeight,),
                   dataViewArea(queryWidth, queryHeight, state),
                   threeDotArea(queryWidth, queryHeight),
-                  listOptionArea(queryWidth, queryHeight)
+                  imageDetailArea(queryWidth, queryHeight, state),
+                  listOptionArea(queryWidth, queryHeight),
                 ],
               ),
             )
@@ -206,6 +200,27 @@ class _TopDetailWidgetState extends State<TopDetailWidget> {
         return Container();
       }
     });
+  }
+
+  Widget imageDetailArea(width, height, state){
+    var model = state.detailImageModel;
+
+    return Column(
+      children: [
+        Container(
+          height: 60
+        ),
+        Container(
+          alignment: Alignment.bottomCenter,
+          height: 40,
+          color: _style.scheduleTitleColor,
+          child: Center(
+            child: Text('${model.schedule_date} | ${model.schedule_name}',
+              style: _style.scheduleTitleText,),
+          ),
+        )
+      ],
+    );
   }
 
   Widget userProfileArea(width, height) {
@@ -336,7 +351,7 @@ class _MiddleDetailWidgetState extends State<MiddleDetailWidget> {
       if (state is DetailImageState) {
         return Column(
           children: [
-            imageDetailArea(queryWidth, queryHeight, state),
+            //imageDetailArea(queryWidth, queryHeight, state),
             imageViewArea(queryWidth, queryHeight, state),
           ],
         );
@@ -344,19 +359,6 @@ class _MiddleDetailWidgetState extends State<MiddleDetailWidget> {
         return Container();
       }
     });
-  }
-
-  Widget imageDetailArea(width, height, state){
-    var model = state.detailImageModel;
-
-    return Container(
-      height: height * 0.05,
-      color: _style.scheduleTitleColor,
-      child: Center(
-        child: Text('${model.schedule_date} | ${model.schedule_name}',
-          style: _style.scheduleTitleText,),
-      ),
-    );
   }
 
   Widget imageViewArea(width, height, state){

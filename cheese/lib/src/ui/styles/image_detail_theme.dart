@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ImageDetailTheme extends MainTheme{
   Color scheduleTitleColor = Colors.deepPurpleAccent.withOpacity(0.3);
-  Color threeDotColor = Colors.grey.withOpacity(0.7);
+  Color threeDotColor = Colors.grey;
   Decoration profileDecoration = BoxDecoration();
   Decoration listOptionDecoration = BoxDecoration();
   Decoration divideLineDecoration = BoxDecoration();

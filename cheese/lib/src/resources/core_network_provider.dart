@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 import 'package:cheese/src/model/home_data_model.dart';
+import 'package:cheese/src/model/image_model.dart';
 import 'package:cheese/src/model/user_model.dart';
 import 'dart:async';
 import 'package:http/http.dart' show Client;
@@ -60,10 +61,37 @@ class ImageDetailApiJsonParser extends MainJsonParser{
   Uri getUri() => this.__url;
 }
 
+class ImageListCategoryApiJsonParser extends MainJsonParser{
+  final Map body = {
+    'uid' : '',
+    'bid' : ''
+  };
+  Uri __url = Uri();
+
+  ImageListCategoryApiJsonParser(String endpoint):super(){
+    __url = Uri(
+      scheme: 'http',
+      host:super.host,
+      port:super.port,
+      path:endpoint,
+    );
+  }
+
+  void makeBodyData(uid, bid){
+    body['uid'] = uid;
+    body['bid'] = bid;
+  }
+
+  String getData() => super.makeSendData(this.body);
+
+  Uri getUri() => this.__url;
+}
+
 
 class CoreNetworkProvider{
   final String none_bias_endpoint = '/core_system/none_bias_home_data';
   final String image_detail_endpoint = '/core_system/image_detail';
+  final String imageListCategoryEndpoint= '/core_system/get_image_list_by_bias';
   Client client = Client();
 
   Future<HomeDataModel> fetchNoneBiasHome(String uid, String date) async {
@@ -97,6 +125,24 @@ class CoreNetworkProvider{
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
       return DetailImageModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
+  Future<ImageListCategoryModel> fetchImageListCategory(String uid, String bid) async {
+    ImageListCategoryApiJsonParser imageListCategoryApiJsonParser= ImageListCategoryApiJsonParser(this.imageListCategoryEndpoint);
+    imageListCategoryApiJsonParser.setHeader(uid, this.imageListCategoryEndpoint);
+    imageListCategoryApiJsonParser.makeBodyData(uid, bid);
+
+    final response = await client.post(
+        imageListCategoryApiJsonParser.getUri(),
+        headers: {'Content-Type': 'application/json'},
+        body: imageListCategoryApiJsonParser.getData()
+    );
+    print('request status: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      return ImageListCategoryModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to load post');
     }
