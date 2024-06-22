@@ -136,8 +136,7 @@ class _BodyWidgetState extends State<BodyWidget> {
             ),
           ),
           Container(
-            height: 610.6,
-            child: ImageListWidget(),
+            height: 610.6, child: ImageListWidget(),
           )
         ],
       ),
@@ -157,82 +156,62 @@ class _ImageListWidgetState extends State<ImageListWidget> {
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
   bool interaction = false;
-  List<String> images = ['images/assets/chodan.jpg','images/assets/upload_button.png','images/assets/chodan.jpg',
-    'images/assets/chodan.jpg','images/assets/upload_button.png','images/assets/chodan.jpg',
-    'images/assets/chodan.jpg','images/assets/upload_button.png','images/assets/chodan.jpg',
-    'images/assets/chodan.jpg','images/assets/upload_button.png','images/assets/chodan.jpg',
-    'images/assets/chodan.jpg','images/assets/upload_button.png','images/assets/chodan.jpg',
-    'images/assets/chodan.jpg','images/assets/upload_button.png','images/assets/chodan.jpg',
-    'images/assets/chodan.jpg','images/assets/upload_button.png','images/assets/chodan.jpg',
-    'images/assets/chodan.jpg','images/assets/upload_button.png','images/assets/chodan.jpg',];
+  List<String> firstList = ['1001-1', '1001-5','1001-2', '1001-3', '1001-10'];
+  List<String> secondList = ['1001-4', '1001-5', '1001-3','1001-3','1001-6'];
+  List<String> thirdList = ['1001-7', '1001-8', '1001-9','1001-3','1001-5',];
 
+  List<Container> firstWidgetList = [];
+  List<Container> secondWidgetList = [];
+  List<Container> thirdWidgetList = [];
 
   @override
   Widget build(BuildContext context) {
-    double queryWidth = MediaQuery.of(context).size.width;
-    if (queryWidth > maxWidth) { queryWidth = maxWidth; }
+    double queryWidth =  MediaQuery.of(context).size.width;
+    firstWidgetList = makeImageContainerList(queryWidth, firstList);
+    secondWidgetList = makeImageContainerList(queryWidth, secondList);
+    thirdWidgetList = makeImageContainerList(queryWidth, thirdList);
 
-    double queryHeight = MediaQuery.of(context).size.height;
-    if (queryHeight > maxHeight) { queryHeight = maxHeight; }
+    return SingleChildScrollView(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          singleColumnImageWidget(queryWidth, firstWidgetList),
+          singleColumnImageWidget(queryWidth, secondWidgetList),
+          singleColumnImageWidget(queryWidth, thirdWidgetList)
+        ],
+      )
+    );
+  }
 
-    return StaggeredGridView.countBuilder(
-      shrinkWrap: true,
-      crossAxisCount: 3, // 열의 개수
-      crossAxisSpacing: 8.0, // 열 간격
-      mainAxisSpacing: 8.0, // 행 간격
-        // childAspectRatio: 1.0, // 자식 아이템의 비율
-      padding: EdgeInsets.all(8),
-      itemCount: images.length,
-      itemBuilder: (context, index) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: Image.asset(images[index], fit: BoxFit.cover),
-        );
-        },
-      staggeredTileBuilder: (index) => StaggeredTile.count(
-          1,
-          (index % 7 ==0)?2.5:1,
-      ),
+  List<Container> makeImageContainerList(width, iidList){
+    List<Container> imageList = [];
+
+    for ( String iid in iidList){
+      Container container = Container(
+        padding: const EdgeInsets.all(4),
+        width: width * 0.3,
+        child : Image.network("http://223.130.157.23/images/${iid}.jpg", fit: BoxFit.fitHeight)
+      );
+      imageList.add(container);
+    }
+    return imageList;
+  }
+
+
+  Container singleColumnImageWidget(width, List<Widget>imageList){
+    return Container(
+      padding: EdgeInsets.all(3),
+      width: width * 0.3,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: imageList,
+      )
     );
   }
 }
 
-// class SingleColumnImageWidget extends StatefulWidget {
-//   const SingleColumnImageWidget({super.key});
-//
-//   @override
-//   State<SingleColumnImageWidget> createState() => _SingleColumnImageWidgetState();
-// }
-//
-// class _SingleColumnImageWidgetState extends State<SingleColumnImageWidget> {
-//   final _style = ImageCategoryTheme();
-//   final double maxWidth = 400.0;
-//   final double maxHeight = 900.0;
-//   bool interaction = false;
-//   List<String> images = ['images/assets/chodan.jpg','images/assets/chodan.jpg','images/assets/chodan.jpg'];
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     double queryWidth = MediaQuery.of(context).size.width;
-//     if (queryWidth > maxWidth) { queryWidth = maxWidth; }
-//
-//     double queryHeight = MediaQuery.of(context).size.height;
-//     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
-//
-//     return GridView.builder(
-//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//         crossAxisCount: 1, // 열의 개수
-//         crossAxisSpacing: 10.0, // 열 간격
-//         mainAxisSpacing: 4.0, // 행 간격
-//         childAspectRatio: 1.0, // 자식 아이템의 비율
-//       ),
-//       itemCount: images.length,
-//       itemBuilder: (context, index) {
-//         return Image.asset(images[index], fit: BoxFit.cover);
-//       },
-//     );
-//   }
-// }
+
 
 
 

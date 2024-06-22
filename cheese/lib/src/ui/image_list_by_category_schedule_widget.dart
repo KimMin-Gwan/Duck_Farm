@@ -85,6 +85,10 @@ class _TopBarWidgetState extends State<TopBarWidget> {
   }
 }
 
+
+
+
+
 class BodyWidget extends StatefulWidget {
   const BodyWidget({super.key});
 
@@ -138,7 +142,7 @@ class _BodyWidgetState extends State<BodyWidget> {
           ),
           Container(
             height: 571.4,
-            child: ImageListWidget(),
+            //child: ImageListWidget(),
           )
         ],
       ),
@@ -178,6 +182,7 @@ class _ScheduleDetailWidgetState extends State<ScheduleDetailWidget> {
   }
 }
 
+/*
 
 class ImageListWidget extends StatefulWidget {
   const ImageListWidget({super.key});
@@ -231,43 +236,7 @@ class _ImageListWidgetState extends State<ImageListWidget> {
   }
 }
 
-// class SingleColumnImageWidget extends StatefulWidget {
-//   const SingleColumnImageWidget({super.key});
-//
-//   @override
-//   State<SingleColumnImageWidget> createState() => _SingleColumnImageWidgetState();
-// }
-//
-// class _SingleColumnImageWidgetState extends State<SingleColumnImageWidget> {
-//   final _style = ImageCategoryTheme();
-//   final double maxWidth = 400.0;
-//   final double maxHeight = 900.0;
-//   bool interaction = false;
-//   List<String> images = ['images/assets/chodan.jpg','images/assets/chodan.jpg','images/assets/chodan.jpg'];
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     double queryWidth = MediaQuery.of(context).size.width;
-//     if (queryWidth > maxWidth) { queryWidth = maxWidth; }
-//
-//     double queryHeight = MediaQuery.of(context).size.height;
-//     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
-//
-//     return GridView.builder(
-//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//         crossAxisCount: 1, // 열의 개수
-//         crossAxisSpacing: 10.0, // 열 간격
-//         mainAxisSpacing: 4.0, // 행 간격
-//         childAspectRatio: 1.0, // 자식 아이템의 비율
-//       ),
-//       itemCount: images.length,
-//       itemBuilder: (context, index) {
-//         return Image.asset(images[index], fit: BoxFit.cover);
-//       },
-//     );
-//   }
-// }
-
+ */
 
 
 class BottomBarWidget extends StatefulWidget {

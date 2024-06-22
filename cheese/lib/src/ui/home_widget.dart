@@ -11,6 +11,7 @@ import 'package:cheese/src/ui/styles/home_theme.dart';
 import 'package:cheese/src/ui/image_detail_widget.dart';
 import 'package:cheese/src/ui/upload_widget.dart';
 import 'package:cheese/src/ui/bias_following_widget.dart';
+import 'package:cheese/src/ui/image_list_category_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -567,13 +568,20 @@ class _HomeBodyState extends State<HomeBodyWidget> {
             backgroundImage: NetworkImage("http://223.130.157.23/images/${core_data['bid']}.jpg")
                 //AssetImage('images/assets/chodan.jpg'), // 이미지 경로 수정 필요
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 5.0),
-            child: Text(
-              core_data['bname'],
-              style: TextStyle(fontSize: 16),
+          InkWell(
+            onTap:(){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ImageListByCategoryWidget())
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: Text(
+                core_data['bname'],
+                style: TextStyle(fontSize: 16),
+              ),
             ),
-          ),
+          )
         ],
       ),
     );
