@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/ui/styles/image_detail_theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_event.dart';
 import 'package:cheese/src/bloc/core_bloc/core_state.dart';

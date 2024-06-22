@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:cheese/src/ui/styles/image_category_theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
+import 'package:cheese/src/bloc/core_bloc/core_event.dart';
+import 'package:cheese/src/bloc/core_bloc/core_state.dart';
+
+
 
 class ImageListByCategoryWidget extends StatefulWidget {
   const ImageListByCategoryWidget({super.key});
@@ -63,7 +69,10 @@ class _TopBarWidgetState extends State<TopBarWidget> {
           Container(
               alignment: Alignment.centerLeft,
               child: IconButton(
-                onPressed: (){},
+                onPressed: (){
+                  BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
+                  Navigator.pop(context);
+                },
                 icon: Icon(Icons.chevron_left),
               )
           ),
@@ -75,7 +84,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
           Container(
               alignment: Alignment.centerLeft,
               child: IconButton(
-                onPressed: (){},
+                onPressed: (){
+                },
                 icon: Icon(Icons.add),
               )
           ),

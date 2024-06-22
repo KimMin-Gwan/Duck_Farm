@@ -139,7 +139,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     return BlocBuilder<CoreBloc, CoreState>(
       builder: (context, state)
-    {
+      {
       if (state is NoneBiasState) {
         return SingleChildScrollView(
           child: Column(
@@ -276,7 +276,7 @@ class _BiasState extends State<BiasWidget> {
               SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.only(left: 8),
-                  height: mainHeight * 0.60, // Specify the height to allow scrolling
+                  height: mainHeight * 0.48, // Specify the height to allow scrolling
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal, // Set horizontal scrolling
                     itemCount: state.homeDataModel.biases.length,
@@ -323,7 +323,7 @@ class _BiasState extends State<BiasWidget> {
                 boxShadow: [_style.mainBoxShadow],
               ),
               child: CircleAvatar(
-                radius: height * 0.18, // 원의 크기 설정
+                radius: height * 0.17, // 원의 크기 설정
                 backgroundColor:  Colors.black26,
                 child: const Icon(Icons.add, color: Colors.black54),
               ),
@@ -348,7 +348,7 @@ class _BiasState extends State<BiasWidget> {
                 boxShadow: [_style.mainBoxShadow],
               ),
               child: CircleAvatar(
-                  radius: height * 0.18, // 원의 크기 설정
+                  radius: height * 0.17, // 원의 크기 설정
                   //backgroundImage: AssetImage('images/assets/chodan.jpg'), // 이미지 경로
                   backgroundImage: NetworkImage("http://223.130.157.23/images/${url}.jpg")
               ),

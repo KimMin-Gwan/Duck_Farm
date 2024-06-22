@@ -13,10 +13,12 @@ import 'package:intl/intl.dart';
 class CoreBloc extends Bloc<CoreEvent, CoreState>{
   final UserRepository _userRepository;
   final CoreRepository _coreRepository;
+  String selectedBid = "";
 
   CoreBloc(this._userRepository, this._coreRepository) : super(InitCoreState()){
     on<NoneBiasHomeDataEvent>(_onNoneBiasHomeDataEvent);
     on<DetailImageDataEvent>(_onDetailImageEvent);
+    on<ImageListByCategory>(_onImageListByCategory);
   }
 
   /*
@@ -34,6 +36,14 @@ class CoreBloc extends Bloc<CoreEvent, CoreState>{
 
   Future<void> _onDetailImageEvent(DetailImageDataEvent event, Emitter<CoreState> emit) async {
     String iid_with_type = event.iid;
+    String iid = iid_with_type.split('.').first;
+
+    DetailImageModel detailImageModel = await _coreRepository.fetchDetailImageData(_userRepository.uid, iid);
+    emit((DetailImageState(detailImageModel)));
+  }
+
+  Future<void> _onImageListByCategory(ImageListByCategory event, Emitter<CoreState> emit) async {
+    String iid_with_type = event.bid;
     String iid = iid_with_type.split('.').first;
 
     DetailImageModel detailImageModel = await _coreRepository.fetchDetailImageData(_userRepository.uid, iid);
