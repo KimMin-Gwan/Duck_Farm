@@ -1,10 +1,10 @@
 
-// http://223.130.157.23/
+//http://223.130.157.23/
 import 'dart:convert';
 
 class MainJsonParser{
-  String host = '192.168.55.213';
-  int port = 5000;
+  String host = '223.130.157.23';
+  int port = 80;
   Map<String, dynamic> header = {
     'request-type' : 'default',
     'client-version' : '0.1.0',
