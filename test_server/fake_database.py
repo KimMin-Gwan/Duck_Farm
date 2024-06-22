@@ -83,6 +83,15 @@ class Local_Database:
             if iid == image['iid']:
                 find_image = image
         return find_image
+    
+    def get_image_datas_with_bid(self, bid):
+        find_image = []
+        for image in self.__image_data:
+            if bid == image['bid']:
+                find_image.append(image)
+
+        return find_image
+
 
 
 

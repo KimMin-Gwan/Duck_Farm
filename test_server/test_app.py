@@ -196,6 +196,109 @@ class Controller:
         response = json.dumps(form, ensure_ascii=False)
         response = response.encode()
         return response
+    
+
+    def get_image_list_by_bias(self, database:Local_Database, request):
+        form = {
+            'header':{
+                'state-code' : '201'
+            }
+        }
+
+        body = {
+            "bid" : "",
+            "bname" : "",
+            "num_image" : 0,
+            "first_list" : [],
+            "second_list" : [],
+            "third_list" : []
+        }
+
+        bias_data = database.get_bias_data_with_bid(bid = request['bid'])
+        image_data = database.get_image_datas_with_bid(bid = request['bid'])
+
+        num_image = len(image_data)
+        first_list = []
+        second_list = []
+        third_list = []
+        
+        for i, item in enumerate(image_data):
+            if i % 3 == 0:
+                first_list.append(item)
+            elif i % 3 == 1:
+                second_list.append(item)
+            else:
+                third_list.append(item)
+
+        body['bid'] = bias_data['bid']
+        body['bname'] = bias_data['bname']
+        body['num_image'] = num_image
+        body['first_list'] = first_list
+        body['second_list'] = second_list
+        body['third_list'] = third_list
+
+        form['header']['state-code'] = '200'
+        form['body']= body
+        response = json.dumps(form, ensure_ascii=False)
+        response = response.encode()
+        return response
+    
+    def get_bias_following(self, database:Local_Database, request):
+        form = {
+            'header':{
+                'state-code' : '201'
+            }
+        }
+
+        body = {
+            "bias_list" : [],
+            "bias_order" : []
+        }
+
+        user_data = database.get_user_data_with_uid(request['uid'])
+
+        bias_list = []
+        
+        for bid in user_data['bids']:
+            bias_data = database.get_bias_data_with_bid(bid)
+            bias_list.append(bias_data)
+
+        body['bias_list'] = bias_list
+        body['bias_order'] = user_data['bids']
+
+        form['header']['state-code'] = '200'
+        form['body']= body
+        response = json.dumps(form, ensure_ascii=False)
+        response = response.encode()
+
+        return response 
+
+
+
+class ImageListModel:
+    def __init__(self, database:Local_Database) -> None:
+        self.__database  = database
+        self.__user = None
+        self.__biases = []
+        self.__images = []
+    
+
+class BiasFollowingController:
+    def __init__(self) -> None:
+        self.__response = {
+            'state-code' : '201',
+            'body' : '',
+        }
+        return
+    
+
+
+
+class ImageListByBiasRequest:
+    def __init__(self, raw_request):
+        self.uid = raw_request['uid']
+        self.bid = raw_request['bid']
+        self.ordier = raw_request['ordering'] 
 
 
 
@@ -228,6 +331,21 @@ class View:
         def get_image_detail(request:dict):
             controller = Controller()
             response = controller.get_image_detail(self.__database, request['body'])
+            return response
+
+        @self.__app.post('/core_system/get_image_list_by_bias')
+        def getImageListByBias(request:dict):
+            #request = ImageListByBiasRequest(raw_request=request)
+            controller = Controller()
+            response = controller.get_image_list_by_bias(self.__database, request['body'])
+            return response
+
+        @self.__app.post('/bias_following/get_bias_following')
+        def getBiasFollowing(request:dict):
+            #request = ImageListByBiasRequest(raw_request=request)
+            print(request)
+            controller = Controller()
+            response = controller.get_bias_following(self.__database, request['body'])
             return response
         
 

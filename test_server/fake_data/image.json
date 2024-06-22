@@ -98,5 +98,45 @@
         "image_detail" : "히나 사진 입니다요",
         "upload_date" : "2024/04/20",
         "location" : ""
+    },
+    {
+        "iid" : "1001-8",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "4",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/06/01",
+        "location" : ""
+    },
+    {
+        "iid" : "1001-9",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "4",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/06/01",
+        "location" : ""
+    },
+    {
+        "iid" : "1001-10",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "4",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/06/01",
+        "location" : ""
+    },
+    {
+        "iid" : "1001-11",
+        "bid" : "1001",
+        "uid" : "1234-abcd-5678",
+        "sid" : "5",
+        "image_type" : "jpg",
+        "image_detail" : "쵸단 사진 입니다요",
+        "upload_date" : "2024/06/01",
+        "location" : "Yes24 원더로크홀"
     }
 ]
