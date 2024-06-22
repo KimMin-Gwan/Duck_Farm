@@ -11,7 +11,6 @@ import 'package:cheese/src/ui/styles/home_theme.dart';
 import 'package:cheese/src/ui/image_detail_widget.dart';
 import 'package:cheese/src/ui/upload_widget.dart';
 import 'package:cheese/src/ui/bias_following_widget.dart';
-import 'package:cheese/src/ui/image_list_category_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -277,7 +276,7 @@ class _BiasState extends State<BiasWidget> {
               SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.only(left: 8),
-                  height: mainHeight * 0.50, // Specify the height to allow scrolling
+                  height: mainHeight * 0.60, // Specify the height to allow scrolling
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal, // Set horizontal scrolling
                     itemCount: state.homeDataModel.biases.length,
@@ -507,9 +506,17 @@ class _HomeBodyState extends State<HomeBodyWidget> {
                 );
               }
               else{
+                Map core_data= state.homeDataModel.homeBodyData[0];
                 var maked_date = DateFormat('yyyy/MM/dd').parse(state.date);
                 formattedDate = DateFormat('dd').format(maked_date);
                 weekDay = _weekDays[maked_date.weekday - 1];
+
+                // schedule_data에 따라 _buildTimelineSection을 동적으로 생성
+                List<Widget> timelineSections = [];
+                for (var schedule in core_data['schedule_data']) {
+                  timelineSections.add(_buildTimelineSection(context, state));
+                }
+
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
                   child: Column(
@@ -519,7 +526,8 @@ class _HomeBodyState extends State<HomeBodyWidget> {
                       // 두 번째 파트: 사진이랑 이름
                       _buildProfileSection(state),
                       // 세 번째 파트: 타임라인
-                      _buildTimelineSection(context, state),
+                      Container(height: 20.0),
+                      for (var section in timelineSections) section, // 동적으로 생성된 타임라인 섹션 추가
                     ],
                   ),
                 );
@@ -534,6 +542,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
                   // 두 번째 파트: 사진이랑 이름
                   _buildProfileSection(state),
                   // 세 번째 파트: 타임라인
+                  _buildTimelineSection(context, state),
                   _buildTimelineSection(context, state),
                 ],
               ),
@@ -568,29 +577,24 @@ class _HomeBodyState extends State<HomeBodyWidget> {
             backgroundImage: NetworkImage("http://223.130.157.23/images/${core_data['bid']}.jpg")
                 //AssetImage('images/assets/chodan.jpg'), // 이미지 경로 수정 필요
           ),
-          InkWell(
-            onTap:(){
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ImageListByCategoryWidget())
-              );
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: Text(
-                core_data['bname'],
-                style: TextStyle(fontSize: 16),
-              ),
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Text(
+              core_data['bname'],
+              style: TextStyle(fontSize: 16),
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
+
+
   Padding _buildTimelineSection(BuildContext context, state) {
-    Map core_data= state.homeDataModel.homeBodyData[0];
+    Map core_data = state.homeDataModel.homeBodyData[0];
     return Padding(
-      padding: EdgeInsets.fromLTRB(10.0, 20.0, 0.0, 0.0),
+      padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -600,6 +604,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
       ),
     );
   }
+
 
   Column _buildTimelineDotLine() {
     return Column(
@@ -685,3 +690,4 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     );
   }
 }
+
