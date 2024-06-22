@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:cheese/src/ui/styles/home_theme.dart';
 import 'package:cheese/src/ui/image_detail_widget.dart';
 import 'package:cheese/src/ui/upload_widget.dart';
+import 'package:cheese/src/ui/bias_following_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -272,30 +273,28 @@ class _BiasState extends State<BiasWidget> {
                   ],
                 ),
               ),
-              SingleChildScrollView (
+              SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.only(left: 8),
-                  height: mainHeight * 0.50, // 높이를 지정하여 스크롤 가능하도록 설정
+                  height: mainHeight * 0.50, // Specify the height to allow scrolling
                   child: ListView.builder(
-                    scrollDirection: Axis.horizontal, // 가로 스크롤 설정
-                    //itemCount: _items.length,
+                    scrollDirection: Axis.horizontal, // Set horizontal scrolling
                     itemCount: state.homeDataModel.biases.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                            10.0, 0.0, 10.0, 0.0),
+                        padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
                         child: _biasProfile(
                           width: queryWidth,
                           height: mainHeight,
-                          biasName: state.homeDataModel.biases[index].bname, // 실제 데이터로 변경 가능
-                          biasId: state.homeDataModel.biases[index].bid, // 실제 데이터로 변경 가능
-                          url: state.homeDataModel.biases[index].bid
+                          biasName: state.homeDataModel.biases[index].bname, // Use actual data
+                          biasId: state.homeDataModel.biases[index].bid, // Use actual data
+                          url: state.homeDataModel.biases[index].bid,
                         ),
                       );
                     },
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -309,28 +308,61 @@ class _BiasState extends State<BiasWidget> {
     required String biasId,
     required String url,
   }) {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [_style.mainBoxShadow],
-          ),
-          child: CircleAvatar(
-            radius: height * 0.18, // 원의 크기 설정
-            //backgroundImage: AssetImage('images/assets/chodan.jpg'), // 이미지 경로
-            backgroundImage: NetworkImage("http://223.130.157.23/images/${url}.jpg")
-          ),
+    if (biasId == "0000"){
+      return InkWell(
+        onTap: (){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => BiasFollowingWidget())
+          );
+        },
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [_style.mainBoxShadow],
+              ),
+              child: CircleAvatar(
+                radius: height * 0.18, // 원의 크기 설정
+                backgroundColor:  Colors.black26,
+                child: const Icon(Icons.add, color: Colors.black54),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5.0),
+              child: Text(
+                biasName, // 텍스트
+                style: _style.biasName,
+              ),
+            )
+          ],
         ),
-        Padding(
-          padding: EdgeInsets.only(top: 5.0),
-          child: Text(
-            biasName, // 텍스트
-            style: _style.biasName,
-          ),
-        )
-      ],
-    );
+      );
+    }else{
+      return
+        Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [_style.mainBoxShadow],
+              ),
+              child: CircleAvatar(
+                  radius: height * 0.18, // 원의 크기 설정
+                  //backgroundImage: AssetImage('images/assets/chodan.jpg'), // 이미지 경로
+                  backgroundImage: NetworkImage("http://223.130.157.23/images/${url}.jpg")
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5.0),
+              child: Text(
+                biasName, // 텍스트
+                style: _style.biasName,
+              ),
+            )
+          ],
+        );
+    }
   }
 }
 
