@@ -19,6 +19,11 @@ class HomeDataModel {
     }
     homeBodyData = Data['body']['home_body_data'];
 
+    Bias plus_bias = Bias();
+    plus_bias.set_bid("0000");
+    plus_bias.set_bname("");
+    biases.add(plus_bias);
+
     return HomeDataModel(biases: biases, homeBodyData: homeBodyData);
   }
 }
