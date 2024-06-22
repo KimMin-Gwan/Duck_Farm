@@ -364,7 +364,7 @@ class _MiddleDetailWidgetState extends State<MiddleDetailWidget> {
       onTap: (){},
       child: Container(
         width: width,
-        child:Image.network("http://192.168.55.213/images/${model.iid}.jpg", fit:BoxFit.cover)
+        child:Image.network("http://223.130.157.23/images/${model.iid}.jpg", fit:BoxFit.cover)
       )
     );
   }

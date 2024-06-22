@@ -319,7 +319,7 @@ class _BiasState extends State<BiasWidget> {
           child: CircleAvatar(
             radius: height * 0.18, // 원의 크기 설정
             //backgroundImage: AssetImage('images/assets/chodan.jpg'), // 이미지 경로
-            backgroundImage: NetworkImage("http://192.168.55.213/images/${url}.jpg")
+            backgroundImage: NetworkImage("http://223.130.157.23/images/${url}.jpg")
           ),
         ),
         Padding(
@@ -532,7 +532,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: NetworkImage("http://192.168.55.213/images/${core_data['bid']}.jpg")
+            backgroundImage: NetworkImage("http://223.130.157.23/images/${core_data['bid']}.jpg")
                 //AssetImage('images/assets/chodan.jpg'), // 이미지 경로 수정 필요
           ),
           Padding(
@@ -639,7 +639,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
               height: maxHeight * 0.10, // 세로 높이
               decoration: _style.galleryBox,
               margin: EdgeInsets.only(left:10),
-              child:Image.network("http://192.168.55.213/images/${url}", fit:BoxFit.cover)
+              child:Image.network("http://223.130.157.23/images/${url}", fit:BoxFit.cover)
           ),
         )
     );
