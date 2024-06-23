@@ -179,7 +179,7 @@ class CoreNetworkProvider{
 
   Future<ImageListCategoryModel> fetchImageListCategoryBySchedule(String uid, String bid, String sid) async {
 
-    ImageListCategoryByScheduleApiJsonParser imageListCategoryByScheduleApiJsonParser= ImageListCategoryByScheduleApiJsonParser(this.imageListCategoryEndpoint);
+    ImageListCategoryByScheduleApiJsonParser imageListCategoryByScheduleApiJsonParser= ImageListCategoryByScheduleApiJsonParser(this.imageListCategoryByScheduleEndpoint);
     imageListCategoryByScheduleApiJsonParser.setHeader(uid, this.imageListCategoryByScheduleEndpoint);
     imageListCategoryByScheduleApiJsonParser.makeBodyData(uid, bid, sid);
 

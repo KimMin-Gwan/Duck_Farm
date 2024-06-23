@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
             children:[
               Container(
                 width: queryWidth,
-                height: 68,
+                height: 78,
               ),
               Container(
                 width: queryWidth,
@@ -96,7 +96,7 @@ class TopBarWidget extends StatefulWidget {
 }
 
 class _TopBarState extends State<TopBarWidget> {
-  final double appBarHeight = 68;
+  final double appBarHeight = 78;
 
   @override
   Widget build(BuildContext context) {

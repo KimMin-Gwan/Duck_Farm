@@ -44,8 +44,8 @@ class ImageListCategoryModel{
         firstImageList: bodyData['first_list'],
         secondImageList: bodyData['second_list'],
         thirdImageList: bodyData['third_list'],
-        scheduleDate: bodyData['schedule']['schedule_date'],
-        scheduleName: bodyData['schedule']['schedule_name'],
+        scheduleDate: bodyData['schedule_date'],
+        scheduleName: bodyData['schedule_name'],
       );
     }else{
       return ImageListCategoryModel(
