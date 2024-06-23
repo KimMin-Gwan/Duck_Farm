@@ -351,7 +351,7 @@ class _BiasState extends State<BiasWidget> {
               child: CircleAvatar(
                   radius: height * 0.17, // 원의 크기 설정
                   //backgroundImage: AssetImage('images/assets/chodan.jpg'), // 이미지 경로
-                  backgroundImage: NetworkImage("http://223.130.157.23/images/${url}.jpg")
+                  backgroundImage: NetworkImage("https://kr.object.ncloudstorage.com/cheese-images/${url}.jpg")
               ),
             ),
             Padding(
@@ -514,8 +514,10 @@ class _HomeBodyState extends State<HomeBodyWidget> {
 
                 // schedule_data에 따라 _buildTimelineSection을 동적으로 생성
                 List<Widget> timelineSections = [];
+                int numSchedule = 0;
                 for (var schedule in core_data['schedule_data']) {
-                  timelineSections.add(_buildTimelineSection(context, state));
+                  timelineSections.add(_buildTimelineSection(context, state, numSchedule));
+                  numSchedule++;
                 }
 
                 return Padding(
@@ -543,8 +545,8 @@ class _HomeBodyState extends State<HomeBodyWidget> {
                   // 두 번째 파트: 사진이랑 이름
                   _buildProfileSection(state),
                   // 세 번째 파트: 타임라인
-                  _buildTimelineSection(context, state),
-                  _buildTimelineSection(context, state),
+                  _buildTimelineSection(context, state, 0),
+                  _buildTimelineSection(context, state, 0),
                 ],
               ),
             );
@@ -575,7 +577,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: NetworkImage("http://223.130.157.23/images/${core_data['bid']}.jpg")
+            backgroundImage: NetworkImage("https://kr.object.ncloudstorage.com/cheese-images/${core_data['bid']}.jpg")
                 //AssetImage('images/assets/chodan.jpg'), // 이미지 경로 수정 필요
           ),
           InkWell(
@@ -600,7 +602,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
 
 
 
-  Padding _buildTimelineSection(BuildContext context, state) {
+  Padding _buildTimelineSection(BuildContext context, state, numSchedule) {
     Map core_data = state.homeDataModel.homeBodyData[0];
     return Padding(
       padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
@@ -608,7 +610,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildTimelineDotLine(),
-          Expanded(child: _buildEventSection(context, core_data)), // 추가: 남은 공간을 차지하도록 확장
+          Expanded(child: _buildEventSection(context, core_data, numSchedule)), // 추가: 남은 공간을 차지하도록 확장
         ],
       ),
     );
@@ -631,36 +633,45 @@ class _HomeBodyState extends State<HomeBodyWidget> {
     );
   }
 
-  Column _buildEventSection(BuildContext context, core_data) {
+  Column _buildEventSection(BuildContext context, core_data, numSchedule) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildEventTitle(context, core_data),
-        _buildEventGallery(context, core_data),
+        _buildEventTitle(context, core_data, numSchedule),
+        _buildEventGallery(context, core_data, numSchedule),
       ],
     );
   }
 
-  Padding _buildEventTitle(BuildContext context, core_data) {
+  Padding _buildEventTitle(BuildContext context, core_data, numSchedule) {
     return Padding(
       padding: const EdgeInsets.only(left: 15.0), // 오른쪽 여백 추가
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            core_data['schedule_data'][0]['schedule_name'],
-            style: _style.eventTitle,
-          ),
-          Icon(
-            Icons.arrow_forward_ios,
-            size: 16.0, // 아이콘 사이즈도 바꾸지 X것 같으므로 고정값
-          ),
-        ],
-      ),
+      child: InkWell(
+        onTap: (){
+          BlocProvider.of<CoreBloc>(context).add(ImageListCategoryByScheduleEvent(core_data['bid'],
+            core_data['schedule_data'][numSchedule]['sid']));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const ImageListCategoryByScheduleWidget())
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              core_data['schedule_data'][numSchedule]['schedule_name'],
+              style: _style.eventTitle,
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 16.0, // 아이콘 사이즈도 바꾸지 X것 같으므로 고정값
+            ),
+          ],
+        ),
+      )
     );
   }
 
-  Padding _buildEventGallery(BuildContext context, core_data) {
+  Padding _buildEventGallery(BuildContext context, core_data, numSchedule) {
     return Padding(
       padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
       child: Container(
@@ -670,18 +681,19 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         decoration: _style.eventGalleryBox,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: core_data['schedule_data'][0]['image_url'].length, // 내부 사각형 개수 -> 추후 바꾸기
-          itemBuilder: (context, index) => _buildGalleryItem(index, core_data),
+          itemCount: core_data['schedule_data'][numSchedule]['image_url'].length, // 내부 사각형 개수 -> 추후 바꾸기
+          itemBuilder: (context, index) => _buildGalleryItem(index, core_data, numSchedule),
         ),
       ),
     );
   }
 
-  Widget _buildGalleryItem(int index, core_data) {
-    String url =  core_data['schedule_data'][0]['image_url'][index];
+  Widget _buildGalleryItem(int index, core_data, numSchedule) {
+    String url =  core_data['schedule_data'][numSchedule]['image_url'][index];
+    String iid = url.split('.').first;
     return InkWell(
       onTap:(){
-        BlocProvider.of<CoreBloc>(context).add(DetailImageDataEvent(url));
+        BlocProvider.of<CoreBloc>(context).add(DetailImageDataEvent(iid));
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => ImageDetailWidget())
         );
@@ -689,11 +701,18 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         child:Align(
           alignment: Alignment.center,
           child: Container(
-              width: maxHeight * 0.10, // 내부 상세사진(보라) 높이
-              height: maxHeight * 0.10, // 세로 높이
+              //width: maxHeight * 0.10, // 내부 상세사진(보라) 높이
+              //height: maxHeight * 0.10, // 세로 높이
               decoration: _style.galleryBox,
               margin: EdgeInsets.only(left:10),
-              child:Image.network("http://223.130.157.23/images/${url}", fit:BoxFit.cover)
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4.0),
+                child: SizedBox(
+                    width : maxHeight * 0.09,
+                    height : maxHeight * 0.09,
+                    child:Image.network("https://kr.object.ncloudstorage.com/cheese-images/${url}", fit:BoxFit.cover)
+                )
+              )
           ),
         )
     );

@@ -87,11 +87,40 @@ class ImageListCategoryApiJsonParser extends MainJsonParser{
   Uri getUri() => this.__url;
 }
 
+class ImageListCategoryByScheduleApiJsonParser extends MainJsonParser{
+  final Map body = {
+    'uid' : '',
+    'bid' : '',
+    'sid' : ''
+  };
+  Uri __url = Uri();
+
+  ImageListCategoryByScheduleApiJsonParser(String endpoint):super(){
+    __url = Uri(
+      scheme: 'http',
+      host:super.host,
+      port:super.port,
+      path:endpoint,
+    );
+  }
+
+  void makeBodyData(uid, bid, sid){
+    body['uid'] = uid;
+    body['bid'] = bid;
+    body['sid'] = sid;
+  }
+
+  String getData() => super.makeSendData(this.body);
+
+  Uri getUri() => this.__url;
+}
+
 
 class CoreNetworkProvider{
   final String none_bias_endpoint = '/core_system/none_bias_home_data';
   final String image_detail_endpoint = '/core_system/image_detail';
   final String imageListCategoryEndpoint= '/core_system/get_image_list_by_bias';
+  final String imageListCategoryByScheduleEndpoint= '/core_system/get_image_list_by_bias_n_schedule';
   Client client = Client();
 
   Future<HomeDataModel> fetchNoneBiasHome(String uid, String date) async {
@@ -139,6 +168,25 @@ class CoreNetworkProvider{
         imageListCategoryApiJsonParser.getUri(),
         headers: {'Content-Type': 'application/json'},
         body: imageListCategoryApiJsonParser.getData()
+    );
+    print('request status: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      return ImageListCategoryModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
+  Future<ImageListCategoryModel> fetchImageListCategoryBySchedule(String uid, String bid, String sid) async {
+
+    ImageListCategoryByScheduleApiJsonParser imageListCategoryByScheduleApiJsonParser= ImageListCategoryByScheduleApiJsonParser(this.imageListCategoryEndpoint);
+    imageListCategoryByScheduleApiJsonParser.setHeader(uid, this.imageListCategoryByScheduleEndpoint);
+    imageListCategoryByScheduleApiJsonParser.makeBodyData(uid, bid, sid);
+
+    final response = await client.post(
+        imageListCategoryByScheduleApiJsonParser.getUri(),
+        headers: {'Content-Type': 'application/json'},
+        body: imageListCategoryByScheduleApiJsonParser.getData()
     );
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {

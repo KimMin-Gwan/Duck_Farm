@@ -1,3 +1,4 @@
+import 'package:cheese/src/ui/image_list_category_widget.dart';
 import 'package:equatable/equatable.dart';
 import 'package:cheese/src/model/user_model.dart';
 import 'package:intl/intl.dart';
@@ -43,3 +44,21 @@ class ImageListCategoryEvent extends CoreEvent{
   List<Object> get props => [bid];
 }
 
+class ImageListCategoryByScheduleEvent extends CoreEvent{
+  // 멤버
+  final String bid;
+  final String sid;
+
+  //생성자
+  ImageListCategoryByScheduleEvent(this.bid, this.sid);
+
+  @override
+  List<Object> get props => [bid, sid];
+}
+
+
+
+class LoadBackwardEvent extends CoreEvent{
+  @override
+  List<Object> get props => [];
+}

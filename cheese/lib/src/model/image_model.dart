@@ -7,6 +7,8 @@ class ImageListCategoryModel{
   final List<dynamic> firstImageList;
   final List<dynamic> secondImageList;
   final List<dynamic> thirdImageList;
+  final String scheduleDate;
+  final String scheduleName;
 
   ImageListCategoryModel({
     required this.bid,
@@ -15,21 +17,48 @@ class ImageListCategoryModel{
     required this.firstImageList,
     required this.secondImageList,
     required this.thirdImageList,
+    required this.scheduleDate,
+    required this.scheduleName
 });
 
   // 생성자
   factory ImageListCategoryModel.fromJson(Map data){
     print(data['body']);
     var bodyData = data['body'];
-
-    return ImageListCategoryModel(
-      bid: bodyData['bid'],
-      bname: bodyData['bname'],
-      numImage: bodyData['num_image'],
-      firstImageList: bodyData['first_list'],
-      secondImageList: bodyData['second_list'],
-      thirdImageList: bodyData['third_list']
-    );
+    if (data['header']['state-code'] == "209"){
+      return ImageListCategoryModel(
+        bid: bodyData['bid'],
+        bname: bodyData['bname'],
+        numImage: bodyData['num_image'],
+        firstImageList: bodyData['first_list'],
+        secondImageList: bodyData['second_list'],
+        thirdImageList: bodyData['third_list'],
+        scheduleDate: "",
+        scheduleName: "",
+      );
+    } else if (data['header']['state-code'] == "210"){
+      return ImageListCategoryModel(
+        bid: bodyData['bid'],
+        bname: bodyData['bname'],
+        numImage: bodyData['num_image'],
+        firstImageList: bodyData['first_list'],
+        secondImageList: bodyData['second_list'],
+        thirdImageList: bodyData['third_list'],
+        scheduleDate: bodyData['schedule']['schedule_date'],
+        scheduleName: bodyData['schedule']['schedule_name'],
+      );
+    }else{
+      return ImageListCategoryModel(
+        bid: "",
+        bname: "",
+        numImage: 0,
+        firstImageList: [],
+        secondImageList: [],
+        thirdImageList: [],
+        scheduleDate: "",
+        scheduleName: "",
+      );
+    }
   }
 }
 

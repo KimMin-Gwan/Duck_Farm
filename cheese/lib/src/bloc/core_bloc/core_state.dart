@@ -41,3 +41,11 @@ class ImageListCategoryState extends CoreState{
   List<Object> get props => [imageListCategoryModel];
 }
 
+class ImageListCategoryByScheduleState extends CoreState{
+  final ImageListCategoryModel imageListCategoryModel;
+
+  ImageListCategoryByScheduleState(this.imageListCategoryModel);
+
+  @override
+  List<Object> get props => [imageListCategoryModel];
+}

@@ -243,11 +243,70 @@ class Controller:
         body['second_list'] = second_list
         body['third_list'] = third_list
 
-        form['header']['state-code'] = '200'
+        form['header']['state-code'] = '209'
         form['body']= body
         response = json.dumps(form, ensure_ascii=False)
         response = response.encode()
         return response
+
+    def get_image_list_by_bias_n_schedule(self, database:Local_Database, request):
+        form = {
+            'header':{
+                'state-code' : '201'
+            }
+        }
+
+        body = {
+            "bid" : "",
+            "bname" : "",
+            "num_image" : 0,
+            "first_list" : [],
+            "second_list" : [],
+            "third_list" : [],
+            "schedule_name" : "",
+            "schedule_date" : "",
+        }
+
+        bias_data = database.get_bias_data_with_bid(bid = request['bid'])
+        image_data = database.get_image_datas_with_bid(bid = request['bid'])
+        schedule_data = database.get_schedule_data_with_sid(sid = request['sid'])
+
+        image_list =[]
+
+        for image in image_data:
+            iid = image['iid']
+            if iid in schedule_data['iids']:
+                image_list.append(image)
+
+        num_image = len(image_list)
+        first_list = []
+        second_list = []
+        third_list = []
+        
+        for i, item in enumerate(image_list):
+            if i % 3 == 0:
+                first_list.append(item)
+            elif i % 3 == 1:
+                second_list.append(item)
+            else:
+                third_list.append(item)
+
+        body['bid'] = bias_data['bid']
+        body['bname'] = bias_data['bname']
+        body['num_image'] = num_image
+        body['first_list'] = first_list
+        body['second_list'] = second_list
+        body['third_list'] = third_list
+        body['schedule_date'] = schedule_data['date']
+        body['schedule_name'] = schedule_data['sname']
+
+        form['header']['state-code'] = '210'
+        form['body']= body
+        response = json.dumps(form, ensure_ascii=False)
+        response = response.encode()
+        return response
+    
+
     
     def get_bias_following(self, database:Local_Database, request):
         form = {
@@ -344,6 +403,13 @@ class View:
             #request = ImageListByBiasRequest(raw_request=request)
             controller = Controller()
             response = controller.get_image_list_by_bias(self.__database, request['body'])
+            return response
+
+        @self.__app.post('/core_system/get_image_list_by_bias_n_schedule')
+        def getImageListByBiasNSchedule(request:dict):
+            #request = ImageListByBiasRequest(raw_request=request)
+            controller = Controller()
+            response = controller.get_image_list_by_bias_n_schedule(self.__database, request['body'])
             return response
 
         @self.__app.post('/bias_following/get_bias_following')

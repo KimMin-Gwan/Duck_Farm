@@ -85,7 +85,10 @@ class HomeTheme extends MainTheme {
     );
 
     galleryBox = BoxDecoration(
-      color: Colors.deepPurpleAccent,
+      color: Colors.grey,
+      image: DecorationImage(
+        image: AssetImage("images/assets/loading.gif"),
+      ),
       borderRadius: BorderRadius.all(Radius.circular(12.0)),
     );
   }

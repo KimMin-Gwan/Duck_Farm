@@ -12,4 +12,6 @@ class CoreRepository{
   Future<DetailImageModel> fetchDetailImageData(uid, iid) => coreNetworkProvider.fetchImageDetail(uid, iid);
   Future<ImageListCategoryModel> fetchImageListCategory(uid, bid)
   => coreNetworkProvider.fetchImageListCategory(uid, bid);
+  Future<ImageListCategoryModel> fetchImageListCategoryBySchedule(uid, bid, sid)
+  => coreNetworkProvider.fetchImageListCategoryBySchedule(uid, bid, sid);
 }

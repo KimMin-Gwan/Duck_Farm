@@ -10,11 +10,13 @@ def send_data():
     #url = f'http://{HOST}:{str(PORT)}/bias_following/get_bias_following'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias'
     url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schedule'
 
     #send_data = {
         #"body" : {
             #'uid' : '1234-abcd-5678',
-            #'bid' : '1001'
+            #'bid' : '1001',
+            #'sid' : '5'
         #}
     #}
 
@@ -24,10 +26,13 @@ def send_data():
             'date' : '2024/05/26'
         }
     }
+
     #send_data = {
         #'uid' : '1234-abcd-5678',
-        #'iid' : '1001-1'
+        #'bid' : '1001',
+        #'sid' : '4'
     #}
+
     headers = {
         'Content-Type': 'application/json'
     }

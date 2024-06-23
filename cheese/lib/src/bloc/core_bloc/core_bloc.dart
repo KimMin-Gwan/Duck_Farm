@@ -13,12 +13,16 @@ import 'package:intl/intl.dart';
 class CoreBloc extends Bloc<CoreEvent, CoreState>{
   final UserRepository _userRepository;
   final CoreRepository _coreRepository;
+  List<CoreState> _coreStateStack = [];
+
   String selectedBid = "";
 
   CoreBloc(this._userRepository, this._coreRepository) : super(InitCoreState()){
     on<NoneBiasHomeDataEvent>(_onNoneBiasHomeDataEvent);
     on<DetailImageDataEvent>(_onDetailImageEvent);
     on<ImageListCategoryEvent>(_onImageListCategoryEvent);
+    on<ImageListCategoryByScheduleEvent>(_onImageListCategoryByScheduleEvent);
+    on<LoadBackwardEvent>(_onLoadBackwardEvent);
   }
 
   /*
@@ -31,22 +35,46 @@ class CoreBloc extends Bloc<CoreEvent, CoreState>{
 
   Future<void> _onNoneBiasHomeDataEvent(NoneBiasHomeDataEvent event, Emitter<CoreState> emit) async {
     HomeDataModel homeDataModel = await _coreRepository.fetchNoneBiasHomeData(_userRepository.uid, event.date);
-    emit(NoneBiasState(homeDataModel, event.date));
+    var state = NoneBiasState(homeDataModel, event.date);
+    _coreStateStack.add(state);
+    emit(state);
   }
 
   Future<void> _onDetailImageEvent(DetailImageDataEvent event, Emitter<CoreState> emit) async {
-    String iid_with_type = event.iid;
-    String iid = iid_with_type.split('.').first;
-
+    String iid = event.iid;
     DetailImageModel detailImageModel = await _coreRepository.fetchDetailImageData(_userRepository.uid, iid);
-    emit((DetailImageState(detailImageModel)));
+
+    var state = DetailImageState(detailImageModel);
+    _coreStateStack.add(state);
+    emit(state);
   }
 
   Future<void> _onImageListCategoryEvent(ImageListCategoryEvent event, Emitter<CoreState> emit) async {
     String bid = event.bid;
 
     ImageListCategoryModel imageListCategoryModel = await _coreRepository.fetchImageListCategory(_userRepository.uid, bid);
-    emit((ImageListCategoryState(imageListCategoryModel)));
+    var state = ImageListCategoryState(imageListCategoryModel);
+    _coreStateStack.add(state);
+    emit(state);
+  }
+
+  Future<void> _onImageListCategoryByScheduleEvent(ImageListCategoryByScheduleEvent event, Emitter<CoreState> emit) async {
+    String bid = event.bid;
+    String sid = event.sid;
+
+    ImageListCategoryModel imageListCategoryModel = await _coreRepository.fetchImageListCategoryBySchedule(_userRepository.uid, bid, sid);
+    var state = ImageListCategoryByScheduleState(imageListCategoryModel);
+    _coreStateStack.add(state);
+    emit(state);
+  }
+
+  Future<void> _onLoadBackwardEvent(LoadBackwardEvent event, Emitter<CoreState> emit) async {
+    _coreStateStack.removeLast();
+    if (!_coreStateStack.isEmpty){
+      emit(_coreStateStack.last);
+    }else{
+      emit(InitCoreState());
+    }
   }
 
 }

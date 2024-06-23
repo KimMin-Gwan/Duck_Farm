@@ -73,7 +73,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                   color: Colors.white,
                 ),
                 Container(
-                  height: queryHeight * 0.05,
+                  height: queryHeight * 0.07,
                   color: _style.mainWhiteColor,
                   child: Stack(
                     children: [
@@ -85,7 +85,7 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                         alignment: Alignment.centerLeft,
                         child: IconButton(
                           onPressed: (){
-                            BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
+                            BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
                             Navigator.pop(context);
                           },
                           icon: Icon(Icons.chevron_left),
@@ -174,7 +174,7 @@ class _TopDetailWidgetState extends State<TopDetailWidget> {
         return Column(
           children: [
             Container(
-              height: queryHeight * 0.08,
+              height: queryHeight * 0.1,
             ),
             Container(
               height: 0.5,
@@ -367,7 +367,7 @@ class _MiddleDetailWidgetState extends State<MiddleDetailWidget> {
       onTap: (){},
       child: Container(
         width: width,
-        child:Image.network("http://223.130.157.23/images/${model.iid}.jpg", fit:BoxFit.cover)
+        child:Image.network("https://kr.object.ncloudstorage.com/cheese-images/${model.iid}.jpg", fit:BoxFit.cover)
       )
     );
   }
