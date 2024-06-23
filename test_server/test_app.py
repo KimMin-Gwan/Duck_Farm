@@ -3,6 +3,7 @@ import uvicorn
 from fake_database import Local_Database
 from datetime import datetime
 import json
+import pprint
 
 #HOST = '192.168.55.213'
 HOST = '127.0.0.1'
@@ -102,6 +103,8 @@ class Controller:
         target_date = datetime.strptime(requset['date'], date_format)
         schedule_data = []
 
+        pprint.pprint(schedules)
+
         temp_dict = {}
         for bias in biases:
             temp_dict[bias['bid']] = []
@@ -113,12 +116,15 @@ class Controller:
                 for iid in schedule['iids']:
                     a_image_url = iid + '.jpg'
                     image_url.append(a_image_url)
+                #print("schdedule : ", schedule)
                 a_schedule_data = {
+                    'sid' : schedule['sid'],
                     'schedule_name' : schedule['sname'],
                     'type' : schedule['type'],
                     'image_url' : image_url
                 }
                 temp_dict[schedule['bid']].append(a_schedule_data)
+
 
         home_body_data = []
         for bid, schdeule_data_list in temp_dict.items():
