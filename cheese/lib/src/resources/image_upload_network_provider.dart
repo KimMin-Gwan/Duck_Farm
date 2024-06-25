@@ -35,7 +35,7 @@ class TryGetImageDataApiJsonParser extends MainJsonParser{
   void makeBodyData(uid, bid, schedule, date, detail, link, location, numImages){
     body['uid'] = uid;
     body['bid'] = bid;
-    body['schedule'] = schedule;
+    body['sname'] = schedule;
     body['date'] = date;
     body['detail'] = detail;
     body['link'] = link;

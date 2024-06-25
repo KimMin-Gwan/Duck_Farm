@@ -10,9 +10,9 @@ PORT = 5000
 def send_data():
     #url = f'http://{HOST}:{str(PORT)}/bias_following/get_bias_following'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias'
-    url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schedule'
-    #url = f'http://{HOST}:{str(PORT)}/core_system/upload_post'
+    url = f'http://{HOST}:{str(PORT)}/core_system/upload_post'
 
     #send_data = {
         #"body" : {
@@ -29,19 +29,19 @@ def send_data():
         }
     }
 
-    #send_data = {
-        #"body" : {
-            #"uid" : "1234-abcd-5678",
-            #"bid" : "1001",
-            #"sname" : "QWER 아어의 놀이터2 특별 공연",
-            #"date" : "2024/06/06",
-            #"detail" : "쵸단사진입니아요",
-            #"link" : "",
-            #"location" : "online",
-            #"num_images" : 3,
+    send_data = {
+        "body" : {
+            "uid" : "1234-abcd-5678",
+            "bid" : "1001",
+            "sname" : "QWER 메이크스타 팬싸인회",
+            "date" : "2024/05/19",
+            "detail" : "쵸단사진입니아요",
+            "link" : "",
+            "location" : "",
+            "num_images" : 3
             #"image_filenames" : ["asdfava.jpg", "dafnavpa.jpg", "dalnfpas.jpg"]
-        #}
-    #}
+        }
+    }
 
     #send_data = {
         #'uid' : '1234-abcd-5678',

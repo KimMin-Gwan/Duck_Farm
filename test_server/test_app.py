@@ -526,6 +526,7 @@ class View:
             #request = ImageListByBiasRequest(raw_request=request)
             controller = Controller()
             response = controller.try_upload_post(self.__database, request['body'])
+            print(response)
             return response
 
 
