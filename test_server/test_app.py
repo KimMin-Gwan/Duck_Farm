@@ -525,6 +525,7 @@ class View:
         def getBiasFollowing(request:dict):
             #request = ImageListByBiasRequest(raw_request=request)
             controller = Controller()
+            print(request)
             response = controller.try_upload_post(self.__database, request['body'])
             print(response)
             return response
