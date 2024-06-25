@@ -20,7 +20,6 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
   final maxWidth = 400.0;
   final maxHeight = 900.0;
   bool interaction = false;
-  var uploadBloc = ImageUploadBloc();
 
   TextEditingController biasTextController = TextEditingController();
   TextEditingController scheduleTextController = TextEditingController();
