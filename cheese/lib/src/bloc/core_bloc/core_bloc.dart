@@ -3,17 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_event.dart';
 import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 import 'package:cheese/src/resources/user_repository.dart';
-import 'package:cheese/src/model/user_model.dart';
 import 'package:cheese/src/model/image_model.dart';
-import 'package:cheese/src/model/schedule_model.dart';
-import 'package:cheese/src/model/bias_model.dart';
 import 'package:cheese/src/resources/core_repository.dart';
-import 'package:intl/intl.dart';
 
 class CoreBloc extends Bloc<CoreEvent, CoreState>{
   final UserRepository _userRepository;
   final CoreRepository _coreRepository;
-  List<CoreState> _coreStateStack = [];
+  final List<CoreState> _coreStateStack = [];
 
   String selectedBid = "";
 

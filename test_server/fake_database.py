@@ -44,13 +44,13 @@ class Local_Database:
     # 저장하기
     def __save_bias_json(self):
         file_name = self.__data_files['bias_file']
-        self.__save_json(file_name, self.__image_data)
+        self.__save_json(file_name, self.__bias_data)
         return
 
     # 저장하기
     def __save_schedule_json(self):
         file_name = self.__data_files['schedule_file']
-        self.__save_json(file_name, self.__image_data)
+        self.__save_json(file_name, self.__schedule_data)
         return
     
     # uid로 유저 찾기 -> 찾환 데이터 반환 없으면 None 반환
@@ -92,6 +92,65 @@ class Local_Database:
 
         return find_image
 
+    def get_schedule_data_with_sname(self, sname):
+        find_schedule = None
+        for schedule in self.__schedule_data:
+            if sname == schedule['sname']:
+                find_schedule = schedule
 
+        return find_schedule
 
+    def set_schedule_data(self, schedule_data):
+        target_index = -1
 
+        for i, schedule in enumerate(self.__schedule_data):
+            if schedule['sid'] == schedule_data['sid']:
+                target_index = i
+                break
+            i += 1
+
+        if target_index == -1:
+            return False
+        
+        self.__schedule_data[target_index] = schedule_data
+        self.__save_schedule_json()
+        return True
+
+    def add_new_schedule_data(self, schedule_data):
+        try:
+            self.__schedule_data.append(schedule_data)
+            self.__save_schedule_json()
+        except:
+            return False
+
+        return True
+
+    def set_bias_data(self, bias_data):
+        target_index = -1
+
+        for i, bias in enumerate(self.__bias_data):
+            if bias['bid'] == bias_data['bid']:
+                target_index = i
+                break
+
+            i += 1
+
+        if target_index == -1:
+            return False
+
+        self.__bias_data[target_index] = bias_data
+        self.__save_bias_json()
+        return True
+
+    def add_new_images(self, new_images):
+        try:
+            self.__image_data.extend(new_images)
+            self.__save_image_json()
+        except:
+            return False
+        
+        return True
+
+    def get_num_schedule(self):
+        num_schedule = len(self.__schedule_data)
+        return num_schedule

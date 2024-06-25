@@ -62,3 +62,36 @@ class ImageListCategoryModel{
   }
 }
 
+
+class ImageUploadModel {
+  String access_key = "eeJ2HV8gE5XTjmrBCi48";
+  String secret_token = "zAGUlUjXMup1aSpG6SudbNDzPEXHITNkEUDcOGnv";
+  String bucket_name = "";
+  List<String> iids = [];
+
+
+  ImageUploadModel({
+    //required this.access_key,
+    //required this.secret_token,
+    required this.bucket_name,
+    required this.iids,
+  });
+
+  factory ImageUploadModel.fromJson(Map data){
+    Map body_data = data['body'];
+
+    if (data['state-code'] == 205){
+      return ImageUploadModel(
+          bucket_name: body_data['bucket_name'],
+          iids : body_data['iid']
+      );
+    }else{
+      return ImageUploadModel(
+          bucket_name: "",
+          iids : body_data['iid']
+      );
+    }
+
+  }
+
+}

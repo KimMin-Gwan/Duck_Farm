@@ -442,7 +442,9 @@ class _ImageListWidgetState extends State<ImageListWidget> {
         child: Container(
           padding: const EdgeInsets.all(4),
           width: width * 0.3,
-          child : Image.network("https://kr.object.ncloudstorage.com/cheese-images/${image['iid']}.jpg",
+          child : ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.network("https://kr.object.ncloudstorage.com/cheese-images/${image['iid']}.jpg",
               fit: BoxFit.fitHeight, loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress)
               {
                 if(loadingProgress == null){
@@ -454,7 +456,8 @@ class _ImageListWidgetState extends State<ImageListWidget> {
                   ),
                 );
               }
-          ),
+            ),
+          )
         )
       );
 

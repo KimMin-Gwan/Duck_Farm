@@ -136,7 +136,6 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
 
     return BlocBuilder<CoreBloc, CoreState>(
       builder: (context, state)

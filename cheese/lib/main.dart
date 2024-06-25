@@ -5,6 +5,8 @@ import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
 import 'package:cheese/src/ui/home_widget.dart';
 import 'package:cheese/src/resources/user_repository.dart';
 import 'package:cheese/src/resources/core_repository.dart';
+import 'package:cheese/src/bloc/core_bloc/core_event.dart';
+import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,9 +26,20 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) => CoreBloc(userRepository, coreRepository),
           ),
         ],
-        child: MaterialApp(
+        child: const MaterialApp(
           title: 'Cheese_proto',
-          home: HomePage()
+          home: StartCheese()
         ));
   }
 }
+
+class StartCheese extends StatelessWidget {
+  const StartCheese({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
+    return HomePage();
+  }
+}
+

@@ -337,6 +337,107 @@ class Controller:
         response = response.encode()
 
         return response 
+    
+    def try_upload_post(self, database:Local_Database, request):
+        request_body= {
+            "uid" : "",
+            "bias" : "1001",
+            "sname" : "비트로드",
+            "date" : "2023/12/06",
+            "detail" : "쵸단사진입니아요",
+            "link" : "",
+            "location" : "",
+            "num_images" : 0,
+            "image_filenames" : []
+        }
+
+        form = {
+            'header':{
+                'state-code' : '201'
+            }
+        }
+
+        body = {
+            "access_key" : "",
+            "secret_token" : "",
+            "bucket_name" : "",
+            "iid" : ["1001-1", "1001-2"],
+        }
+
+
+        date_format = '%Y/%m/%d'
+        target_date = datetime.today().strftime(date_format)
+
+
+        bias_data = database.get_bias_data_with_bid(bid=request['bid'])
+        last_number = len(bias_data['iid'])
+
+        new_iids = []
+        new_images = []
+        
+        for i in range(request['num_images']):
+            new_iid = bias_data['bid'] + "-" + str(last_number + i + 1)
+            new_image = {
+                "iid" : new_iid,
+                "bid" : bias_data['bid'],
+                "uid" : request["uid"],
+                "sid" : "",
+                "image_type" : "jpg",
+                "image_detail" : request['detail'],
+                "upload_date" : target_date,
+                "location" : request['location']
+            }
+
+            new_images.append(new_image)
+            new_iids.append(new_iid)
+        
+        schedule_data = database.get_schedule_data_with_sname(sname=request['sname'])
+
+        bias_data['iid'].extend(new_iids)
+
+        if schedule_data:
+            schedule_data['iids'].extend(new_iids)
+            database.set_schedule_data(schedule_data)
+        else:
+            new_sid = str(database.get_num_schedule() + 1)
+
+            bias_data['sids'].append(new_sid)
+            if request['location'] == "offline":
+                schedule_type = "offline"
+            else:
+                schedule_type = "online"
+
+            schedule_data = {
+                "sid" : new_sid,
+                "bid" : request['bid'],
+                "sname" : request['sname'],
+                "date" : request['date'],
+                "location" : request['location'],
+                "type" : schedule_type,
+                "iids" : new_iids
+            }
+            database.add_new_schedule_data(schedule_data)
+
+        database.set_bias_data(bias_data)
+
+        image_file_names = []
+        for image in new_images:
+            image['sid'] = schedule_data['sid']
+            image_file_names.append(image['iid'] + '.jpg')
+
+        database.add_new_images(new_images)
+
+
+        body['access_key'] = ""
+        body['secret_token'] = ""
+        body['bucket_name'] = "cheese-images"
+        body['iid'] = image_file_names
+
+        form['header']['state-code'] = '205'
+        form['body']= body
+        response = json.dumps(form, ensure_ascii=False)
+        response = response.encode()
+        return response
 
 
 
@@ -420,6 +521,12 @@ class View:
             response = controller.get_bias_following(self.__database, request['body'])
             return response
         
+        @self.__app.post('/core_system/upload_post')
+        def getBiasFollowing(request:dict):
+            #request = ImageListByBiasRequest(raw_request=request)
+            controller = Controller()
+            response = controller.try_upload_post(self.__database, request['body'])
+            return response
 
 
 

@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_event.dart';
-import 'package:cheese/src/bloc/core_bloc/core_state.dart';
+import 'package:cheese/src/bloc/image_upload/image_upload_bloc.dart';
+import 'package:cheese/src/bloc/image_upload/image_upload_state.dart';
+import 'package:cheese/src/bloc/image_upload/image_upload_event.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:typed_data';
 
 // 이미지 업로드 메인 위젯
 class ImageUploadWidget extends StatefulWidget {
@@ -16,6 +20,16 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
   final maxWidth = 400.0;
   final maxHeight = 900.0;
   bool interaction = false;
+  var uploadBloc = ImageUploadBloc();
+
+  TextEditingController biasTextController = TextEditingController();
+  TextEditingController scheduleTextController = TextEditingController();
+  TextEditingController dateTextController = TextEditingController();
+  TextEditingController detailTextController = TextEditingController();
+  TextEditingController linkTextController = TextEditingController();
+  TextEditingController locationTextController = TextEditingController();
+
+  List fileNames = [];
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +70,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                   child: IconButton(
                       icon: Icon(Icons.chevron_left),
                       onPressed: (){
-                        BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
+                        BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
                         Navigator.pop(context);
                       }),
               ),
@@ -67,93 +81,87 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
               Container(
                 alignment: Alignment.centerRight,
                 child: InkWell(
-                  onTap: (){},
+                  onTap: (){
+                    BlocProvider.of<ImageUploadBloc>(context).add(GetUploadImageDataEvent(
+                        biasTextController.text,
+                        scheduleTextController.text,
+                        dateTextController.text,
+                        detailTextController.text,
+                        linkTextController.text,
+                        locationTextController.text,
+                        fileNames,
+                    ));
+                  },
                   child: Text('완료',style: _style.completeButton),
                 )
               )
             ],
           ),
         ),
-        FileSelecterWidget(),
-        InfoOptionWidget(),
+        _fileSelecterWidget(width, height),
+        _infoOptionWidget(width, height),
       ],
     );
   }
-}
 
-// 파일 업로드 부분 위젯
-class FileSelecterWidget extends StatefulWidget {
-  const FileSelecterWidget({super.key});
-
-  @override
-  State<FileSelecterWidget> createState() => _FileSelecterWidgetState();
-}
-
-class _FileSelecterWidgetState extends State<FileSelecterWidget> {
-  var _style = UploadTheme();
-
-  @override
-  Widget build(BuildContext context) {
-    double queryWidth = MediaQuery.of(context).size.width;
-    double queryHeight = MediaQuery.of(context).size.height;
-    return fileSelectArea(queryWidth, queryHeight);
+  Widget _fileSelecterWidget(width, height) {
+    return fileSelectArea(width, height);
   }
 
   Widget fileSelectArea(width, height){
-    return Container(
-      width: width,
-      height: height * 0.29,
-      color: _style.mainWhiteColor,
-      child: Stack(
-        children: [
-          Center(
-            child: Container(
-              width: width * 0.55,
-              height: height * 0.25,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.file_upload_outlined, color: Colors.black.withOpacity(0.6),),
-                    Text('0/10'),
-                    Text('jpeg,png,gif')
-                  ],
-                )
-              ),
-              decoration: _style.imageBoxDecoration
+    return InkWell(
+      onTap:() async{
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowedExtensions: ['jpg'],
+          allowMultiple: true,
+          withData: false
+        );
+        print("hello");
+
+        if( result != null && result.files.isNotEmpty ){
+          for (var file in result.files){
+            String fileName = file.name;
+            String? filePath = file.path;
+            fileNames.add(filePath);
+          }
+
+        }
+      },
+      child: Container(
+        width: width,
+        height: height * 0.29,
+        color: _style.mainWhiteColor,
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                width: width * 0.55,
+                height: height * 0.25,
+                decoration: _style.imageBoxDecoration,
+                child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.file_upload_outlined, color: Colors.black.withOpacity(0.6),),
+                        const Text('0/10'),
+                        const Text('jpeg,png,gif')
+                      ],
+                    )
+                ),
               ),
             ),
-        ],
+          ],
+        )
       )
     );
   }
-}
 
-// 정보 입력 부분 위젯
-class InfoOptionWidget extends StatefulWidget {
-  const InfoOptionWidget({super.key});
-
-  @override
-  State<InfoOptionWidget> createState() => _InfoOptionWidgetState();
-}
-
-class _InfoOptionWidgetState extends State<InfoOptionWidget> {
-  var _style = UploadTheme();
-
-  TextEditingController biasTextController = TextEditingController();
-  TextEditingController scheduleTextController = TextEditingController();
-  TextEditingController dateTextController = TextEditingController();
-  TextEditingController detailTextController = TextEditingController();
-  TextEditingController linkTextController = TextEditingController();
-  TextEditingController locationTextController = TextEditingController();
 
   final int maxLength = 20;
   String currentText = '';
   @override
-  Widget build(BuildContext context) {
-    double queryWidth = MediaQuery.of(context).size.width;
-    double queryHeight = MediaQuery.of(context).size.height;
-
+  Widget _infoOptionWidget(queryWidth, queryHeight) {
     return Container(
       width: queryWidth,
       height: queryHeight * 0.6,
