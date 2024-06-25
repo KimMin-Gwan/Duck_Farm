@@ -369,7 +369,8 @@ class Controller:
         target_date = datetime.today().strftime(date_format)
 
 
-        bias_data = database.get_bias_data_with_bid(bid=request['bid'])
+        #bias_data = database.get_bias_data_with_bid(bid=request['bid'])
+        bias_data = database.get_bias_data_with_bname(bname=request['bname'])
         last_number = len(bias_data['iid'])
 
         new_iids = []

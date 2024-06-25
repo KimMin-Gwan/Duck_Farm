@@ -32,7 +32,7 @@ def send_data():
     send_data = {
         "body" : {
             "uid" : "1234-abcd-5678",
-            "bid" : "1001",
+            "bname" : "쵸단",
             "sname" : "QWER 메이크스타 팬싸인회",
             "date" : "2024/05/19",
             "detail" : "쵸단사진입니아요",

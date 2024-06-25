@@ -70,6 +70,14 @@ class Local_Database:
 
         return find_bias
 
+    def get_bias_data_with_bname(self, bname):
+        find_bias = None
+        for bias in self.__bias_data:
+            if bname == bias['bname']:
+                find_bias = bias
+
+        return find_bias
+
     def get_schedule_data_with_sid(self, sid):
         find_schedule = None
         for schedule in self.__schedule_data:

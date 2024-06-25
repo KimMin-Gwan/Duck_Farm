@@ -116,7 +116,6 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
           allowMultiple: true,
           withData: false
         );
-        print("hello");
 
         if( result != null && result.files.isNotEmpty ){
           for (var file in result.files){
@@ -124,8 +123,10 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
             String? filePath = file.path;
             fileNames.add(filePath);
           }
-
         }
+        print(fileNames);
+        print(fileNames.length);
+
       },
       child: Container(
         width: width,

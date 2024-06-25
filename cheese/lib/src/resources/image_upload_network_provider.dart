@@ -40,7 +40,7 @@ class TryGetImageDataApiJsonParser extends MainJsonParser{
     body['detail'] = detail;
     body['link'] = link;
     body['location'] = location;
-    body['numImages'] = numImages;
+    body['num_images'] = numImages;
   }
 
   String getData() => super.makeSendData(this.body);
