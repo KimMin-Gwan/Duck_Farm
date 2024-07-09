@@ -1,4 +1,5 @@
 import 'package:cheese/src/ui/styles/upload_theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
@@ -17,9 +18,8 @@ class ImageUploadWidget extends StatefulWidget {
 
 class _ImageUploadWidgetState extends State<ImageUploadWidget> {
   var _style = UploadTheme(); // 테마
-  final maxWidth = 400.0;
-  final maxHeight = 900.0;
   bool interaction = false;
+  bool popUpState = false;
 
   TextEditingController biasTextController = TextEditingController();
   TextEditingController scheduleTextController = TextEditingController();
@@ -34,22 +34,78 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
   Widget build(BuildContext context) {
     double queryWidth = MediaQuery.of(context).size.width;
     // 가로 최대 길이를 400으로 한정
-    if (queryWidth > maxWidth) { queryWidth = maxWidth; }
     double queryHeight = MediaQuery.of(context).size.height;
     // 세로 최대 길이를 1200으로  한정
-    if (queryHeight > maxHeight) { queryHeight = maxHeight; }
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-            width: queryWidth,
-            height: queryHeight,
-            color: _style.mainWhiteColor,
-            child: uploadWidgetBody(queryWidth, queryHeight)
-        ),
+        child: Stack(
+          children: [
+            Container(
+                width: queryWidth,
+                height: queryHeight,
+                color: _style.mainWhiteColor,
+                child: uploadWidgetBody(queryWidth, queryHeight)
+            ),
+            popUpState ? _completeContainer(queryWidth, queryHeight) : Container()
+          ],
+        )
       )
     );
   }
+
+  Widget _completeContainer(width, height){
+    return Stack(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          height: height,
+          width: width,
+          color: Colors.black54.withOpacity(0.5),
+          child: Container(
+              alignment: Alignment.center,
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(
+                color: _style.mainLineColor,
+                borderRadius: BorderRadius.all(Radius.circular(6)),
+                border: Border.all(color: Colors.black54),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                     height: 140,
+                     width: 200,
+                      child: Text("업로드 성공", style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800)),
+                  ),
+                  InkWell(
+                    onTap:(){
+                      BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 40,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        color: _style.mainPurpleColor,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        border: Border.all(color: Colors.black54),
+                      ),
+                      child: Text("돌아가기", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                    ),
+                  )
+                ],
+              )
+          ),
+        ),
+      ],
+    );
+  }
+
+
 
   Widget uploadWidgetBody(width, height){
     return Column(
@@ -69,7 +125,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                   child: IconButton(
                       icon: Icon(Icons.chevron_left),
                       onPressed: (){
-                        BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
+                        //BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
                         Navigator.pop(context);
                       }),
               ),
@@ -81,6 +137,7 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                 alignment: Alignment.centerRight,
                 child: InkWell(
                   onTap: (){
+                    /*
                     BlocProvider.of<ImageUploadBloc>(context).add(GetUploadImageDataEvent(
                         biasTextController.text,
                         scheduleTextController.text,
@@ -90,6 +147,10 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
                         locationTextController.text,
                         fileNames,
                     ));
+                     */
+                    setState(() {
+                      popUpState = true;
+                    });
                   },
                   child: Text('완료',style: _style.completeButton),
                 )

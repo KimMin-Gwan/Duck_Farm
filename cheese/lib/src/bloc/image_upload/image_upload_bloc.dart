@@ -18,7 +18,7 @@ class ImageUploadBloc extends Bloc<ImageUploadEvent, ImageUploadState>{
     int numImages = event.imageFilenames.length;
     
     ImageUploadModel imageUploadModel = await _imageRepository.fetchTryGetImageData(
-        event.bid, event.schedule, event.date, event.detail, event.link, event.location, numImages);
+        event.bname, event.schedule, event.date, event.detail, event.link, event.location, numImages);
 
     print(event.imageFilenames);
     print(imageUploadModel.iids);
@@ -33,7 +33,8 @@ class ImageUploadBloc extends Bloc<ImageUploadEvent, ImageUploadState>{
       'object_name': event.imageUploadModel.iids
     };
 
-    var result = _imageRepository.fetchTryImageUpload(args, event.fileNames);
-
+    //String path = '/data/user/0/com.example.cheese/cache/file_picker/1719336984231/1000006410.jpg';
+    Map<String, dynamic> result = await _imageRepository.fetchTryImageUpload(args, event.fileNames);
+    print(result['done']);
   }
 }

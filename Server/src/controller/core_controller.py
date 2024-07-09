@@ -1,62 +1,64 @@
-from model import User_Model
-from model import Image_Model
-from model import Bias_Model
+from model import NoneBiasHomeDataModel, BiasHomeDataModel, ImageDetailModel
+from model import Local_Database
+#from view import NoneBiasHomeDataRequest, BiasHomeDataRequest
+from others import UserNotExist, CoreControllerLogicError, DictMakingError
+
 
 class Core_Controller:
-    def __init__(self) -> None:
-        pass
+    def get_none_bias_home_data(self, database:Local_Database, request) -> NoneBiasHomeDataModel:
+        model = NoneBiasHomeDataModel(database=database)
+        try:
+            # 유저가 있는지 확인
+            if not model.get_user_with_uid(request=request):
+                raise UserNotExist("Can not find User with uid")
+        except UserNotExist as e:
+            print("Error Catched : ", e)
+            model.set_state_code(e.error_code) # 종합 에러
+            return model
 
-    def get_none_bias_home_data(self,request, database):
+        try:
+                
+            if not model.set_bias_with_bid():
+                return model
+        
+            if not model.set_schedules_with_sid():
+                return model
 
-        bias_models=[]
-        target_schedules=[]
-        image_models=[]
-        image_by_date = []
-        image_list = []
+            if not model.set_home_body_data_with_target_date(request=request):
+                return model
+            model.set_state_code("211")
 
-        user_model = User_Model()
-        result = {}
-        if not user_model.is_vaild_user(request['uid']) :   #유저 확인
-            result = {
-                'state_code' : '501',
-                'detail' : 'permision denied',
-            }
-            return result
+        except CoreControllerLogicError as e:
+            print("Error Catched : ", e)
+            model.set_state_code(e.error_code) # 종합 에러
 
-        for bid in request['bid'] :
-            bias_model = Bias_Model(database)
-            bias_model.make_schedule_list(bid)
-            bias_models.append(bias_model)
+        except DictMakingError as e:
+            model.set_state_code(e.error_code)
 
-        for schedule in bias_models[0].get_schedules():
-            if (schedule.get_date() == request['date']):
-                target_schedules.append(schedule)
-
-        if target_schedules :
-            for schedule in target_schedules:
-                image_model = Image_Model(database)
-                image_model.make_image_data_with_schedule(schedule)
-                image_models.append(image_model)
-
-        for bias_model in bias_models:
-            image_by_date.append(bias_model.get_image_by_date()) 
-
-        for image_model in image_models:
-            image_list.append(image_model.get_home_body_image_list()) 
-
-        latest_image = {
-            'bid' : bias_models[0].get_bid(),
-            'image_list' : image_list
-        }
-
-        result = {
-            'state_code': '201',
-            '“image_by_date”' : image_by_date,
-            'detail' : 'none-bias-home-date-returned',
-            '“latest_image”':latest_image
-        }
-
-        return result
+        finally:
+            return model
     
-    def get_bias_home_data(self, request, database):
-        return
+    def get_bias_home_data(self, database:Local_Database, request):
+        model = BiasHomeDataModel(database=database)
+        model.set_state_code('503')
+
+        return model
+    
+
+    def get_image_detail(self, database:Local_Database, request):
+        model = ImageDetailModel(database=database)
+        try:
+            # 유저가 있는지 확인
+            if not model.get_user_with_uid(request=request):
+                raise UserNotExist("Can not find User with uid")
+        except UserNotExist as e:
+            print("Error Catched : ", e)
+            model.set_state_code(e.error_code) # 종합 에러
+            return model
+        
+
+
+
+
+
+

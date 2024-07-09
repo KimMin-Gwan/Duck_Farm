@@ -14,7 +14,7 @@ class InitImageUploadEvent extends ImageUploadEvent{
 
 class TryImageUploadEvent extends ImageUploadEvent{
   final ImageUploadModel imageUploadModel;
-  final List<String> fileNames;
+  final List fileNames;
 
   TryImageUploadEvent(
       this.imageUploadModel,
@@ -26,7 +26,7 @@ class TryImageUploadEvent extends ImageUploadEvent{
 }
 
 class GetUploadImageDataEvent extends ImageUploadEvent{
-  final String bid;
+  final String bname;
   final String schedule;
   final String date;
   final String detail;
@@ -35,7 +35,7 @@ class GetUploadImageDataEvent extends ImageUploadEvent{
   final List imageFilenames;
 
   GetUploadImageDataEvent(
-      this.bid,
+      this.bname,
       this.schedule,
       this.date,
       this.detail,
@@ -45,5 +45,5 @@ class GetUploadImageDataEvent extends ImageUploadEvent{
       );
 
   @override
-  List<Object> get props => [bid, schedule, date, detail, link, location, imageFilenames];
+  List<Object> get props => [bname, schedule, date, detail, link, location, imageFilenames];
 }

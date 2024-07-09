@@ -7,9 +7,9 @@ class ImageRepository{
 
 
   Future<ImageUploadModel> fetchTryGetImageData(
-      bid, schedule, date, detail, link, location, numImages,)
+      bname, schedule, date, detail, link, location, numImages,)
     => imageUploadNetworkProvider.fetchTryGetImageData(
-      uid, bid, schedule, date, detail, link, location, numImages);
+      uid, bname, schedule, date, detail, link, location, numImages);
 
   Future<Map<String, dynamic>> fetchTryImageUpload(
       args, fileNames) => imageUploadNetworkProvider.fetchTryImageUpload(

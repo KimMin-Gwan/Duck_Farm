@@ -32,9 +32,9 @@ class TryGetImageDataApiJsonParser extends MainJsonParser{
     );
   }
 
-  void makeBodyData(uid, bid, schedule, date, detail, link, location, numImages){
+  void makeBodyData(uid, bname, schedule, date, detail, link, location, numImages){
     body['uid'] = uid;
-    body['bid'] = bid;
+    body['bname'] = bname;
     body['sname'] = schedule;
     body['date'] = date;
     body['detail'] = detail;
@@ -80,7 +80,7 @@ class ImageUploadNetworkProvider{
     return base64.encode(kSigning);
   }
 
-  Future<Map<String, dynamic>> fetchTryImageUpload(Map<String, String> args, fileNames) async {
+  Future<Map<String, dynamic>> fetchTryImageUpload(Map args, fileNames) async {
     var imagePath = './test_images/1003.jpg';
 
     try {
@@ -134,6 +134,7 @@ class ImageUploadNetworkProvider{
         file = File(fileName);
         response = await http.put(Uri.parse(endpoint), body: file.readAsBytesSync(), headers: headers);
         if(response.statusCode != 200){
+          print(response.statusCode);
           checkUpload = false;
         }
       }
@@ -144,6 +145,7 @@ class ImageUploadNetworkProvider{
         return {'done': false, 'error_message': response.body};
       }
     } catch (e) {
+      print(e.toString());
       return {'done': false, 'error_message': e.toString()};
     }
   }

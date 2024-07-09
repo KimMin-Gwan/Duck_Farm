@@ -67,7 +67,7 @@ class ImageUploadModel {
   String access_key = "eeJ2HV8gE5XTjmrBCi48";
   String secret_token = "zAGUlUjXMup1aSpG6SudbNDzPEXHITNkEUDcOGnv";
   String bucket_name = "";
-  List<String> iids = [];
+  List iids = [];
 
 
   ImageUploadModel({

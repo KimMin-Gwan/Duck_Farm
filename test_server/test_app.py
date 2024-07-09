@@ -1,9 +1,10 @@
-from fastapi import FastAPI
 import uvicorn
 from fake_database import Local_Database
 from datetime import datetime
 import json
 import pprint
+from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.responses import JSONResponse
 
 #HOST = '192.168.55.213'
 HOST = '127.0.0.1'
@@ -459,13 +460,35 @@ class BiasFollowingController:
         return
     
 
+import boto3
 
-
-class ImageListByBiasRequest:
+class ImageUploadController:
     def __init__(self, raw_request):
-        self.uid = raw_request['uid']
-        self.bid = raw_request['bid']
-        self.ordier = raw_request['ordering'] 
+        self.__args = {
+            'access_key' : 'eeJ2HV8gE5XTjmrBCi48',
+            'secret_key' : 'zAGUlUjXMup1aSpG6SudbNDzPEXHITNkEUDcOGnv',
+            'bucket_name' : 'cheese-images',
+            'object_name' : 'test_upload.jpg'
+        }
+
+
+    def boto_upload(self, image):
+        args = self.__args
+        server_name = 's3'
+        endpoint = 'https://kr.object.ncloudstorage.com'
+
+        try:
+            s3 = boto3.client(
+                server_name,
+                endpoint_url = endpoint,
+                aws_access_key_id = args["access_key"],
+                aws_secret_access_key = args["secret_key"]
+            )
+            s3.upload_file(f"{image}", args["bucket_name"], args["object_name"])
+
+            return {"done"  : True}
+        except Exception as e:
+            return {"done":False, "error_message": e}
 
 
 
@@ -530,6 +553,18 @@ class View:
             response = controller.try_upload_post(self.__database, request['body'])
             print(response)
             return response
+
+        @self.__app.post('/upload_test')
+        def getBiasFollowing(file: UploadFile = File(...)):
+            try:
+                print(file.file)
+                imageUpload = ImageUploadController()
+                result = imageUpload.boto_upload(image=file.file)
+                
+                return JSONResponse(content={"message": "이미지가 성공적으로 업로드되었습니다."})
+            
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=str(e))
 
 
 
