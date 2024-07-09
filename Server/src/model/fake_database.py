@@ -70,7 +70,7 @@ class Local_Database:
 
         return find_bias
 
-    def get_bias_data_with_bids(self, bids):
+    def get_bias_datas_with_bids(self, bids):
         find_bias = []
         for bid in bids:
             for bias in self.__bias_data:
@@ -94,7 +94,7 @@ class Local_Database:
                 find_schedule = schedule
         return find_schedule
 
-    def get_schedule_data_with_sids(self, sids):
+    def get_schedule_datas_with_sids(self, sids):
         find_schedule = []
         for sid in sids:
             for schedule in self.__schedule_data:

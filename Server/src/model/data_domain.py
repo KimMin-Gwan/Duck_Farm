@@ -1,5 +1,6 @@
 from others import DictMakingError
 
+# 추상 클래스
 class SampleDomain:
     def get_dict_form_data(self):
         pass
@@ -19,6 +20,7 @@ class User(SampleDomain):
         self.bids = []
         return
 
+    # database로 부터 받아온 데이터를 사용해 내용 구성
     def make_with_dict(self, dict_data):
         try:
             self.uid = dict_data['uid']
@@ -32,6 +34,7 @@ class User(SampleDomain):
         except:
             raise DictMakingError()
     
+    # response에 사용되는 json형태로 만들기 위한 dict 데이터
     def get_dict_form_data(self):
         return {
             "uid" : self.uid,
@@ -50,6 +53,7 @@ class Bias(SampleDomain):
         self.sids = []
         self.iids = []
 
+    # database로 부터 받아온 데이터를 사용해 내용 구성
     def make_with_dict(self, dict_data):
         try:
             self.bid = dict_data['bid']
@@ -59,8 +63,8 @@ class Bias(SampleDomain):
             return
         except:
             raise DictMakingError()
-
     
+    # response에 사용되는 json형태로 만들기 위한 dict 데이터
     def get_dict_form_data(self):
         return{
             "bid" : self.bid,
@@ -82,6 +86,7 @@ class Schedule:
         self.iids = iids
         pass
 
+    # database로 부터 받아온 데이터를 사용해 내용 구성
     def make_with_dict(self, dict_data):
         try:
             self.sid = dict_data['sid'] 
@@ -94,6 +99,7 @@ class Schedule:
         except:
             raise DictMakingError()
 
+    # response에 사용되는 json형태로 만들기 위한 dict 데이터
     def get_dict_form_data(self):
         return {
             "sid" : self.sid,
@@ -120,6 +126,7 @@ class Image:
         self.bid = bid
         self.uid = uid
 
+    # database로 부터 받아온 데이터를 사용해 내용 구성
     def make_with_dict(self, dict_data):
         try:
             self.iid = dict_data['iid']
@@ -134,6 +141,7 @@ class Image:
         except:
             raise DictMakingError()
         
+    # response에 사용되는 json형태로 만들기 위한 dict 데이터
     def get_dict_form_data(self):
         return {
             "iid" : self.iid,

@@ -9,7 +9,7 @@ class Core_Controller:
         model = NoneBiasHomeDataModel(database=database)
         try:
             # 유저가 있는지 확인
-            if not model.get_user_with_uid(request=request):
+            if not model.set_user_with_uid(request=request):
                 raise UserNotExist("Can not find User with uid")
         except UserNotExist as e:
             print("Error Catched : ", e)
@@ -18,7 +18,7 @@ class Core_Controller:
 
         try:
                 
-            if not model.set_bias_with_bid():
+            if not model.set_biases_with_bids():
                 return model
         
             if not model.set_schedules_with_sid():
@@ -49,7 +49,7 @@ class Core_Controller:
         model = ImageDetailModel(database=database)
         try:
             # 유저가 있는지 확인
-            if not model.get_user_with_uid(request=request):
+            if not model.set_user_with_uid(request=request):
                 raise UserNotExist("Can not find User with uid")
         except UserNotExist as e:
             print("Error Catched : ", e)

@@ -1,6 +1,26 @@
-from model.header_data_model import HeaderModel
 from model.fake_database import Local_Database
 from model.data_domain import User
+import json
+
+class HeaderModel:
+    def __init__(self) -> None:
+        self._state_code = '500'
+
+    def _get_response_data(self, body):
+        form = {
+            'header' : {
+                'state-code' : self._state_code
+                },
+            'body' : body
+        }
+
+        response = json.dumps(form, ensure_ascii=False)
+        return response
+
+    def set_state_code(self, state_code):
+        self._state_code = state_code
+        return
+
 
 class SampleModelTypeOne(HeaderModel):
     def __init__(self, database) -> None:
@@ -8,7 +28,7 @@ class SampleModelTypeOne(HeaderModel):
         self._user = User()
         super().__init__()
 
-    def get_user_with_uid(self, request):
+    def set_user_with_uid(self, request):
         # uid를 기반으로 user table 데이터와 userbias 데이터를 가지고 올것
         user_data = self._database.get_user_data_with_uid(request.uid)
         if not user_data:
@@ -16,5 +36,6 @@ class SampleModelTypeOne(HeaderModel):
         self._user.make_with_dict(user_data)
         return True
     
-    
-    
+    # 추상
+    def get_response_form_data(self):
+        pass

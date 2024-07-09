@@ -12,11 +12,11 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
         self.__home_body_data = []
 
     
-    def set_bias_with_bid(self) -> bool:
+    def set_biases_with_bids(self) -> bool:
         try:
             if len(self._user.bids) == 0:
                 return False
-            bias_datas = self._database.get_bias_data_with_bids(self._user.bids)
+            bias_datas = self._database.get_bias_datas_with_bids(self._user.bids)
 
             for bias_data in bias_datas:
                 bias = Bias()
@@ -33,7 +33,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
             for bias in self.__biases:
                 for sid in bias.sids:
                     sids.add(sid)
-            schedule_datas = self._database.get_schedule_data_with_sids(sids)
+            schedule_datas = self._database.get_schedule_datas_with_sids(sids)
 
             # 스케줄 데이터가 하나도 없다면 그냥 반환
             if not schedule_datas:
@@ -49,7 +49,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
         except Exception as e:
             raise CoreControllerLogicError("set_schedules_with_sid error | " + e)
     
-    def set_home_body_data_with_target_date(self, request):
+    def set_home_body_data_with_target_date(self, request) -> bool:
         try:
             date_format = "%Y/%m/%d"
             target_date = datetime.strptime(request.date, date_format)
@@ -111,7 +111,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
                 "home_body_data" : dict_home_body_data
             }
 
-            response = self.get_response_data(body=body)
+            response = self._get_response_data(body=body)
             return response
 
         except Exception as e:

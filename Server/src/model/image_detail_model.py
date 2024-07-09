@@ -22,6 +22,9 @@ class ImageDetailModel(SampleModelTypeOne):
             body.update(self.__bias.get_dict_form_data())
             body['schedule'] = self.__schedule.get_dict_form_data()
 
+            response = self._get_response_data(body=body)
+            return response
+
         except Exception as e:
             raise CoreControllerLogicError("response making error | " + e)
 
