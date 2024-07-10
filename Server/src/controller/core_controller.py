@@ -17,14 +17,16 @@ class Core_Controller:
             return model
 
         try:
-                
             if not model.set_biases_with_bids():
+                model.set_state_code("210")
                 return model
         
-            if not model.set_schedules_with_sid():
+            if not model.set_schedules_with_sids():
+                model.set_state_code("210")
                 return model
 
             if not model.set_home_body_data_with_target_date(request=request):
+                model.set_state_code("210")
                 return model
             model.set_state_code("211")
 

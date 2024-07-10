@@ -27,7 +27,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
             raise CoreControllerLogicError("set_bias_with_bid error | " + e)
 
     
-    def set_schedules_with_sid(self) -> bool:
+    def set_schedules_with_sids(self) -> bool:
         try:
             sids = set()
             for bias in self.__biases:
@@ -91,7 +91,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
 
 
     # json 타입의 데이터로 반환
-    def get_response_form_data(self):
+    def get_response_form_data(self, head_parser):
         try:
             dict_bias_data = []
             for data in self.__biases:
@@ -111,7 +111,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
                 "home_body_data" : dict_home_body_data
             }
 
-            response = self._get_response_data(body=body)
+            response = self._get_response_data(head_parser=head_parser, body=body)
             return response
 
         except Exception as e:

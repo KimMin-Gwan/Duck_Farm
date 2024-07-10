@@ -1,16 +1,17 @@
 from model.fake_database import Local_Database
 from model.data_domain import User
+from view.parsers import Head_Parser
 import json
 
 class HeaderModel:
     def __init__(self) -> None:
         self._state_code = '500'
 
-    def _get_response_data(self, body):
+    def _get_response_data(self, head_parser:Head_Parser, body):
+        header = head_parser.get_header()
+        header['state-code'] = self._state_code
         form = {
-            'header' : {
-                'state-code' : self._state_code
-                },
+            'header' : header,
             'body' : body
         }
 

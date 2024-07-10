@@ -1,6 +1,7 @@
 
 class Master_View():
-    def __init__(self) -> None:
+    def __init__(self, head_parser) -> None:
+        self._head_parser = head_parser
         self._endpoint = ''
         pass
 

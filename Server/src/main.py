@@ -12,7 +12,7 @@ class Master(Configure_File_Reader):
         pass
 
     def server_start_up(self):
-        database = Local_Database()
+        database = Local_Database() #디비 실행
         cheese_server = Cheese_Server(database=database)
         cheese_server.run_server(self._host, self._port)
         

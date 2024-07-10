@@ -9,7 +9,8 @@ from controller import Core_Controller
 import json
 
 class Core_Service_View(Master_View):
-    def __init__(self, app:FastAPI, endpoint:str, database) -> None:
+    def __init__(self, app:FastAPI, endpoint:str, database, head_parser) -> None:
+        super().__init__(head_parser=head_parser)
         self.__app = app
         self._endpoint = endpoint
         self.__database = database
@@ -26,16 +27,16 @@ class Core_Service_View(Master_View):
             core_controller=Core_Controller()
             model = core_controller.get_none_bias_home_data(database=self.__database,
                                                              request=request)
-            response = model.get_response_form_data()
+            response = model.get_response_form_data(self._head_parser)
             return response
         
         @self.__app.post(endpoint+'/bias_home_data')
         def bias_home_data(raw_request:dict):
-            request = NoneBiasHomeDataRequest(request=raw_request)
+            request = BiasHomeDataRequest(request=raw_request)
             core_controller=Core_Controller()
             model = core_controller.get_bias_home_data(database=self.__database,
                                                              request=request)
-            response = model.get_response_form_data()
+            response = model.get_response_form_data(self._head_parser)
             return response
 
         @self.__app.post(endpoint+'/detail_image')
@@ -44,7 +45,7 @@ class Core_Service_View(Master_View):
             core_controller = Core_Controller()
             model = core_controller.get_image_detail(database=self.__database,
                                                      request=request)
-            response = model.get_response_form_data()
+            response = model.get_response_form_data(self._head_parser)
             return response
 
 

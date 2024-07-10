@@ -27,11 +27,13 @@ class Configure_File_Reader:
 
 class Head_Parser(Configure_File_Reader):
     def __init__(self) -> None:
-        self._extract_host_port('./../configure.txt')
+        self._extract_host_port('./configure.txt')
         self._header = {
             'request-type' : 'default',
             'server-version' : self._version,
-            'state-code' : 100,
+            'state-code' : "100",
             'detail' : 'Default'
         }
 
+    def get_header(self):
+        return self._header
