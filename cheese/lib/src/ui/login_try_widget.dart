@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
+import 'package:flutter/services.dart';
+
+final _formKey = GlobalKey<FormState>();
 
 class LoginTryWidget extends StatefulWidget {
   const LoginTryWidget({super.key});
@@ -86,7 +89,6 @@ class BodyWidget extends StatelessWidget {
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
   bool interaction = false;
-  final _formkey = GlobalKey<FormState>();
 
   String email = '로그인 혹은 회원가입을 위한 \n이메일을 입력해주세요.';
   String emailPattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
@@ -134,15 +136,31 @@ class BodyWidget extends StatelessWidget {
     return Container(
       height: height * 0.1,
       width: width * 0.8,
-      child: TextFormField(
-          onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
-          decoration: InputDecoration(
-            label: Text('이메일'),
-            suffixIcon: Icon(Icons.close),
-            hintText: '이메일 입력',
-            errorText: '※ 올바른 이메일 형식을 입력해주세요',
+      child: Form(
+        key: _formKey,
+        child: TextFormField(
+          validator: (value){
+            if(value!.isEmpty){
+              return '이메일을 입력해주세요.';
+            }else if(!RegExp(emailPattern).hasMatch(value)){
+              return '※ 올바른 이메일 형식을 입력해주세요';
+            }else
+              return null;
+          },
+            onTapOutside: (event){
+            FocusManager.instance.primaryFocus?.unfocus();
+            final formKeyState = _formKey.currentState!;
+            if(formKeyState.validate()){
+              formKeyState.save();
+            }
+            },
+            decoration: InputDecoration(
+              label: Text('이메일'),
+              suffixIcon: Icon(Icons.close),
+              hintText: '이메일 입력',
+            ),
           ),
-        ),
+      ),
     );
   }
 

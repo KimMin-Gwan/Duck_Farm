@@ -2,6 +2,8 @@ import 'package:cheese/src/ui/login_try_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
 
+final _formkey = GlobalKey<FormState>();
+
 class MemberLoginWidget extends StatefulWidget {
   const MemberLoginWidget({super.key});
 
@@ -72,7 +74,7 @@ class LoginBodyWidget extends StatelessWidget {
       children: [
         bodyWidget.titleArea(queryWidth, queryHeight, memberVisit),
         bodyWidget.emailInputArea(queryWidth, queryHeight),
-        passwordInputArea(queryWidth, queryHeight, '비밀번호'),
+        passwordInputArea(queryWidth, queryHeight, '비밀번호를 입력해주세요.'),
         SizedBox(
           height: 20,
         ),
@@ -89,27 +91,40 @@ class LoginBodyWidget extends StatelessWidget {
     return Container(
       height: height * 0.1,
       width: width * 0.8,
-      child: TextFormField(
-        onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
-        obscureText: true,
-        decoration: InputDecoration(
-          label: Text(text),
-          suffixIcon: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              InkWell(
-                onTap: (){},
-                child: Icon(Icons.remove_red_eye,
-                size: 20,),
-              ),
-              InkWell(
-                onTap: (){},
-                child: Icon(Icons.close,size: 20,),
-              ),
-            ],
+      child: Form(
+        key: _formkey,
+        child: TextFormField(
+          validator: (value){
+            if(value!.isEmpty){
+              return '비밀번호가 일치하지 않아요.';
+            }else
+              return null;
+          },
+          onTapOutside: (event) {
+            FocusManager.instance.primaryFocus?.unfocus();
+            final formKeyState = _formkey.currentState!;
+            if(formKeyState.validate()){
+              formKeyState.save();
+            }
+            },
+          obscureText: true,
+          decoration: InputDecoration(
+            label: Text(text),
+            suffixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InkWell(
+                  onTap: (){},
+                  child: Icon(Icons.remove_red_eye,
+                  size: 20,),
+                ),
+                InkWell(
+                  onTap: (){},
+                  child: Icon(Icons.close,size: 20,),
+                ),
+              ],
+            ),
           ),
-          errorText: '비밀번호가 일치하지 않아요.',
-
         ),
       ),
     );
