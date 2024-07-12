@@ -39,7 +39,7 @@ class Core_Service_View(Master_View):
             response = model.get_response_form_data(self._head_parser)
             return response
 
-        @self.__app.post(endpoint+'/detail_image')
+        @self.__app.post(endpoint+'/image_detail')
         def get_image_detail(raw_request:dict):
             request = DetailImageRequest(request=raw_request)
             core_controller = Core_Controller()

@@ -61,6 +61,34 @@ class Core_Controller:
             print("Error Catched : ", e)
             model.set_state_code(e.error_code) # 종합 에러
             return model
+
+        try:
+            if not model.set_image_with_iid(request=request):
+                model.set_state_code("200")
+                return model
+        
+            if not model.set_biases_with_bids():
+                model.set_state_code("200")
+                return model
+
+            if not model.set_schedules_with_sids(request=request):
+                model.set_state_code("200")
+                return model
+            model.set_state_code("200")
+
+        except CustomError as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+            print(e.error_type)
+
+        except Exception as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+            print(e.error_type)
+
+
+        finally:
+            return model
         
 
 
