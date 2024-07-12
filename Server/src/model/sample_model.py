@@ -31,7 +31,7 @@ class SampleModelTypeOne(HeaderModel):
 
     def set_user_with_uid(self, request):
         # uid를 기반으로 user table 데이터와 userbias 데이터를 가지고 올것
-        user_data = self._database.get_user_data_with_uid(request.uid)
+        user_data = self._database.get_data_with_id(target="uid", id=request.uid)
         if not user_data:
             return False
         self._user.make_with_dict(user_data)
@@ -40,3 +40,14 @@ class SampleModelTypeOne(HeaderModel):
     # 추상
     def get_response_form_data(self):
         pass
+
+
+    def _make_dict_list_data(self, list_data:list)-> list:
+        dict_list_data = []
+        for data in list_data:
+            dict_list_data.append(data.get_dict_form_data())
+        return dict_list_data
+    
+
+
+

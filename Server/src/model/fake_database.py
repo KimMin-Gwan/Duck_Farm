@@ -1,4 +1,6 @@
 import json
+from others import DatabaseLogicError
+
 
 class Local_Database:
     def __init__(self) -> None:
@@ -53,130 +55,118 @@ class Local_Database:
         self.__save_json(file_name, self.__schedule_data)
         return
     
-    # uid로 유저 찾기 -> 찾환 데이터 반환 없으면 None 반환
-    def get_user_data_with_uid(self, uid:str):
-        find_user = None
-        for user in self.__user_data:
-            if user['uid'] == uid:
-                find_user = user
+    # db.get_data_with_key(target="user", key="uname", key_data="minsu")
+    def get_data_with_key(self, target:str, key:str, key_data:str):
+        try:
+            list_data = self._select_target_list(target=target)
+            find_data = None
+            for data in list_data:
+                if data[key] == key_data:
+                    find_data = data
+            return find_data
+        except Exception as e:
+            raise DatabaseLogicError("get_data_with_key error | " + str(e))
 
-        return find_user
+    # db.get_datas_with_key(target="user", key="uname", key_datas=["minsu", "minzi"])
+    def get_datas_with_key(self, target:str, key:str, key_datas:str):
+        try:
+            list_data = self._select_target_list(target=target)
+            find_datas = []
+            for key_data in key_datas:
+                for data in list_data:
+                    if key_data == data[key]:
+                        find_datas.append(data)
+            return find_datas
+        except Exception as e:
+            raise DatabaseLogicError("get_datas_with_key error | " + str(e))
 
-    def get_bias_data_with_bid(self, bid):
-        find_bias = None
-        for bias in self.__bias_data:
-            if bid == bias['bid']:
-                find_bias = bias
 
-        return find_bias
+    # db.get_data_with_id(target="uid", id="1001")
+    def get_data_with_id(self, target:str, id:str):
+        try:
+            list_data = self._select_target_list(target=target)
+            find_data = None
+            for data in list_data:
+                if data[target] == id:
+                    find_data = data
+            return find_data
+        except Exception as e:
+            raise DatabaseLogicError("get_data_with_id error | " + str(e))
 
-    def get_bias_datas_with_bids(self, bids):
-        find_bias = []
-        for bid in bids:
-            for bias in self.__bias_data:
-                if bid == bias['bid']:
-                    find_bias.append(bias)
+    # db.get_datas_with_ids(target="uid", ids=["1001", "1002"])
+    def get_datas_with_ids(self, target_id:str, ids:list):
+        try:
+            list_data = self._select_target_list(target=target_id)
+            find_datas = []
+            for id in ids:
+                for data in list_data:
+                    if id == data[target_id]:
+                        find_datas.append(data)
+            return find_datas
+        except Exception as e:
+            raise DatabaseLogicError("get_datas_with_ids error | " + str(e))
 
-        return find_bias
+    def _select_target_list(self, target:str):
+        if target == "iid" or target == "image":
+            return self.__image_data
+        elif target == "uid" or target == "user":
+            return self.__user_data
+        elif target == "bid" or target == "bias":
+            return self.__bias_data
+        elif target == "sid" or target == "schedule":
+            return self.__schedule_data
+        else:
+            raise DatabaseLogicError("target id did not define")
 
-    def get_bias_data_with_bname(self, bname):
-        find_bias = None
-        for bias in self.__bias_data:
-            if bname == bias['bname']:
-                find_bias = bias
+    # db.modify_data_with_id(target="uid", target_data={key: value})
+    def modify_data_with_id(self, target_id, target_data:dict):
+        try:
+            target_index = -1
+            target_list = self._select_target_list(target=target_id)
 
-        return find_bias
+            for i, data in enumerate(target_list):
+                if data[target_id] == target_data[target_id]:
+                    target_index = i
+                    break
+                i+=1
 
-    def get_schedule_data_with_sid(self, sid):
-        find_schedule = None
-        for schedule in self.__schedule_data:
-            if sid == schedule['sid']:
-                find_schedule = schedule
-        return find_schedule
+            if target_index == -1:
+                return False
+            
+            target_list[target_index] = target_data
+            func = self._select_save_function(target=target_id)
+            func()
+            return True
+        except Exception as e:
+            raise DatabaseLogicError("modifiy_data_with_id error | " + str(e))
 
-    def get_schedule_datas_with_sids(self, sids):
-        find_schedule = []
-        for sid in sids:
-            for schedule in self.__schedule_data:
-                if sid == schedule['sid']:
-                    find_schedule.append(schedule)
+    # db.add_new_data(target_id="uid", new_data={key: value})
+    def add_new_data(self, target_id:str, new_data:dict):
+        try:
+            target_list:list = self._select_target_list(target=target_id)
+            target_list.extend(new_data)
+            func = self._select_save_function(target=target_id)
+            func()
+        except Exception as e:
+            raise DatabaseLogicError("add_new_data error | " + str(e))
+        return True
 
-        return find_schedule
+    def _select_save_function(self, target:str):
+        if target == "iid" or target == "image":
+            return self.__save_image_json
+        elif target == "uid" or target == "user":
+            return self.__save_user_json
+        elif target == "bid" or target == "bias":
+            return self.__save_bias_json
+        elif target == "sid" or target == "schedule":
+            return self.__save_schedule_json
+        else:
+            raise DatabaseLogicError("target id did not define")
 
-    def get_image_data_with_iid(self, iid):
-        find_image = None
-        for image in self.__image_data:
-            if iid == image['iid']:
-                find_image = image
-        return find_image
+    # db.get_num_list_with_id(target_id="uid")
+    def get_num_list_with_id(self, target_id:str):
+        target_list:list = self._select_target_list(target=target_id)
+        num_list= len(target_list)
+        return num_list
     
-    def get_image_datas_with_bid(self, bid):
-        find_image = []
-        for image in self.__image_data:
-            if bid == image['bid']:
-                find_image.append(image)
 
-        return find_image
-
-    def get_schedule_data_with_sname(self, sname):
-        find_schedule = None
-        for schedule in self.__schedule_data:
-            if sname == schedule['sname']:
-                find_schedule = schedule
-
-        return find_schedule
-
-    def set_schedule_data(self, schedule_data):
-        target_index = -1
-
-        for i, schedule in enumerate(self.__schedule_data):
-            if schedule['sid'] == schedule_data['sid']:
-                target_index = i
-                break
-            i += 1
-
-        if target_index == -1:
-            return False
-        
-        self.__schedule_data[target_index] = schedule_data
-        self.__save_schedule_json()
-        return True
-
-    def add_new_schedule_data(self, schedule_data):
-        try:
-            self.__schedule_data.append(schedule_data)
-            self.__save_schedule_json()
-        except:
-            return False
-
-        return True
-
-    def set_bias_data(self, bias_data):
-        target_index = -1
-
-        for i, bias in enumerate(self.__bias_data):
-            if bias['bid'] == bias_data['bid']:
-                target_index = i
-                break
-
-            i += 1
-
-        if target_index == -1:
-            return False
-
-        self.__bias_data[target_index] = bias_data
-        self.__save_bias_json()
-        return True
-
-    def add_new_images(self, new_images):
-        try:
-            self.__image_data.extend(new_images)
-            self.__save_image_json()
-        except:
-            return False
-        
-        return True
-
-    def get_num_schedule(self):
-        num_schedule = len(self.__schedule_data)
-        return num_schedule

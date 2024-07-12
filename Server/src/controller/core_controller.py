@@ -1,7 +1,7 @@
 from model import NoneBiasHomeDataModel, BiasHomeDataModel, ImageDetailModel
 from model import Local_Database
 #from view import NoneBiasHomeDataRequest, BiasHomeDataRequest
-from others import UserNotExist, CoreControllerLogicError, DictMakingError
+from others import UserNotExist, CustomError
 
 
 class Core_Controller:
@@ -30,12 +30,17 @@ class Core_Controller:
                 return model
             model.set_state_code("211")
 
-        except CoreControllerLogicError as e:
-            print("Error Catched : ", e)
-            model.set_state_code(e.error_code) # 종합 에러
 
-        except DictMakingError as e:
-            model.set_state_code(e.error_code)
+        except CustomError as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+            print(e.error_type)
+
+        except Exception as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+            print(e.error_type)
+
 
         finally:
             return model

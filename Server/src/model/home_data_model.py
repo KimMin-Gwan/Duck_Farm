@@ -16,7 +16,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
         try:
             if len(self._user.bids) == 0:
                 return False
-            bias_datas = self._database.get_bias_datas_with_bids(self._user.bids)
+            bias_datas = self._database.get_datas_with_ids(target_id="bid", ids=self._user.bids)
 
             for bias_data in bias_datas:
                 bias = Bias()
@@ -24,7 +24,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
                 self.__biases.append(bias)
             return True
         except Exception as e:
-            raise CoreControllerLogicError("set_bias_with_bid error | " + e)
+            raise CoreControllerLogicError("set_bias_with_bid error | " + str(e))
 
     
     def set_schedules_with_sids(self) -> bool:
@@ -33,7 +33,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
             for bias in self.__biases:
                 for sid in bias.sids:
                     sids.add(sid)
-            schedule_datas = self._database.get_schedule_datas_with_sids(sids)
+            schedule_datas = self._database.get_datas_with_ids(target_id="sid", ids=sids)
 
             # 스케줄 데이터가 하나도 없다면 그냥 반환
             if not schedule_datas:
@@ -47,7 +47,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
 
             return True
         except Exception as e:
-            raise CoreControllerLogicError("set_schedules_with_sid error | " + e)
+            raise CoreControllerLogicError("set_schedules_with_sid error | " + str(e))
     
     def set_home_body_data_with_target_date(self, request) -> bool:
         try:
@@ -87,7 +87,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
             return True
 
         except Exception as e:
-            raise CoreControllerLogicError("set_home_body_data_with_target_data error | " + e)
+            raise CoreControllerLogicError("set_home_body_data_with_target_data error | " + str(e))
 
 
     # json 타입의 데이터로 반환
@@ -106,16 +106,16 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
                 dict_home_body_data.append(data.get_dict_form_data())
 
             body = {
-                "bias" : dict_bias_data,
-                "calender_data" : dict_calender_data,
-                "home_body_data" : dict_home_body_data
+                "bias" : self._make_dict_list_data(list_data=self.__biases),
+                "calender_data" : self._make_dict_list_data(list_data=self.__schedules),
+                "home_body_data" : self._make_dict_list_data(list_data=self.__home_body_data)
             }
 
             response = self._get_response_data(head_parser=head_parser, body=body)
             return response
 
         except Exception as e:
-            raise CoreControllerLogicError("response making error | " + e)
+            raise CoreControllerLogicError("response making error | " + str(e))
 
 
 class SingleHomeBodyData:
@@ -126,16 +126,18 @@ class SingleHomeBodyData:
 
     # dict 타입의 데이터로 반환
     def get_dict_form_data(self):
-        dict_schedule_data = []
-        for data in self.schedule_data:
-            dict_schedule_data.append(data.get_dict_form_data())
+        try:
+            dict_schedule_data = []
+            for data in self.schedule_data:
+                dict_schedule_data.append(data.get_dict_form_data())
 
-        return {
-            "bid" : self.bid,
-            "bname" : self.bname,
-            "schedule_data" : dict_schedule_data
-        }
-
+            return {
+                "bid" : self.bid,
+                "bname" : self.bname,
+                "schedule_data" : dict_schedule_data
+            }
+        except Exception as e:
+            raise CoreControllerLogicError("response making error | " + str(e))
 
 
 class BiasHomeDataModel(SampleModelTypeOne):
