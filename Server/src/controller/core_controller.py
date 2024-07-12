@@ -90,6 +90,27 @@ class Core_Controller:
         finally:
             return model
         
+    def get_image_list_by_bias(self, database:Local_Database, request):
+        model = ImageListByBiasModel(database=database)
+        try:
+            # 유저가 있는지 확인
+            if not model.set_user_with_uid(request=request):
+                raise UserNotExist("Can not find User with uid")
+        except UserNotExist as e:
+            print("Error Catched : ", e)
+            model.set_state_code(e.error_code) # 종합 에러
+            return model
+    
+    def get_image_list_by_bias_n_schedule(self, database:Local_Database, request):
+        model = ImageListByBiasNScheduleModel(database=database)
+        try:
+            # 유저가 있는지 확인
+            if not model.set_user_with_uid(request=request):
+                raise UserNotExist("Can not find User with uid")
+        except UserNotExist as e:
+            print("Error Catched : ", e)
+            model.set_state_code(e.error_code) # 종합 에러
+            return model
 
 
 
