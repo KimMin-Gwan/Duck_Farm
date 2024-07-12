@@ -30,7 +30,6 @@ class Core_Controller:
                 return model
             model.set_state_code("211")
 
-
         except CustomError as e:
             print("Error Catched : ", e.error_type)
             model.set_state_code(e.error_code) # 종합 에러

@@ -31,8 +31,8 @@ class User(SampleDomain):
             self.nickname = dict_data['nickname']
             self.bids = dict_data['bids']
             return
-        except:
-            raise DictMakingError()
+        except Exception as e:
+            raise DictMakingError(error_type=e)
     
     # response에 사용되는 json형태로 만들기 위한 dict 데이터
     def get_dict_form_data(self):
@@ -61,8 +61,8 @@ class Bias(SampleDomain):
             self.sids = dict_data['sids']
             self.iids = dict_data['iids']
             return
-        except:
-            raise DictMakingError()
+        except Exception as e:
+            raise DictMakingError(error_type=e)
     
     # response에 사용되는 json형태로 만들기 위한 dict 데이터
     def get_dict_form_data(self):
@@ -96,8 +96,8 @@ class Schedule:
             self.type = dict_data['type'] 
             self.bids = dict_data['bids'] 
             self.iids = dict_data['iids']
-        except:
-            raise DictMakingError()
+        except Exception as e:
+            raise DictMakingError(error_type=e)
 
     # response에 사용되는 json형태로 만들기 위한 dict 데이터
     def get_dict_form_data(self):
@@ -138,8 +138,8 @@ class Image:
             self.sid = dict_data['sid']
             self.bid = dict_data['bid']
             self.uid = dict_data['uid']
-        except:
-            raise DictMakingError()
+        except Exception as e:
+            raise DictMakingError(error_type=e)
         
     # response에 사용되는 json형태로 만들기 위한 dict 데이터
     def get_dict_form_data(self):
