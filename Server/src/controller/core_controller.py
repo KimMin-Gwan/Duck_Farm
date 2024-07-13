@@ -66,6 +66,7 @@ class Core_Controller:
             model.set_image_with_iid(request=request)
             model.set_bias_with_bid(request=request)
             model.set_schedule_with_sid()
+            model.is_image_owner()
 
             model.set_state_code("200")
 
