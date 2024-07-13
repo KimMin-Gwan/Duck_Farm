@@ -93,6 +93,23 @@ class Core_Controller:
             print("Error Catched : ", e)
             model.set_state_code(e.error_code) # 종합 에러
             return model
+        
+        try:
+            model.set_bias_with_bid(request=request)
+            model.set_images_with_bid()
+            model.make_image_list()
+
+            model.set_state_code("200")
+
+        except CustomError as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+            print(e.error_type)
+
+        except Exception as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+            print(e.error_type)
     
     def get_image_list_by_bias_n_schedule(self, database:Local_Database, request):
         model = ImageListByBiasNScheduleModel(database=database)

@@ -9,6 +9,9 @@ class ImageListByBiasModel(SampleModelTypeOne):
         super().__init__(database)
         self.__bias = Bias()
         self.__images = []
+        self.__first_list = []
+        self.__second_list = []
+        self.__third_list = []
 
     def set_bias_with_bid(self,request) -> bool: 
         try:
@@ -16,36 +19,52 @@ class ImageListByBiasModel(SampleModelTypeOne):
 
             if not bias_data:
                 return False
-            
-            self.__images = bias_data.iids
 
             self.__bias.make_with_dict(bias_data)
+
             return True
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_bias_with_bid error | " + str(e))
     
-    # def set_images_with_bid(self) -> bool:
-    #     try:
-    #         if not self.__bias:
-    #             return False
+    def set_images_with_bid(self) -> bool:
+        try:
+            if not self.__bias:
+                return False
             
-    #         images = self.__bias.iids
+            self.__images = self.__bias.iids
             
-    #         for bias_data in self.__biases:
-    #             bias = Bias()
-    #             bias.make_with_dict(bias_data)
-    #             self.__biases.append(bias)
-    #         return True
+            return True
         
-    #     except Exception as e:
-    #         raise CoreControllerLogicError(error_type="set_bias_with_bid error | " + str(e))
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="set_bias_with_bid error | " + str(e))
+
+    def make_image_list(self) -> bool:
+        try:
+            if not self.__images:
+                return False
+            for i in range(len(self.__images)//3):
+                if i % 3 == 0:
+                    self.__first_list = self.__images[i]
+                elif i % 3 == 1:
+                    self.__second_list = self.__images[i]
+                else:
+                    self.__third_list = self.__images[i]
+                
+
+            return True
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="make_image_list error | " + str(e))
 
     def get_response_form_data(self):
         try:
-            body = {}
-            body.update(self.__image.get_dict_form_data())
-            body.update(self.__bias.get_dict_form_data())
-            body['schedule'] = self.__schedule.get_dict_form_data()
+            body = {
+                'bid': self.__bias.bid,
+                'bname': self.__bias.bname,
+                'num_image' :len(self.__images),
+                'first_list' : self.__first_list,
+                'second_list' : self.__second_list,
+                'third_list' : self.__third_list
+            }
 
             response = self._get_response_data(body=body)
             return response
