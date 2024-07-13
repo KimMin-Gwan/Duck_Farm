@@ -8,7 +8,7 @@ class ImageDetailModel(SampleModelTypeOne):
     def __init__(self, database:Local_Database) -> None:
         super().__init__(database)
         self.__bias = Bias()
-        self.__image = None
+        self.__image = Image()
         self.__schedule = Schedule()
         self.__owner = False
 
@@ -16,12 +16,8 @@ class ImageDetailModel(SampleModelTypeOne):
         try:
             image_data = self._database.get_data_with_id(target="iid", id=request.iid)
             if not image_data:
-                print(0)
                 return False
-            image = Image()
-            image.make_with_dict(image_data)
-            self.__image = image
-            print(1)
+            self.__image.make_with_dict(image_data)
             return True
 
         except Exception as e:
@@ -29,7 +25,7 @@ class ImageDetailModel(SampleModelTypeOne):
 
     def set_bias_with_bid(self,request) -> bool: 
         try:
-            bias_data = self._database.get_datas_with_ids(target_id="bid", ids=request.bid)
+            bias_data = self._database.get_data_with_id(target="bid", id=request.bid)
 
             if not bias_data:
                 return False
@@ -41,7 +37,7 @@ class ImageDetailModel(SampleModelTypeOne):
     def set_schedule_with_sid(self) -> bool:  
         try:
             sid = self.__image.sid
-            schedule_data = self._database.get_datas_with_ids(target_id="sid", ids=sid)
+            schedule_data = self._database.get_data_with_id(target="sid", id=sid)
 
             if not schedule_data:
                 return False
@@ -60,11 +56,11 @@ class ImageDetailModel(SampleModelTypeOne):
     def get_response_form_data(self,head_parser):
         try:
             body = {
-                "user_owner" : self.__image
+                "user_owner" : self.__owner
             }
-            #body.update(self.__image)
-            #body.update(self.__bias.get_dict_form_data())
-            #body['schedule'] = self.__schedule.get_dict_form_data()
+            body.update(self.__image.get_dict_form_data())
+            body.update(self.__bias.get_dict_form_data())
+            body['schedule'] = self.__schedule.get_dict_form_data()
 
             response = self._get_response_data(head_parser=head_parser, body=body)
             return response
