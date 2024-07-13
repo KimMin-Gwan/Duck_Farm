@@ -23,37 +23,26 @@ class ImageDetailModel(SampleModelTypeOne):
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_image_with_iid error | " + str(e))
 
-    def set_biases_with_bids(self) -> bool: #중복
+    def set_bias_with_bid(self,request) -> bool: 
         try:
-            if len(self._user.bids) == 0:
-                return False
-            bias_datas = self._database.get_datas_with_ids(target_id="bid", ids=self._user.bids)
+            bias_data = self._database.get_datas_with_ids(target_id="bid", ids=request.bid)
 
-            for bias_data in bias_datas:
-                bias = Bias()
-                bias.make_with_dict(bias_data)
-                self.__biases.append(bias)
+            if not bias_data:
+                return False
+            self.__bias.make_with_dict(bias_data)
             return True
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_bias_with_bid error | " + str(e))
 
-    def set_schedules_with_sids(self) -> bool: #중복
+    def set_schedules_with_sids(self) -> bool:  
         try:
-            sids = set()
-            for bias in self.__biases:
-                for sid in bias.sids:
-                    sids.add(sid)
-            schedule_datas = self._database.get_datas_with_ids(target_id="sid", ids=sids)
-
-            # 스케줄 데이터가 하나도 없다면 그냥 반환
-            if not schedule_datas:
+            sid = self.__image.sid
+            schedule_data = self._database.get_datas_with_ids(target_id="sid", ids=sid)
+            
+            if not schedule_data:
                 return False
 
-            for schedule_data in schedule_datas:
-                schedule = Schedule()
-                schedule.make_with_dict(schedule_data)
-                self.__schedules.append(schedule)
-
+            self.__schedule.make_with_dict(schedule_data)
 
             return True
         except Exception as e:

@@ -1,4 +1,4 @@
-from model import NoneBiasHomeDataModel, BiasHomeDataModel, ImageDetailModel
+from model import NoneBiasHomeDataModel, BiasHomeDataModel, ImageDetailModel, ImageListByBiasModel, ImageListByBiasNScheduleModel
 from model import Local_Database
 #from view import NoneBiasHomeDataRequest, BiasHomeDataRequest
 from others import UserNotExist, CustomError
@@ -63,17 +63,10 @@ class Core_Controller:
             return model
 
         try:
-            if not model.set_image_with_iid(request=request):
-                model.set_state_code("200")
-                return model
-        
-            if not model.set_biases_with_bids():
-                model.set_state_code("200")
-                return model
+            model.set_image_with_iid(request=request)
+            model.set_bias_with_bid(request=request)
+            model.set_schedules_with_sids()
 
-            if not model.set_schedules_with_sids(request=request):
-                model.set_state_code("200")
-                return model
             model.set_state_code("200")
 
         except CustomError as e:
