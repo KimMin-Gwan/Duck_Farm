@@ -110,6 +110,9 @@ class Core_Controller:
             print("Error Catched : ", e.error_type)
             model.set_state_code(e.error_code) # 종합 에러
             print(e.error_type)
+            
+        finally:
+            return model
     
     def get_image_list_by_bias_n_schedule(self, database:Local_Database, request):
         model = ImageListByBiasNScheduleModel(database=database)
