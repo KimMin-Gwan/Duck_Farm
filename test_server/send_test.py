@@ -2,18 +2,18 @@ import requests
 import json
 import pprint
 
-HOST = '223.130.157.23'
-PORT = 80
-#HOST = '127.0.0.1'
-#PORT = 5000
+#HOST = '223.130.157.23'
+#PORT = 80
+HOST = '127.0.0.1'
+PORT = 5000
 
 def send_data():
     #url = f'http://{HOST}:{str(PORT)}/bias_following/get_bias_following'
-    url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias'
     #url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schedule'
     #url = f'http://{HOST}:{str(PORT)}/core_system/upload_post'
-    #url = f'http://{HOST}:{str(PORT)}/core_system/image_detail'
+    url = f'http://{HOST}:{str(PORT)}/core_system/image_detail'
 
     header = {
         "request-type" : "default",
@@ -32,15 +32,15 @@ def send_data():
         #}
     #}
 
-    send_data = {
-        "header" : header,
-        "body" : {
-            'uid' : '1234-abcd-5678',
-            'bid' : '1001',
-            'ordering' : 'like',
-            'num_image' : '0'
-        }
-    }
+    # send_data = {
+    #     "header" : header,
+    #     "body" : {
+    #         'uid' : '1234-abcd-5678',
+    #         'bid' : '1001',
+    #         'ordering' : 'like',
+    #         'num_image' : '0'
+    #     }
+    # }
 
     # send_data = {
     #     "header" : header,
@@ -77,6 +77,15 @@ def send_data():
         #'bid' : '1001',
         #'sid' : '4'
     #}
+
+    send_data = {
+        "header" : header,
+        'body' :{
+            'uid' : '1234-abcd-5678',
+            'bid' : '1003',
+            'iid' : '1001-01'
+        }
+    }
 
     headers = {
         'Content-Type': 'application/json'

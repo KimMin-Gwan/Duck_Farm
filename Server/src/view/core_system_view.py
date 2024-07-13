@@ -99,6 +99,7 @@ class ImageDetailRequest(RequestHeader):
         body = request['body']
         self.uid = body['uid']
         self.iid = body['iid']
+        self.bid = body['bid']
 
 class ImageListByBias(RequestHeader):
     def __init__(self, request) -> None:
