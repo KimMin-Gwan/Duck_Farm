@@ -42,7 +42,7 @@ class ImageListByBiasModel(SampleModelTypeOne):
         try:
             if not self.__images:
                 return False
-            for i in range(len(self.__images)//3):
+            for i in range(len(self.__images)):
                 if i % 3 == 0:
                     self.__first_list.append(self.__images[i])
                 elif i % 3 == 1:
