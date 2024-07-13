@@ -65,7 +65,7 @@ class Core_Controller:
         try:
             model.set_image_with_iid(request=request)
             model.set_bias_with_bid(request=request)
-            model.set_schedules_with_sids()
+            model.set_schedule_with_sid()
 
             model.set_state_code("200")
 

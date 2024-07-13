@@ -34,11 +34,11 @@ class ImageDetailModel(SampleModelTypeOne):
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_bias_with_bid error | " + str(e))
 
-    def set_schedules_with_sids(self) -> bool:  
+    def set_schedule_with_sid(self) -> bool:  
         try:
             sid = self.__image.sid
             schedule_data = self._database.get_datas_with_ids(target_id="sid", ids=sid)
-            
+
             if not schedule_data:
                 return False
 
