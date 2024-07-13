@@ -15,7 +15,7 @@ class ImageListByBiasModel(SampleModelTypeOne):
 
     def set_bias_with_bid(self,request) -> bool: 
         try:
-            bias_data = self._database.get_datas_with_ids(target_id="bid", ids=request.bid)
+            bias_data = self._database.get_data_with_id(target="bid", id=request.bid)
 
             if not bias_data:
                 return False
