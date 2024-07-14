@@ -48,7 +48,7 @@ class Core_Service_View(Master_View):
             response = model.get_response_form_data(self._head_parser)
             return response
         
-        @self.__app.post(endpoint+'/get_image_list_by_bias(')
+        @self.__app.post(endpoint+'/get_image_list_by_bias')
         def get_image_list_by_bias(raw_request:dict):
             request = ImageListByBias(request=raw_request)
             core_controller = Core_Controller()
@@ -57,7 +57,7 @@ class Core_Service_View(Master_View):
             response = model.get_response_form_data(self._head_parser)
             return response
         
-        @self.__app.post(endpoint+'/get_image_list_by_bias_n_schdule(')
+        @self.__app.post(endpoint+'/get_image_list_by_bias_n_schdule')
         def get_image_list_by_bias_n_schdule(raw_request:dict):
             request = ImageListByBiasNSchedule(request=raw_request)
             core_controller = Core_Controller()
@@ -99,6 +99,7 @@ class ImageDetailRequest(RequestHeader):
         body = request['body']
         self.uid = body['uid']
         self.iid = body['iid']
+        self.bid = body['bid']
 
 class ImageListByBias(RequestHeader):
     def __init__(self, request) -> None:

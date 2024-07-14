@@ -2,10 +2,10 @@ import requests
 import json
 import pprint
 
-HOST = '223.130.157.23'
-PORT = 80
-#HOST = '127.0.0.1'
-#PORT = 5000
+#HOST = '223.130.157.23'
+#PORT = 80
+HOST = '127.0.0.1'
+PORT = 5000
 
 def send_data():
     #url = f'http://{HOST}:{str(PORT)}/bias_following/get_bias_following'
@@ -36,17 +36,27 @@ def send_data():
     #     "header" : header,
     #     "body" : {
     #         'uid' : '1234-abcd-5678',
+    #         'bid' : '1001',
+    #         'ordering' : 'like',
+    #         'num_image' : '0'
+    #     }
+    # }
+
+    # send_data = {
+    #     "header" : header,
+    #     "body" : {
+    #         'uid' : '1234-abcd-5678',
     #         'date' : '2024/05/26'
     #     }
     # }
 
-    send_data = {
-        "header" : header,
-        "body" : {
-            'uid' : '1234-abcd-5678',
-            'iid' : '1001-1'
-        }
-    }
+    # send_data = {
+    #     "header" : header,
+    #     "body" : {
+    #         'uid' : '1234-abcd-5678',
+    #         'iid' : '1001-1'
+    #     }
+    # }
 
     #send_data = {
         #"body" : {
@@ -67,6 +77,15 @@ def send_data():
         #'bid' : '1001',
         #'sid' : '4'
     #}
+
+    send_data = {
+        "header" : header,
+        'body' :{
+            'uid' : '1234-abcd-5678',
+            'bid' : '1003',
+            'iid' : '1001-1'
+        }
+    }
 
     headers = {
         'Content-Type': 'application/json'
