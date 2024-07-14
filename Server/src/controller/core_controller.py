@@ -126,6 +126,27 @@ class Core_Controller:
             model.set_state_code(e.error_code) # 종합 에러
             return model
 
+        try:
+            model.set_bias_with_bid(request=request)
+            model.set_schedule_with_sid(request=request)
+            model.set_images_with_sid()
+            model.make_image_list()
+
+            model.set_state_code("200")
+
+        except CustomError as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+            print(e.error_type)
+
+        except Exception as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+            print(e.error_type)
+        
+        finally:
+            return model
+
 
 
 

@@ -11,9 +11,9 @@ def send_data():
     #url = f'http://{HOST}:{str(PORT)}/bias_following/get_bias_following'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias'
     #url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
-    #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schedule'
+    url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schdule'
     #url = f'http://{HOST}:{str(PORT)}/core_system/upload_post'
-    url = f'http://{HOST}:{str(PORT)}/core_system/image_detail'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/image_detail'
 
     header = {
         "request-type" : "default",
@@ -78,12 +78,23 @@ def send_data():
         #'sid' : '4'
     #}
 
+    # send_data = {
+    #     "header" : header,
+    #     'body' :{
+    #         'uid' : '1234-abcd-5678',
+    #         'bid' : '1003',
+    #         'iid' : '1001-1'
+    #     }
+    # }
+
     send_data = {
         "header" : header,
         'body' :{
             'uid' : '1234-abcd-5678',
-            'bid' : '1003',
-            'iid' : '1001-1'
+            'bid' : '1001',
+            'sid' : '1',
+            'ordering' : 'like',
+            'num_image' : '0'
         }
     }
 
