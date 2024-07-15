@@ -97,7 +97,7 @@ class Core_Controller:
         
         try:
             model.set_bias_with_bid(request=request)
-            model.set_images_with_bid()
+            model.set_images_with_bid(request=request)
             model.make_image_list()
 
             model.set_state_code("200")
@@ -129,7 +129,7 @@ class Core_Controller:
         try:
             model.set_bias_with_bid(request=request)
             model.set_schedule_with_sid(request=request)
-            model.set_images_with_sid()
+            model.set_images_with_sid(request=request)
             model.make_image_list()
 
             model.set_state_code("200")
