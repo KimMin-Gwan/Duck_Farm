@@ -26,12 +26,16 @@ class ImageListByBiasModel(SampleModelTypeOne):
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_bias_with_bid error | " + str(e))
     
-    def set_images_with_bid(self) -> bool:
+    def set_images_with_bid(self,request) -> bool:
         try:
             if not self.__bias:
                 return False
             
             self.__images = self.__bias.iids
+            self.__images = self.__images[request.num_image:]
+
+            if len(self.__images) > 20:
+                self.__images = self.__images[:20]
             
             return True
         
@@ -60,7 +64,7 @@ class ImageListByBiasModel(SampleModelTypeOne):
             body = {
                 'bid': self.__bias.bid,
                 'bname': self.__bias.bname,
-                'num_image' :'이거 뭐하는건지 이해못함',
+                'num_image' : len(self.__images),
                 'first_list' : self.__first_list,
                 'second_list' : self.__second_list,
                 'third_list' : self.__third_list
@@ -110,19 +114,23 @@ class ImageListByBiasNScheduleModel(SampleModelTypeOne):
 
             return True
         except Exception as e:
-            raise CoreControllerLogicError(error_type="set_bias_with_sid error | " + str(e))
+            raise CoreControllerLogicError(error_type="set_schedule_with_sid error | " + str(e))
         
-    def set_images_with_sid(self) -> bool:
+    def set_images_with_sid(self,request) -> bool:
         try:
             if not self.__schedule:
                 return False
-        
+            
             self.__images = self.__schedule.iids
+            self.__images = self.__images[request.num_image:]
+
+            if len(self.__images) > 20:
+                self.__images = self.__images[:20]
             
             return True
         
         except Exception as e:
-            raise CoreControllerLogicError(error_type="set_bias_with_bid error | " + str(e))
+            raise CoreControllerLogicError(error_type="set_images_with_sid error | " + str(e))
 
     def make_image_list(self) -> bool:
         try:
@@ -146,7 +154,7 @@ class ImageListByBiasNScheduleModel(SampleModelTypeOne):
             body = {
                 'bid': self.__bias.bid,
                 'bname': self.__bias.bname,
-                'num_image' :'이거 뭐하는건지 이해못함',
+                'num_image' :len(self.__images),
                 'sid' : self.__schedule.sid,
                 'schedule_date' : self.__schedule.date,
                 'schedule_name' : self.__schedule.sname,
