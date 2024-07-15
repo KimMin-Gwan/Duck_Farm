@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
-import 'package:cheese/src/ui/login_try_widget.dart ';
+import 'package:cheese/src/ui/sign_widget/login_try_widget.dart ';
 
 class MemberInfoWidget extends StatefulWidget {
   const MemberInfoWidget({super.key});

@@ -144,7 +144,7 @@ class _CalendarWidgetState2 extends State<CalendarWidget2> {
       DateTime date = _dateFormat.parse(dateTime);
       bool isKeyExist = dateTimeMap.containsKey(date);
       if (isKeyExist){
-        dateTimeMap[date] = singleDate
+        dateTimeMap[date] = singleDate;
       }
 
     }
