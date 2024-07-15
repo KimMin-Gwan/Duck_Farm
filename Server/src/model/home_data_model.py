@@ -7,9 +7,10 @@ from others import CoreControllerLogicError
 class NoneBiasHomeDataModel(SampleModelTypeOne):
     def __init__(self, database:Local_Database) -> None:
         super().__init__(database)
-        self.__biases = []
-        self.__schedules = []
-        self.__home_body_data = []
+        self._biases = []
+        self._schedules = []
+        self._home_body_data = []
+        self._response_schedule = {}
 
     
     def set_biases_with_bids(self) -> bool:
@@ -21,7 +22,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
             for bias_data in bias_datas:
                 bias = Bias()
                 bias.make_with_dict(bias_data)
-                self.__biases.append(bias)
+                self._biases.append(bias)
             return True
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_bias_with_bid error | " + str(e))
@@ -30,7 +31,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
     def set_schedules_with_sids(self) -> bool:
         try:
             sids = set()
-            for bias in self.__biases:
+            for bias in self._biases:
                 for sid in bias.sids:
                     sids.add(sid)
             schedule_datas = self._database.get_datas_with_ids(target_id="sid", ids=sids)
@@ -42,8 +43,21 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
             for schedule_data in schedule_datas:
                 schedule = Schedule()
                 schedule.make_with_dict(schedule_data)
-                self.__schedules.append(schedule)
+                self._schedules.append(schedule)
 
+            for schedule in self._schedules:
+                date = schedule.date
+                if not date in self._response_schedule:
+                    set_data = set()
+                    set_data.update(schedule.bids)
+                    self._response_schedule[date] = set_data
+                else:
+                    self._response_schedule[date].update(schedule.bids)
+
+            for key in self._response_schedule.keys():
+                self._response_schedule[key] = list(self._response_schedule[key])
+
+            print(self._response_schedule)
 
             return True
         except Exception as e:
@@ -55,7 +69,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
             target_date = datetime.strptime(request.date, date_format)
             filtered_schedules = []
 
-            for schedule in self.__schedules:
+            for schedule in self._schedules:
                 compare_date = datetime.strptime(schedule.date, date_format)
                 if target_date == compare_date:
                     filtered_schedules.append(schedule)
@@ -68,7 +82,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
             # 스케줄들을 모아서 리스트로 만들어 하나의 homebodydata로 만들것
             # 단, homebodydata 에 포함되는 스케줄이 가지고있는 iid는 해당 bias의 iid와 동일해야함
 
-            for bias in self.__biases:
+            for bias in self._biases:
                 target_schedules = []
                 for schedule in filtered_schedules:
                     if schedule.sid in bias.sids:
@@ -83,7 +97,7 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
                 if len(target_schedules) != 0:
                     single_home_body_data = SingleHomeBodyData(bid=bias.bid, bname=bias.bname, 
                                                             schedule_data = target_schedules)
-                    self.__home_body_data.append(single_home_body_data)
+                    self._home_body_data.append(single_home_body_data)
             return True
 
         except Exception as e:
@@ -93,22 +107,10 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
     # json 타입의 데이터로 반환
     def get_response_form_data(self, head_parser):
         try:
-            dict_bias_data = []
-            for data in self.__biases:
-                dict_bias_data.append(data.get_dict_form_data())
-
-            dict_calender_data = []
-            for data in self.__schedules:
-                dict_calender_data.append(data.get_dict_form_data())
-
-            dict_home_body_data = []
-            for data in self.__home_body_data:
-                dict_home_body_data.append(data.get_dict_form_data())
-
             body = {
-                "bias" : self._make_dict_list_data(list_data=self.__biases),
-                "calender_data" : self._make_dict_list_data(list_data=self.__schedules),
-                "home_body_data" : self._make_dict_list_data(list_data=self.__home_body_data)
+                "bias" : self._make_dict_list_data(list_data=self._biases),
+                "calender" : self._response_schedule,
+                "home_body_data" : self._make_dict_list_data(list_data=self._home_body_data)
             }
 
             response = self._get_response_data(head_parser=head_parser, body=body)
@@ -140,17 +142,62 @@ class SingleHomeBodyData:
             raise CoreControllerLogicError(error_type="response making error | " + str(e))
 
 
-class BiasHomeDataModel(SampleModelTypeOne):
+class BiasHomeDataModel(NoneBiasHomeDataModel):
     def __init__(self, database) -> None:
         super().__init__(database)
-        self.__biases = []
-        self.__schedules = []
-        self.__home_body_data = []
+        self.__target_bias = Bias()
 
-    def get_response_data(self):
-        body = {
-        }
+    def set_schedules_with_sids(self, request) -> bool:
+        try:
+            for bias in self._biases:
+                if bias.bid == request.bid:
+                    self.__target_bias = bias
 
-        response = self.get_response_data(body=body)
-        return response
+            schedule_datas = self._database.get_datas_with_ids(target_id="sid", ids=self.__target_bias.sids)
 
+            # 스케줄 데이터가 하나도 없다면 그냥 반환
+            if not schedule_datas:
+                return False
+
+            for schedule_data in schedule_datas:
+                schedule = Schedule()
+                schedule.make_with_dict(schedule_data)
+                self._schedules.append(schedule)
+
+            for schedule in self._schedules:
+                date = schedule.date
+                if not date in self._response_schedule:
+                    self._response_schedule[date] = [schedule.type]
+                else:
+                    self._response_schedule[date].append(schedule.type)
+
+            print(self._response_schedule)
+
+            return True
+        except Exception as e:
+            print(e)
+            raise CoreControllerLogicError(error_type="set_schedules_with_sid error | ")
+        
+    def filtering_home_body_data(self):
+        temp_list = []
+
+        for data in self._home_body_data:
+            if self.__target_bias.bid == data.bid:
+                temp_list.append(data)
+
+        self._home_body_data = temp_list
+
+    # json 타입의 데이터로 반환
+    def get_response_form_data(self, head_parser):
+        try:
+            body = {
+                "bias" : self._make_dict_list_data(list_data=self._biases),
+                "calender" : self._response_schedule,
+                "home_body_data" : self._make_dict_list_data(list_data=self._home_body_data)
+            }
+
+            response = self._get_response_data(head_parser=head_parser, body=body)
+            return response
+
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="response making error | " + str(e))

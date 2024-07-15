@@ -1,13 +1,15 @@
 [
     {
         "iid": "1001-1",
-        "bid": "1001",
-        "uid": "1234-abcd-5678",
-        "sid": "1",
-        "image_type": "jpg",
+        "iname": "",
         "image_detail": "쵸단 사진 입니다요",
+        "image_type": "jpg",
         "upload_date": "2024/05/22",
-        "location": ""
+        "location": "",
+        "like": 0,
+        "sid": "1",
+        "bid": "1001",
+        "uid": "1234-abcd-5678"
     },
     {
         "iid": "1001-2",
@@ -17,7 +19,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/05/22",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-3",
@@ -27,7 +30,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/05/22",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-4",
@@ -37,7 +41,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/05/22",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-5",
@@ -47,7 +52,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-6",
@@ -57,7 +63,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-7",
@@ -67,7 +74,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1002-1",
@@ -77,7 +85,8 @@
         "image_type": "jpg",
         "image_detail": "히나 사진 입니다요",
         "upload_date": "2024/04/20",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1002-2",
@@ -87,7 +96,8 @@
         "image_type": "jpg",
         "image_detail": "히나 사진 입니다요",
         "upload_date": "2024/04/20",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1002-3",
@@ -97,7 +107,8 @@
         "image_type": "jpg",
         "image_detail": "히나 사진 입니다요",
         "upload_date": "2024/04/20",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-8",
@@ -107,7 +118,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/01",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-9",
@@ -117,7 +129,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/01",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-10",
@@ -127,7 +140,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/01",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-11",
@@ -137,7 +151,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/01",
-        "location": "Yes24 원더로크홀"
+        "location": "Yes24 원더로크홀",
+        "like": 0
     },
     {
         "iid": "1001-12",
@@ -147,7 +162,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-13",
@@ -157,7 +173,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-14",
@@ -167,7 +184,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-15",
@@ -177,7 +195,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-16",
@@ -187,7 +206,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-17",
@@ -197,7 +217,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-18",
@@ -207,7 +228,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-19",
@@ -217,7 +239,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-20",
@@ -227,7 +250,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-21",
@@ -237,7 +261,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-22",
@@ -247,7 +272,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-23",
@@ -257,7 +283,8 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     },
     {
         "iid": "1001-24",
@@ -267,6 +294,7 @@
         "image_type": "jpg",
         "image_detail": "쵸단 사진 입니다요",
         "upload_date": "2024/06/07",
-        "location": ""
+        "location": "",
+        "like": 0
     }
 ]

@@ -1,6 +1,6 @@
 from typing import Any
 from fastapi import FastAPI
-from view.master_view import Master_View
+from view.master_view import Master_View, RequestHeader
 from view.parsers import Head_Parser
 
 #from controller import Upload_Controller
@@ -67,16 +67,6 @@ class Core_Service_View(Master_View):
             return response
 
 
-
-class RequestHeader:
-    def __init__(self, request) -> None:
-        header = request['header']
-
-        self.request_type = header['request-type']
-        self.client_version = header['client-version']
-        self.client_ip = header['client-ip']
-        self.uid = header['uid']
-        self.endpoint = header['endpoint']
 
 class NoneBiasHomeDataRequest(RequestHeader):
     def __init__(self, request) -> None:

@@ -18,6 +18,7 @@ class User(SampleDomain):
         self.email = email
         self.nickname = nickname
         self.bids = []
+        self.like_iids = []
         return
 
     # database로 부터 받아온 데이터를 사용해 내용 구성
@@ -30,6 +31,7 @@ class User(SampleDomain):
             self.email= dict_data['email']
             self.nickname = dict_data['nickname']
             self.bids = dict_data['bids']
+            self.like_iids = dict_data['like_iids']
             return
         except Exception as e:
             raise DictMakingError(error_type=e)
@@ -43,7 +45,8 @@ class User(SampleDomain):
             "birthday" : self.birthday,
             "email" : self.email,
             "nickname" : self.nickname,
-            "bids" : self.bids
+            "bids" : self.bids,
+            "like_iids" : self.like_iids
         }
 
 class Bias(SampleDomain):
@@ -114,7 +117,7 @@ class Schedule:
 
 class Image:
     def __init__(self, iid ="", iname = "", image_type = ".jpg", location = "",
-                 image_detail = "", upload_date = "", sid = "", bid = "",
+                 image_detail = "", upload_date = "", like = 0, sid = "", bid = "",
                  uid = ""):
         self.iid = iid
         self.iname = iname
@@ -122,6 +125,7 @@ class Image:
         self.location = location
         self.image_detail = image_detail
         self.upload_date = upload_date
+        self.like = like
         self.sid = sid
         self.bid = bid
         self.uid = uid
@@ -135,6 +139,7 @@ class Image:
             self.image_detail = dict_data['image_detail']
             self.upload_date = dict_data['upload_date']
             self.location = dict_data['location']
+            self.like = dict_data['like']
             self.sid = dict_data['sid']
             self.bid = dict_data['bid']
             self.uid = dict_data['uid']
@@ -150,6 +155,7 @@ class Image:
             "image_type" : self.image_type,
             "upload_date" : self.upload_date,
             "location" : self.location,
+            "like" : self.like,
             "sid" : self.sid,
             "bid" : self.bid,
             "uid" : self.uid

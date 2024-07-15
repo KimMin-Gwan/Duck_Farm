@@ -1,7 +1,10 @@
 2XX -> 전송에 성공함 / 3XX -> 경고 / 4XX -> 에러 (Try - Except) / 5XX -> 금지 ( 금지된 유저, 금지된 접근)
 
 
-211 : 
+200 : /core_system/ -> 홈 화면 정상 반환 단, 바디 데이터가 비었음
+211 : /core_system/none_bias_home_data -> none_bias_home_data 정상 반환
+212 : /core_system/none_bias_home_data -> none_bias_home_data 정상 반환
+
 
 
 401 : /core_system/ -> 등록되지 않은 유저의 접근
@@ -10,6 +13,9 @@
 
 501 : /core_system/ -> 코어 컨트롤러에서 발생한 파이선 로직 애러
 
+502 : / -> Database 로 부터 받은 데이터로 실 데이터를 만드는데 실패
+
+505 : / -> Database 인터페이스들의 문제가 있을 때 발생한다
 
 
 
