@@ -147,9 +147,9 @@ class ImageListByBiasNScheduleModel(SampleModelTypeOne):
                 'bid': self.__bias.bid,
                 'bname': self.__bias.bname,
                 'num_image' :'이거 뭐하는건지 이해못함',
-                '“sid”' : self.__schedule.sid,
-                '“schedule_date”' : self.__schedule.date,
-                '“schedule_name”' : self.__schedule.sname,
+                'sid' : self.__schedule.sid,
+                'schedule_date' : self.__schedule.date,
+                'schedule_name' : self.__schedule.sname,
                 'first_list' : self.__first_list,
                 'second_list' : self.__second_list,
                 'third_list' : self.__third_list

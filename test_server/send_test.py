@@ -32,15 +32,15 @@ def send_data():
         #}
     #}
 
-    # send_data = {
-    #     "header" : header,
-    #     "body" : {
-    #         'uid' : '1234-abcd-5678',
-    #         'bid' : '1001',
-    #         'ordering' : 'like',
-    #         'num_image' : '0'
-    #     }
-    # }
+    #send_data = {
+        #"header" : header,
+        #"body" : {
+            #'uid' : '1234-abcd-5678',
+            #'bid' : '1001',
+            #'ordering' : 'like',
+            #'num_image' : '0'
+        #}
+    #}
 
     # send_data = {
     #     "header" : header,
