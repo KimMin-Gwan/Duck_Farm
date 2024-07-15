@@ -3,14 +3,16 @@ import 'package:cheese/src/model/bias_model.dart';
 class HomeDataModel {
   final String uid = '1234-abcd-5678';
   final List<Bias> biases;
+  final List calenderData;
   final List homeBodyData;
 
-  HomeDataModel({required this.biases, required this.homeBodyData});
+  HomeDataModel({required this.biases, required this.calenderData, required this.homeBodyData});
 
   factory HomeDataModel.fromJson(Data){
     List<Bias> biases = [];
     List homeBodyData = [];
-    print(Data.runtimeType);
+    List calenderData = [];
+    print(Data['body']);
     for(var response_bias in Data['body']['bias']){
       Bias bias = Bias();
       bias.set_bid(response_bias['bid']);
@@ -18,13 +20,14 @@ class HomeDataModel {
       biases.add(bias);
     }
     homeBodyData = Data['body']['home_body_data'];
+    calenderData = Data['body']['calender_data'];
 
     Bias plus_bias = Bias();
     plus_bias.set_bid("0000");
     plus_bias.set_bname("");
     biases.add(plus_bias);
 
-    return HomeDataModel(biases: biases, homeBodyData: homeBodyData);
+    return HomeDataModel(biases: biases, calenderData: calenderData, homeBodyData: homeBodyData);
   }
 }
 

@@ -1,6 +1,5 @@
-import 'package:cheese/src/ui/image_list_category_widget.dart';
+//import 'package:cheese/src/ui/image_list_category_widget.dart';
 import 'package:equatable/equatable.dart';
-import 'package:cheese/src/model/user_model.dart';
 import 'package:intl/intl.dart';
 
 

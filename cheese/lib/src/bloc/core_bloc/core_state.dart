@@ -1,6 +1,5 @@
 import 'package:cheese/src/model/image_model.dart';
 import 'package:equatable/equatable.dart';
-import 'package:cheese/src/model/bias_model.dart';
 import 'package:cheese/src/model/home_data_model.dart';
 
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
-import 'package:cheese/src/ui/login_try_widget.dart';
-import 'package:cheese/src/ui/first_visitor_widget.dart';
+import 'package:cheese/src/ui/sign_widget/login_try_widget.dart';
+import 'package:cheese/src/ui/sign_widget/first_visitor_widget.dart';
 
 class ForgetPasswordWidget extends StatefulWidget {
   const ForgetPasswordWidget({super.key});

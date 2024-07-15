@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
-import 'package:cheese/src/ui/login_try_widget.dart';
-import 'package:cheese/src/ui/login_widget.dart';
+import 'package:cheese/src/ui/sign_widget/login_try_widget.dart';
+import 'package:cheese/src/ui/sign_widget/login_widget.dart';
 
 class CompleteSignUpWidget extends StatefulWidget {
   const CompleteSignUpWidget({super.key});

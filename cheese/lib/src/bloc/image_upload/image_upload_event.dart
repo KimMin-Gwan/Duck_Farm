@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:cheese/src/model/image_model.dart';
-import 'package:flutter/material.dart';
 
 abstract class ImageUploadEvent extends Equatable{
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
-import 'package:cheese/src/ui/login_try_widget.dart';
-import 'package:cheese/src/ui/password_create_widget.dart';
+import 'package:cheese/src/ui/sign_widget/login_try_widget.dart';
+import 'package:cheese/src/ui/sign_widget/password_create_widget.dart';
 // import 'package:cheese/src/ui/login_widget.dart';
-import 'package:cheese/src/ui/member_login_widget.dart';
+import 'package:cheese/src/ui/sign_widget/member_login_widget.dart';
 
 class ChangePasswordWidget extends StatefulWidget {
   const ChangePasswordWidget({super.key});

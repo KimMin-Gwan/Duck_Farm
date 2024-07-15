@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:cheese/src/ui/styles/home_theme.dart';
 import 'package:cheese/src/ui/image_detail_widget.dart';
 import 'package:cheese/src/ui/bias_following_widget.dart';
-import 'package:cheese/src/ui/image_list_category_widget.dart';
+import 'package:cheese/src/ui/image_list/image_list_category_widget.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -47,10 +47,10 @@ class _HomePageState extends State<HomePage> {
                 MaterialPageRoute(builder: (context) => ImageUploadWidget())
             );
           },
-          child: Image.asset('images/assets/upload_button.png'),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
           backgroundColor: Colors.transparent,
           elevation: 0,
+          child: Image.asset('images/assets/upload_button.png'),
         )
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 width: queryWidth,
                 height: queryHeight - 110,
-                child: HomeWidget()
+                child: const HomeWidget()
               ),
             ]
           ),
@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                   height: queryHeight - 60,
                   //color: Colors.grey,
                 ),
-                BottomBarWidget()
+                const BottomBarWidget()
               ]
           )
         ],
@@ -102,7 +102,7 @@ class _TopBarState extends State<TopBarWidget> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.bottomCenter,
-      padding: EdgeInsets.symmetric(horizontal: 25.0), // 좌우 간격
+      padding: const EdgeInsets.symmetric(horizontal: 25.0), // 좌우 간격
       height: appBarHeight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween, // 가운데 간격
@@ -117,7 +117,7 @@ class _TopBarState extends State<TopBarWidget> {
             onPressed: () {
               // 메뉴 아이콘 클릭 시 동작
             },
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
           )
         ],
       ),
@@ -145,12 +145,12 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+                padding: const EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
                 child: BiasWidget(),
               ),
 
               Padding(
-                padding: EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
+                padding: const EdgeInsets.fromLTRB(25.0, 10.0, 25.0, 10.0),
                 // child: CalendarWidget(),
                 child: CalendarWidget2(),
               ),
@@ -164,7 +164,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
               // HomebodyWidget2
               Padding(
-                padding: EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 20.0),
+                padding: const EdgeInsets.fromLTRB(25.0, 20.0, 25.0, 20.0),
                 child:
                 HomeBodyWidget2(selectedDate: DateTime.now()), // 오늘 날짜를 임의로 넣음
               ),
@@ -174,7 +174,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         );
       } else {
         return Container(
-            child: Text('로딩 중 ~~')
+            child: const Text('로딩 중 ~~')
         );
       }
     });
@@ -199,15 +199,15 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
     return Container(
       width: queryWidth,
       height: bottomBarHeight,
-      color: Color(0xff232323),
+      color: const Color(0xff232323),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Icon(Icons.home, color : Colors.white),
+          const Icon(Icons.home, color : Colors.white),
           Container(
             width: queryWidth * 0.15,
           ),
-          Icon(Icons.search, color : Colors.white),
+          const Icon(Icons.search, color : Colors.white),
         ],
       )
     );
@@ -283,7 +283,7 @@ class _BiasState extends State<BiasWidget> {
               ),
               SingleChildScrollView(
                 child: Container(
-                  padding: EdgeInsets.only(left: 8),
+                  padding: const EdgeInsets.only(left: 8),
                   height: mainHeight * 0.48, // Specify the height to allow scrolling
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal, // Set horizontal scrolling
@@ -337,7 +337,7 @@ class _BiasState extends State<BiasWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 5.0),
+              padding: const EdgeInsets.only(top: 5.0),
               child: Text(
                 biasName, // 텍스트
                 style: _style.biasName,
@@ -362,7 +362,7 @@ class _BiasState extends State<BiasWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 5.0),
+              padding: const EdgeInsets.only(top: 5.0),
               child: Text(
                 biasName, // 텍스트
                 style: _style.biasName,
@@ -381,7 +381,7 @@ class CalendarWidget extends StatefulWidget {
 }
 
 class _CalendarWidgetState extends State<CalendarWidget> {
-  CalendarFormat _calendarFormat = CalendarFormat.month;
+  final CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -408,12 +408,12 @@ class _CalendarWidgetState extends State<CalendarWidget> {
             Container(
               width: queryWidth * 0.9,
               height : 28,
-              padding: EdgeInsets.only(top: 10.0),
+              padding: const EdgeInsets.only(top: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_left),
+                    icon: const Icon(Icons.arrow_left),
                     onPressed: () {
                       setState(() {
                         _focusedDay =
@@ -426,7 +426,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                     style: _style.monthYear,
                   ),
                   IconButton(
-                    icon: Icon(Icons.arrow_right),
+                    icon: const Icon(Icons.arrow_right),
                     onPressed: () {
                       setState(() {
                         _focusedDay =
@@ -489,7 +489,7 @@ class CalendarWidget2 extends StatefulWidget {
 }
 
 class _CalendarWidgetState2 extends State<CalendarWidget2> {
-  CalendarFormat _calendarFormat = CalendarFormat.month;
+  final CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
@@ -526,7 +526,7 @@ class _CalendarWidgetState2 extends State<CalendarWidget2> {
           Container(
             width: queryWidth * 0.9,
             height: 28,
-            padding: EdgeInsets.only(top: 10.0),
+            padding: const EdgeInsets.only(top: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -544,7 +544,7 @@ class _CalendarWidgetState2 extends State<CalendarWidget2> {
                   style: _style.monthYear,
                 ),
                 IconButton(
-                  icon: Icon(Icons.arrow_right),
+                  icon: const Icon(Icons.arrow_right),
                   onPressed: () {
                     setState(() {
                       _focusedDay = DateTime(
@@ -572,7 +572,7 @@ class _CalendarWidgetState2 extends State<CalendarWidget2> {
                     _selectedDay = selectedDay;
                     _focusedDay = focusedDay; // `_focusedDay`도 업데이트
                     String date = DateFormat('yyyy/MM/dd').format(selectedDay);
-                    print(date);
+                    //print(date);
                     BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent(date));
                   });
                 },
@@ -672,7 +672,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
           if (state is NoneBiasState){
               if (state.homeDataModel.homeBodyData.length == 0){
                 return Container(
-                  child : Text("텅~!")
+                  child : const Text("텅~!")
                 );
               }
               else{
@@ -753,14 +753,14 @@ class _HomeBodyState extends State<HomeBodyWidget> {
             onTap:(){
               BlocProvider.of<CoreBloc>(context).add(ImageListCategoryEvent(core_data['bid']));
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ImageListByCategoryWidget())
+                  MaterialPageRoute(builder: (context) => const ImageListByCategoryWidget())
               );
             },
             child: Padding(
               padding: const EdgeInsets.only(left: 5.0),
               child: Text(
                 core_data['bname'],
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           )
@@ -774,7 +774,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
   Padding _buildTimelineSection(BuildContext context, state, numSchedule) {
     Map core_data = state.homeDataModel.homeBodyData[0];
     return Padding(
-      padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -830,7 +830,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
               core_data['schedule_data'][numSchedule]['schedule_name'],
               style: _style.eventTitle,
             ),
-            Icon(
+            const Icon(
               Icons.arrow_forward_ios,
               size: 16.0, // 아이콘 사이즈도 바꾸지 X것 같으므로 고정값
             ),
@@ -842,11 +842,11 @@ class _HomeBodyState extends State<HomeBodyWidget> {
 
   Padding _buildEventGallery(BuildContext context, core_data, numSchedule) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
       child: Container(
         width: maxWidth, // 상세 사진(회색) 가로 사이즈
         height: maxHeight * 0.13, // 세로 사이즈
-        margin: EdgeInsets.only(right: 10),
+        margin: const EdgeInsets.only(right: 10),
         decoration: _style.eventGalleryBox,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -873,7 +873,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
               //width: maxHeight * 0.10, // 내부 상세사진(보라) 높이
               //height: maxHeight * 0.10, // 세로 높이
               decoration: _style.galleryBox,
-              margin: EdgeInsets.only(left:10),
+              margin: const EdgeInsets.only(left:10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4.0),
                 child: SizedBox(
@@ -1006,11 +1006,11 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
               padding: const EdgeInsets.only(left: 5.0),
               child: Text(
                 core_data['bname'],
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ),
-          Spacer(), // 남은 공간을 차지하는 위젯
+          const Spacer(), // 남은 공간을 차지하는 위젯
           DropdownWidget(),// DropdownWidget
         ],
       ),
@@ -1076,7 +1076,7 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
                 core_data['schedule_data'][numSchedule]['schedule_name'],
                 style: _style.eventTitle,
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios,
                 size: 16.0, // 아이콘 사이즈도 바꾸지 X것 같으므로 고정값
               ),
@@ -1088,11 +1088,11 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
 
   Padding _buildEventGallery(BuildContext context, core_data, numSchedule) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
+      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 10.0),
       child: Container(
         width: maxWidth, // 상세 사진(회색) 가로 사이즈
         height: maxHeight * 0.13, // 세로 사이즈
-        margin: EdgeInsets.only(right: 10),
+        margin: const EdgeInsets.only(right: 10),
         decoration: _style.eventGalleryBox,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -1119,7 +1119,7 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
             //width: maxHeight * 0.10, // 내부 상세사진(보라) 높이
             //height: maxHeight * 0.10, // 세로 높이
               decoration: _style.galleryBox,
-              margin: EdgeInsets.only(left:10),
+              margin: const EdgeInsets.only(left:10),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(4.0),
                   child: SizedBox(
@@ -1144,9 +1144,9 @@ class _DropdownWidgetState extends State<DropdownWidget> {
   IconData _selectedIcon = Icons.circle;
 
   final Map<String, Color> _colorMap = {
-    '전체': Color(0xFFF7CE52),
-    '온라인': Color(0xFF675DEF),
-    '오프라인': Color(0xFFF7CE52),
+    '전체': const Color(0xFFF7CE52),
+    '온라인': const Color(0xFF675DEF),
+    '오프라인': const Color(0xFFF7CE52),
   };
 
   void _onSelected(String value, IconData icon) {
@@ -1163,7 +1163,7 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         popupMenuTheme: PopupMenuThemeData(
           color: Colors.white, // 팝업 메뉴 배경색 설정
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.grey, width: 1.0), // 외곽선 색상과 두께 설정
+            side: const BorderSide(color: Colors.grey, width: 1.0), // 외곽선 색상과 두께 설정
             borderRadius: BorderRadius.circular(8.0), // 모서리 반경 설정
           ),
         ),
@@ -1172,9 +1172,9 @@ class _DropdownWidgetState extends State<DropdownWidget> {
         child: OutlinedButton(
           onPressed: null,
           style: OutlinedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 10.0), // 버튼의 패딩 조정
+            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 10.0), // 버튼의 패딩 조정
             minimumSize: Size(0, 20), // 버튼의 최소 세로 길이 조정
-            side: BorderSide(color: Colors.grey, width: 1.0), // 외곽선 색상과 두께 설정
+            side: const BorderSide(color: Colors.grey, width: 1.0), // 외곽선 색상과 두께 설정
             tapTargetSize: MaterialTapTargetSize.shrinkWrap, // 버튼의 터치 영역 조정
           ),
           child: PopupMenuButton<String>(
@@ -1193,9 +1193,9 @@ class _DropdownWidgetState extends State<DropdownWidget> {
                   value: '전체',
                   child: Row(
                     children: [
-                      Icon(Icons.circle, size: 12, color: Color(0xFFF7CE52)),
+                      const Icon(Icons.circle, size: 12, color: Color(0xFFF7CE52)),
                       Container(width: 8),
-                      Text('전체'),
+                      const Text('전체'),
                     ],
                   ),
                 ),
@@ -1203,9 +1203,9 @@ class _DropdownWidgetState extends State<DropdownWidget> {
                   value: '온라인',
                   child: Row(
                     children: [
-                      Icon(Icons.circle, size: 12, color: Color(0xFF675DEF)), // 적절한 아이콘 추가
+                      const Icon(Icons.circle, size: 12, color: Color(0xFF675DEF)), // 적절한 아이콘 추가
                       Container(width: 8),
-                      Text('온라인'),
+                      const Text('온라인'),
                     ],
                   ),
                 ),
@@ -1213,9 +1213,9 @@ class _DropdownWidgetState extends State<DropdownWidget> {
                   value: '오프라인',
                   child: Row(
                     children: [
-                      Icon(Icons.circle, size: 12, color: Color(0xFFF7CE52)),
+                      const Icon(Icons.circle, size: 12, color: Color(0xFFF7CE52)),
                       Container(width: 8),
-                      Text('오프라인'),
+                      const Text('오프라인'),
                     ],
                   ),
                 ),
@@ -1232,14 +1232,14 @@ class _DropdownWidgetState extends State<DropdownWidget> {
                 Container(width: 8),
                 Text(
                   _selectedText,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black, // 텍스트 색상 설정
                     fontSize: 12, // 폰트 크기 설정
                     fontWeight: FontWeight.normal, // 폰트 굵기 설정
                   ),
                 ),
                 Container(width: 1),
-                Icon(Icons.arrow_drop_down, size: 24), // 드롭다운 아이콘
+                const Icon(Icons.arrow_drop_down, size: 24), // 드롭다운 아이콘
               ],
             ),
           ),
