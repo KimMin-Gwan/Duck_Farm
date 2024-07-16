@@ -57,7 +57,6 @@ class NoneBiasHomeDataModel(SampleModelTypeOne):
             for key in self._response_schedule.keys():
                 self._response_schedule[key] = list(self._response_schedule[key])
 
-            print(self._response_schedule)
 
             return True
         except Exception as e:

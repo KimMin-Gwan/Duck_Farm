@@ -58,10 +58,10 @@ class Core_Controller:
                 model.set_state_code("210")
                 return model
 
+            print("hello")
             if not model.set_schedules_with_sids(request=request):
                 model.set_state_code("210")
                 return model
-            print("hello")
 
             if not model.set_home_body_data_with_target_date(request=request):
                 model.set_state_code("210")

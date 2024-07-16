@@ -67,7 +67,6 @@ class Core_Service_View(Master_View):
             return response
 
 
-
 class NoneBiasHomeDataRequest(RequestHeader):
     def __init__(self, request) -> None:
         super().__init__(request)
