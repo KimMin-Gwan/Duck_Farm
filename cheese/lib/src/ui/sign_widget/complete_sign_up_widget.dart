@@ -38,7 +38,13 @@ class _CompleteSignUpWidgetState extends State<CompleteSignUpWidget> {
               height: 20,
             ),
             mainLogoArea(queryWidth, queryHeight),
+            SizedBox(
+              height: 20,
+            ),
             TextBodyWidget(),
+            SizedBox(
+              height: 20,
+            ),
             BodyWidget().functionButton(queryWidth, queryHeight, '최애 설정하기'),
           ],
         ),
@@ -70,19 +76,25 @@ class TextBodyWidget extends StatelessWidget {
     return Column(
       children: [
         completeTextArea(queryWidth, queryHeight),
+        SizedBox(
+          height: 10,
+        ),
         subTextArea(queryWidth, queryHeight),
       ],
     );
   }
   Widget completeTextArea(width, height){
     return Container(
-      child: Text('치즈 가입을 완료하였습니다.'),
+      child: Text('치즈 가입을 완료하였습니다.',style: TextStyle(
+        fontSize: 18,
+      ),),
     );
   }
   Widget subTextArea(width, height){
     return Container(
       alignment: Alignment.center,
-      child: Text('이제 나의 최애를 설정하고\n 보고싶은 날짜의 사진을 편하게 즐겨보세요!'),
+      child: Text('이제 나의 최애를 설정하고\n 보고싶은 날짜의 사진을 편하게 즐겨보세요!',
+      textAlign: TextAlign.center,),
     );
   }
 }

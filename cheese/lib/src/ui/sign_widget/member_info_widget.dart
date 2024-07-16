@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
 import 'package:cheese/src/ui/sign_widget/login_try_widget.dart ';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class MemberInfoWidget extends StatefulWidget {
   const MemberInfoWidget({super.key});
@@ -58,6 +59,10 @@ class _InputInfoWidgetState extends State<InputInfoWidget> {
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
   bool interaction = false;
+  final maskedFormatter = MaskTextInputFormatter(
+    mask: '###### - #######',
+    filter: {'#': RegExp(r'[0-9]')},
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +103,8 @@ class _InputInfoWidgetState extends State<InputInfoWidget> {
       height: height * 0.1,
       width: width * 0.8,
       child: TextFormField(
+        inputFormatters: [maskedFormatter],
+        keyboardType: TextInputType.number,
         onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
         decoration: InputDecoration(
           label: Text('생년월일'),
