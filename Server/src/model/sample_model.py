@@ -2,7 +2,6 @@ from model.fake_database import Local_Database
 from model.data_domain import User
 from view.parsers import Head_Parser
 import json
-from others import CoreControllerLogicError
 
 import editdistance
 from jamo import h2j, j2hcj
@@ -104,6 +103,20 @@ class SampleModelTypeThree(HeaderModel):
         self._database:Local_Database = database
         super().__init__()
     
+    def _set_list_alignment(self,product_list , align): #정렬
+        if align == "latest":
+            sorted_products = sorted(product_list, key=lambda x: x.ordering, reverse=True)
+        elif align == "rating":
+            sorted_products = sorted(product_list, key=lambda x: x.ordering, reverse=False)
+        elif align == "like":
+            sorted_products = sorted(product_list, key=lambda x: x.ordering, reverse=True)
+        else:
+            sorted_products = sorted(product_list, key=lambda x: x.iid, reverse=True)
+        #sorted_products = sorted(product_list, key=lambda x: datetime.strptime(x.date, "%Y/%m/%d"))
+
+        return sorted_products
+    
+
     # 추상
     def get_response_form_data(self):
         pass
