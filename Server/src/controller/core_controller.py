@@ -126,6 +126,7 @@ class Core_Controller:
         
         try:
             model.set_bias_with_bid(request=request)
+            model._set_list_alignment(request=request)
             model.set_images_with_bid(request=request)
             model.make_image_list()
 
@@ -158,6 +159,7 @@ class Core_Controller:
         try:
             model.set_bias_with_bid(request=request)
             model.set_schedule_with_sid(request=request)
+            model._set_list_alignment(request=request)
             model.set_images_with_sid(request=request)
             model.make_image_list()
 

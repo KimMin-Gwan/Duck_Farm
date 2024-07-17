@@ -2,7 +2,7 @@ from model.fake_database import Local_Database
 from model.data_domain import User
 from view.parsers import Head_Parser
 import json
-
+'''
 import editdistance
 from jamo import h2j, j2hcj
 
@@ -20,7 +20,7 @@ class FindSimilarData:
             if distance <= len(decomposed_item) - len(decomposed_key_data):
                 results.append(item)
         return results
-
+'''
 class HeaderModel:
     def __init__(self) -> None:
         self._state_code = '500'
@@ -79,6 +79,20 @@ class SampleModelTypeOne(HeaderModel):
         self._user.make_with_dict(user_data)
         return True
     
+    def _set_list_alignment(self,product_list , align): #정렬
+        if align == "latest":
+            sorted_products = sorted(product_list, key=lambda x: x.ordering, reverse=True)
+        elif align == "rating":
+            sorted_products = sorted(product_list, key=lambda x: x.ordering, reverse=False)
+        elif align == "like":
+            sorted_products = sorted(product_list, key=lambda x: x.ordering, reverse=True)
+        else:
+            sorted_products = sorted(product_list, key=lambda x: x.iid, reverse=True)
+        #sorted_products = sorted(product_list, key=lambda x: datetime.strptime(x.date, "%Y/%m/%d"))
+
+        return sorted_products
+    
+
     # 추상
     def get_response_form_data(self):
         pass

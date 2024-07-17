@@ -41,6 +41,15 @@ class ImageListByBiasModel(SampleModelTypeOne):
         
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_bias_with_bid error | " + str(e))
+    
+    def _set_list_alignment(self,request):
+        try:
+            image_list = self.__images
+            align = request.ordering
+            self.__images = super()._set_list_alignment(image_list, align)
+
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="_set_list_alignment error | " + str(e))
 
     def make_image_list(self) -> bool:
         try:
@@ -131,6 +140,15 @@ class ImageListByBiasNScheduleModel(SampleModelTypeOne):
         
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_images_with_sid error | " + str(e))
+
+    def _set_list_alignment(self,request):
+        try:
+            image_list = self.__images
+            align = request.ordering
+            self.__images = super()._set_list_alignment(image_list, align)
+
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="_set_list_alignment error | " + str(e))
 
     def make_image_list(self) -> bool:
         try:
