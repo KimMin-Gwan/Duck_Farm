@@ -23,5 +23,16 @@
             "1002"
         ],
         "like_iids": []
+    },
+    {
+        "uid": "3290-abcd-5678",
+        "uname": "김보성",
+        "password": "1324897",
+        "birthday": "2000/05/16",
+        "email": "seyoung@naver.com",
+        "nickname": "Csy User",
+        "bids": [
+        ],
+        "like_iids": []
     }
 ]

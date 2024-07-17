@@ -5,6 +5,9 @@
 211 : /core_system/none_bias_home_data -> none_bias_home_data 정상 반환
 212 : /core_system/none_bias_home_data -> none_bias_home_data 정상 반환
 
+222 : /Core_Controller/ -> 최애 팔로잉 데이터가 없을 때
+223 : /Core_Controller/get_bias_list -> get_bias_list 정상 반환
+
 
 
 401 : /core_system/ -> 등록되지 않은 유저의 접근

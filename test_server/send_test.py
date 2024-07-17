@@ -8,10 +8,10 @@ HOST = '127.0.0.1'
 PORT = 5000
 
 def send_data():
-    #url = f'http://{HOST}:{str(PORT)}/bias_following/get_bias_following'
+    url = f'http://{HOST}:{str(PORT)}/core_system/get_bias_following'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias'
 
-    url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
 
     #url = f'http://{HOST}:{str(PORT)}/core_system/bias_home_data'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schdule'
@@ -38,8 +38,7 @@ def send_data():
     send_data = {
         "header" : header,
         "body" : {
-            'uid' : '1234-abcd-5678',
-            'date' : '2024/05/26',
+            'uid' : '3290-abcd-5678'
         }
     }
 

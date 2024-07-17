@@ -65,6 +65,16 @@ class Core_Service_View(Master_View):
                                                      request=request)
             response = model.get_response_form_data(self._head_parser)
             return response
+        
+        # 최애 팔로잉
+        @self.__app.post(endpoint+'/get_bias_following')
+        def get_bias_list_by_uid(raw_request:dict):
+            request = BiasListByUid(request=raw_request)
+            core_controller = Core_Controller()
+            model = core_controller.get_bias_list(database=self.__database,
+                                                     request=request)
+            response = model.get_response_form_data(self._head_parser)
+            return response
 
 
 class NoneBiasHomeDataRequest(RequestHeader):
@@ -108,6 +118,13 @@ class ImageListByBiasNSchedule(RequestHeader):
         self.sid = body['sid']
         self.ordering = body['ordering']
         self.num_image = body['num_image']
+
+# 최애 팔로잉
+class BiasListByUid(RequestHeader):
+    def __init__(self, request) -> None:
+        super().__init__(request)
+        body = request['body']
+        self.uid = body['uid']
 
 
 

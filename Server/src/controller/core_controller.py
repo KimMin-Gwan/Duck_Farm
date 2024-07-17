@@ -1,8 +1,7 @@
-from model import NoneBiasHomeDataModel, BiasHomeDataModel, ImageDetailModel, ImageListByBiasModel, ImageListByBiasNScheduleModel
+from model import NoneBiasHomeDataModel, BiasHomeDataModel, ImageDetailModel, ImageListByBiasModel, ImageListByBiasNScheduleModel, BiasListModel
 from model import Local_Database
 #from view import NoneBiasHomeDataRequest, BiasHomeDataRequest
 from others import UserNotExist, CustomError
-
 
 class Core_Controller:
     def get_none_bias_home_data(self, database:Local_Database, request) -> NoneBiasHomeDataModel:
@@ -174,6 +173,37 @@ class Core_Controller:
             model.set_state_code(e.error_code) # 종합 에러
             print(e.error_type)
         
+        finally:
+            return model
+        
+
+        #최애 팔로잉 편집 페이지
+    def get_bias_list(self, database:Local_Database, request):
+        model = BiasListModel(database=database)
+        try:
+            # 유저가 있는지 확인
+            if not model.set_user_with_uid(request=request):
+                raise UserNotExist("Can not find User with uid")
+        except UserNotExist as e:
+            print("Error Catched : ", e)
+            model.set_state_code(e.error_code) # 종합 에러
+            return model
+
+        try:
+            if not model.get_biases_data_with_bids():
+                model.set_state_code("222")
+                return model
+
+            model.set_state_code("223")
+
+        except CustomError as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+
+        except Exception as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+
         finally:
             return model
 
