@@ -2,6 +2,7 @@ from model.fake_database import Local_Database
 from model.data_domain import User
 from view.parsers import Head_Parser
 import json
+from others import CoreControllerLogicError
 
 import editdistance
 from jamo import h2j, j2hcj
