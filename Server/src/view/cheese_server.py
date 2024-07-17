@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from view.core_system_view import Core_Service_View
 from view.utility_system_view import Utility_Service_View
+from view.sign_system_view import Sign_Service_View
 from view.parsers import Head_Parser
 import uvicorn
 
@@ -17,9 +18,14 @@ class Cheese_Server:
                                                    endpoint='/utility_system',
                                                    database=database,
                                                    head_parser=head_parser)
+        self.__sign_system_view = Sign_Service_View(app=self.__app,
+                                                   endpoint='/sign_system',
+                                                   database=database,
+                                                   head_parser=head_parser)
 
         self.__core_system_view()
         self.__utility_system_view()
+        self.__sign_system_view()
 
     def run_server(self, host='127.0.0.1', port=5000):
         uvicorn.run(app=self.__app, host=host, port=port)

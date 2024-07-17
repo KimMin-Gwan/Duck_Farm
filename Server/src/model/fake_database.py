@@ -68,7 +68,7 @@ class Local_Database:
             raise DatabaseLogicError("get_data_with_key error | " + str(e))
 
     # db.get_datas_with_key(target="user", key="uname", key_datas=["minsu", "minzi"])
-    def get_datas_with_key(self, target:str, key:str, key_datas:str):
+    def get_datas_with_key(self, target:str, key:str, key_datas:list):
         try:
             list_data = self._select_target_list(target=target)
             find_datas = []
@@ -146,8 +146,9 @@ class Local_Database:
     # db.add_new_data(target_id="uid", new_data={key: value})
     def add_new_data(self, target_id:str, new_data:dict):
         try:
+            print(new_data)
             target_list:list = self._select_target_list(target=target_id)
-            target_list.extend(new_data)
+            target_list.append(new_data)
             func = self._select_save_function(target=target_id)
             func()
         except Exception as e:

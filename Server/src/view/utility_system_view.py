@@ -19,7 +19,7 @@ class Utility_Service_View(Master_View):
     def register_route(self, endpoint:str):
         @self.__app.get(endpoint+'/home')
         def home():
-            return 'Hello, This is Root of Core-System Service'
+            return 'Hello, This is Root of Utility-System Service'
 
         @self.__app.post(endpoint+'/image_like_n_dislike')
         def none_bias_home_data(raw_request:dict):
