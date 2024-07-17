@@ -11,6 +11,7 @@ class ImageDetailModel(SampleModelTypeOne):
         self.__image = Image()
         self.__schedule = Schedule()
         self.__owner = False
+        self.__like = False
 
     def set_image_with_iid(self,request) -> bool:
         try:
@@ -52,11 +53,21 @@ class ImageDetailModel(SampleModelTypeOne):
             if self._user.uid == self.__image.uid:
                 self.__owner = True
             return
+    
+    def is_image_liek(self) -> None:
+        try:
+            if self.__image.iid in self._user.like_iids:
+                self.__like = True
+
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="set_schedules_with_sid error | " + str(e))
+
 
     def get_response_form_data(self,head_parser):
         try:
             body = {
-                "user_owner" : self.__owner
+                "user_owner" : self.__owner,
+                "like_state" : self.__like
             }
             body.update(self.__image.get_dict_form_data())
             body.update(self.__bias.get_dict_form_data())
