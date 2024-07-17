@@ -12,6 +12,9 @@ def send_data():
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias'
 
     #url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
+    #url = f'http://{HOST}:{str(PORT)}/utility_system/search_schedule'
+    #url = f'http://{HOST}:{str(PORT)}/utility_system/search_schedule'
+    url = f'http://{HOST}:{str(PORT)}/utility_system/search_bias'
 
     #url = f'http://{HOST}:{str(PORT)}/core_system/bias_home_data'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schdule'
@@ -35,12 +38,27 @@ def send_data():
         #}
     #}
 
+    #send_data = {
+        #"header" : header,
+        #"body" : {
+            #'key_word' : '디어마이',
+        #}
+    #}
+
     send_data = {
         "header" : header,
         "body" : {
-            'uid' : '3290-abcd-5678'
+            'key_word' : '히',
         }
     }
+
+    #send_data = {
+        #"header" : header,
+        #"body" : {
+            #'uid' : '1234-abcd-5678',
+            #'date' : '2024/05/26',
+        #}
+    #}
 
     #send_data = {
         #"header" : header,

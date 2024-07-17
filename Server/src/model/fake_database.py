@@ -106,6 +106,9 @@ class Local_Database:
         except Exception as e:
             raise DatabaseLogicError("get_datas_with_ids error | " + str(e))
 
+    def get_all_data(self, target):
+        return self._select_target_list(target=target)
+
     def _select_target_list(self, target:str):
         if target == "iid" or target == "image":
             return self.__image_data
@@ -169,4 +172,3 @@ class Local_Database:
         num_list= len(target_list)
         return num_list
     
-

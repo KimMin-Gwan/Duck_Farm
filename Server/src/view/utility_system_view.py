@@ -30,6 +30,24 @@ class Utility_Service_View(Master_View):
             response = model.get_response_form_data(self._head_parser)
             return response
         
+        @self.__app.post(endpoint+'/search_schedule')
+        def search_schedule_data(raw_request:dict):
+            request = SearchscheduleRequest(request=raw_request)
+            utility_controller=Utility_Controller()
+            model = utility_controller.try_search_schedule_with_keyword(database=self.__database,
+                                                                    request=request)
+            response = model.get_response_form_data(self._head_parser)
+            return response
+
+        @self.__app.post(endpoint+'/search_bias')
+        def search_bias_data(raw_request:dict):
+            request = SearchBiasRequest(request=raw_request)
+            utility_controller=Utility_Controller()
+            model = utility_controller.try_search_bias_with_keyword(database=self.__database,
+                                                                    request=request)
+            response = model.get_response_form_data(self._head_parser)
+            return response
+
 
 class ImageLikeRequest(RequestHeader):
     def __init__(self, request) -> None:
@@ -38,3 +56,15 @@ class ImageLikeRequest(RequestHeader):
         self.uid = body['uid']
         self.iid = body['iid']
         self.like = body['like']  # bool
+
+class SearchscheduleRequest(RequestHeader):
+    def __init__(self, request) -> None:
+        super().__init__(request)
+        body = request['body']
+        self.key_word = body['key_word']
+
+class SearchBiasRequest(RequestHeader):
+    def __init__(self, request) -> None:
+        super().__init__(request)
+        body = request['body']
+        self.key_word = body['key_word']

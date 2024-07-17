@@ -3,6 +3,24 @@ from model.data_domain import User
 from view.parsers import Head_Parser
 import json
 
+import editdistance
+from jamo import h2j, j2hcj
+
+class FindSimilarData:
+    def __decompose(self, text:str):
+        return ''.join(j2hcj(h2j(text.replace(" ", ""))))
+
+    def search_similar(self, data_list:list, key_word:str, key_attr:str):
+        results = []
+        decomposed_key_data = self.__decompose(key_word)
+        for item in data_list:
+            target_item = getattr(item, key_attr)
+            decomposed_item = self.__decompose(target_item)
+            distance = editdistance.eval(decomposed_item, decomposed_key_data)
+            if distance <= len(decomposed_item) - len(decomposed_key_data):
+                results.append(item)
+        return results
+
 class HeaderModel:
     def __init__(self) -> None:
         self._state_code = '500'
@@ -22,6 +40,30 @@ class HeaderModel:
         self._state_code = state_code
         return
 
+class SampleModelTypeTwo(HeaderModel):
+    def __init__(self, database) -> None:
+        self._database:Local_Database = database
+        self._user = User()
+        super().__init__()
+    
+
+    def _search_similar_data(self, data_list:list, key_word:str, key_attr:str):
+        find_similar_data = FindSimilarData()
+        result = find_similar_data.search_similar(data_list=data_list,
+                                          key_word=key_word, key_attr=key_attr)
+        return result
+
+    # 추상
+    def get_response_form_data(self):
+        pass
+
+
+    def _make_dict_list_data(self, list_data:list)-> list:
+        dict_list_data = []
+        for data in list_data:
+            dict_list_data.append(data.get_dict_form_data())
+        return dict_list_data
+    
 
 class SampleModelTypeOne(HeaderModel):
     def __init__(self, database) -> None:
