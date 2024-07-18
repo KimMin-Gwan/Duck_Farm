@@ -35,8 +35,8 @@ class ImageListByBiasModel(SampleModelTypeOne):
             self.__images = self.__images[request.num_image:]
 
             if len(self.__images) > 20:
-                self.__images = self.__images[:20]
-            
+                self.__images = self.__images[:20]          
+
             return True
         
         except Exception as e:
