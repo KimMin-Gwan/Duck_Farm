@@ -2,7 +2,7 @@ from model.sample_model import SampleModelTypeThree
 from model.fake_database import Local_Database
 from model.data_domain import User
 from datetime import datetime
-from others import CoreControllerLogicError
+from others import CoreControllerLogicError, UserNotExist
 import uuid
 
 class SignUpModel(SampleModelTypeThree):
@@ -56,6 +56,46 @@ class SignUpModel(SampleModelTypeThree):
         try:
             body = {
                 "user" : self.__user.get_dict_form_data()
+            }
+
+            response = self._get_response_data(head_parser=head_parser, body=body)
+            return response
+
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="response making error | " + str(e))
+
+
+class ChangePasswordModel(SampleModelTypeThree):
+    def __init__(self, database) -> None:
+        super().__init__(database)
+        self.__user = User()
+        self.__result = False
+
+    def set_user_with_email(self, request) -> None:
+        user_data = self._database.get_data_with_key(target="uid", key="email", key_data=request.email)
+
+        if not user_data:
+            raise UserNotExist()
+
+        self.__user.make_with_dict(user_data)
+        return True
+
+    def try_change_password(self, request):
+        try:
+            self.__user.password = request.password
+            self._database.modify_data_with_id("uid", self.__user.get_dict_form_data())
+            self.__result = True
+
+            return True
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="set_user_with_request_data error | " + str(e))
+
+
+    # json 타입의 데이터로 반환
+    def get_response_form_data(self, head_parser):
+        try:
+            body = {
+                "result" : self.__result
             }
 
             response = self._get_response_data(head_parser=head_parser, body=body)

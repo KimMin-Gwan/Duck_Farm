@@ -36,6 +36,14 @@ class Sign_Service_View(Master_View):
             response = model.get_response_form_data(self._head_parser)
             return response
         
+        @self.__app.post(endpoint+'/try_change_password')
+        def try_change_password(raw_request:dict):
+            request = ChangePasswordRequest(request=raw_request)
+            sign_controller=Sign_Controller()
+            model = sign_controller.try_change_password(database=self.__database,
+                                                             request=request)
+            response = model.get_response_form_data(self._head_parser)
+            return response
 
 class SingUpRequest(RequestHeader):
     def __init__(self, request) -> None:
@@ -48,6 +56,13 @@ class SingUpRequest(RequestHeader):
         self.uname = body['uname']
 
 class LoginRequest(RequestHeader):
+    def __init__(self, request) -> None:
+        super().__init__(request)
+        body = request['body']
+        self.email = body['email']
+        self.password = body['password']
+
+class ChangePasswordRequest(RequestHeader):
     def __init__(self, request) -> None:
         super().__init__(request)
         body = request['body']
