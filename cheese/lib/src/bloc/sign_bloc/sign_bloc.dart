@@ -22,6 +22,20 @@ class SignBloc extends Bloc<SignEvent, SignState>{
     on<CheckTermsEvent>(_onCheckTermInputEvent);
     on<EndOfSignUpEvent>(_onEndOfSignUpEvent);
     on<TryLoginEvent>(_onTryLoginEvent);
+    on<PasswordChangeEvent>(_onPasswordChangeEvent);
+  }
+
+  Future<void> _onPasswordChangeEvent(PasswordChangeEvent event, Emitter<SignState> emit) async {
+    String email = _user.email;
+    String password =event.password;
+    SignState state;
+    PasswordChangeModel passwordChangeModel = await _userRepository.fetchPasswordChange(email,password);
+    if (PasswordChangeModel.flag){
+      state = TryLoginState(_user.email);
+      _signStateStack.add(state);
+      emit(state);
+    }
+
   }
 
   Future<void> _onStartSignEvent(StartSignEvent event, Emitter<SignState> emit) async {

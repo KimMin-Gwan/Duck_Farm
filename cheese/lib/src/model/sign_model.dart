@@ -22,6 +22,21 @@ class SearchEmailModel extends SampleModel {
   }
 }
 
+class PasswordChangeModel extends SampleModel {
+  final bool flag;
+
+  PasswordChangeModel({
+    required String stateCode,
+    required this.flag,
+  }) : super(stateCode);
+
+  factory PasswordChangeModel.fromJson(Map data) {
+    return PasswordChangeModel(
+      stateCode: data['header']['state-code'],
+      flag: data['body']['flag'],
+    );
+  }
+}
 
 class SendEmailModel extends SampleModel{
   final bool flag;

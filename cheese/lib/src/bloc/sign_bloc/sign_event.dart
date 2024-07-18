@@ -13,6 +13,14 @@ class InitSignEvent extends SignEvent{
   List<Object> get props => [];
 }
 
+class PasswordChangeEvent extends SignEvent{
+  final String password;
+  PasswordChangeEvent(this.password);
+
+  @override
+  List<Object> get props => [password];
+}
+
 class StartSignEvent extends SignEvent{
 
   @override

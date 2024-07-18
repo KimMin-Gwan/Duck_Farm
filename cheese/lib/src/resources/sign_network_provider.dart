@@ -6,6 +6,32 @@ import 'dart:convert';
 import 'package:cheese/src/resources/main_json_parser.dart';
 import 'package:cheese/src/data_domain/data_domain.dart';
 
+class PasswordChangeApiJsonParser extends MainJsonParser{
+  final Map body = {
+    'email' : '',
+    'password':'',
+  };
+  Uri __url = Uri();
+
+  PasswordChangeApiJsonParser(String endpoint):super(){
+    __url = Uri(
+      scheme: 'http',
+      host:super.host,
+      port:super.port,
+      path:endpoint,
+    );
+  }
+
+  void makeBodyData(email,password){
+    body['email'] = email;
+    body['password'] = password;
+  }
+
+  String getData() => super.makeSendData(this.body);
+
+  Uri getUri() => this.__url;
+}
+
 class TrySearchEmailApiJsonParser extends MainJsonParser{
   final Map body = {
     'email' : '',
@@ -94,7 +120,7 @@ class SignNetworkProvider{
   final String sendEmailEndpoint = '/sign_system/try_send_email';
   final String trySignUpEndpoint = '/sign_system/try_sign_up';
   final String tryLoginEndpoint = '/sign_system/try_login';
-
+  final String passwordChangeEndpoint = '/sign_system/try_password_change';
 
   Client client = Client();
 
@@ -155,6 +181,26 @@ class SignNetworkProvider{
     }
   }
 
+  Future<PasswordChangeModel> fetchPasswordChange(String email, String password) async {
+
+    PasswordChangeApiJsonParser passwordChangeApiJsonParser = PasswordChangeApiJsonParser(this.passwordChangeEndpoint);
+    PasswordChangeApiJsonParser.setHeader("", this.passwordChangeEndpoint);
+    passwordChangeApiJsonParser.makeBodyData(email, password);
+
+    final response = await client.post(
+        passwordChangeApiJsonParser.getUri(),
+        headers: {'Content-Type': 'application/json'},
+        body: passwordChangeApiJsonParser.getData()
+    );
+
+    print('request status: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      return PasswordChangeModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
   Future<TrySignUpModel> fetchTrySignUp(
       User user,
       ) async {
@@ -175,6 +221,7 @@ class SignNetworkProvider{
       throw Exception('Failed to load post');
     }
   }
+
 /*
   Future<TryLoginModel> fetchTryLogin(String email, String password) async {
     TryLoginApiJsonParser tryLoginApiJsonParser = TryLoginApiJsonParser(this.tryLoginEndpoint);

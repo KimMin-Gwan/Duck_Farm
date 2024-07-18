@@ -12,6 +12,11 @@ class InitSignState extends SignState{
   List<Object> get props => [];
 }
 
+class PasswordChangeState extends SignState{
+  @override
+  List<Object> get props => [];
+}
+
 class TryLoginState extends SignState{
   final String email;
 
