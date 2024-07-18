@@ -1,10 +1,10 @@
-from model.sample_model import SampleModelTypeOne
+from model.sample_model import SampleModelTypeThree
 from model.fake_database import Local_Database
 from model.data_domain import Bias, Schedule, Image
 from datetime import datetime
 from others import CoreControllerLogicError
 
-class ImageListByBiasModel(SampleModelTypeOne):
+class ImageListByBiasModel(SampleModelTypeThree):
     def __init__(self, database:Local_Database) -> None:
         super().__init__(database)
         self.__bias = Bias()
@@ -93,7 +93,7 @@ class ImageListByBiasModel(SampleModelTypeOne):
 
 
 
-class ImageListByBiasNScheduleModel(SampleModelTypeOne):
+class ImageListByBiasNScheduleModel(SampleModelTypeThree):
     def __init__(self, database:Local_Database) -> None:
         super().__init__(database)
         self.__bias = Bias()

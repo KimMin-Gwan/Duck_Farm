@@ -102,7 +102,16 @@ class SampleModelTypeTwo(HeaderModel):
 class SampleModelTypeThree(HeaderModel):
     def __init__(self, database) -> None:
         self._database:Local_Database = database
+        self._user = User()
         super().__init__()
+
+    def set_user_with_uid(self, request):
+        # uid를 기반으로 user table 데이터와 userbias 데이터를 가지고 올것
+        user_data = self._database.get_data_with_id(target="uid", id=request.uid)
+        if not user_data:
+            return False
+        self._user.make_with_dict(user_data)
+        return True
     
     def _set_list_alignment(self,product_list , align): #정렬
         if align == "latest":
