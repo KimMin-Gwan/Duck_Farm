@@ -8,6 +8,8 @@ HOST = '127.0.0.1'
 PORT = 5000
 
 def send_data():
+    url = f'http://{HOST}:{str(PORT)}/sign_system/try_login'
+
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_bias_following'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias'
 
@@ -17,7 +19,7 @@ def send_data():
     #url = f'http://{HOST}:{str(PORT)}/utility_system/search_bias'
 
     #url = f'http://{HOST}:{str(PORT)}/core_system/bias_home_data'
-    url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schdule'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schdule'
     #url = f'http://{HOST}:{str(PORT)}/core_system/upload_post'
     #url = f'http://{HOST}:{str(PORT)}/core_system/image_detail'
     #url = f'http://{HOST}:{str(PORT)}/utility_system/image_like_n_dislike'
@@ -28,6 +30,14 @@ def send_data():
         "client-ip" : '127.0.0.1',
         "uid" : '1234-abcd-5678', 
         "endpoint" : "/core_system/", 
+    }
+
+    send_data = {
+        "header" : header,
+        "body" : {
+            'email' : 'testUser@naver.com',
+            'password' : '19082093',
+        }
     }
 
     #send_data = {
@@ -127,16 +137,16 @@ def send_data():
     #     }
     # }
 
-    send_data = {
-        "header" : header,
-        'body' :{
-            'uid' : '1234-abcd-5678',
-            'bid' : '1001',
-            'sid' : '1',
-            'ordering' : 'like',
-            'num_image' : 0
-        }
-    }
+    # send_data = {
+    #     "header" : header,
+    #     'body' :{
+    #         'uid' : '1234-abcd-5678',
+    #         'bid' : '1001',
+    #         'sid' : '1',
+    #         'ordering' : 'like',
+    #         'num_image' : 0
+    #     }
+    # }
 
     headers = {
         'Content-Type': 'application/json'

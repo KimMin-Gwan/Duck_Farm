@@ -8,10 +8,11 @@
 222 : /Core_Controller/ -> 최애 팔로잉 데이터가 없을 때
 223 : /Core_Controller/get_bias_list -> get_bias_list 정상 반환
 
-
+251 : /sign_system/try_login -> 로그인 정상 동작
+252 : /sign_system/try_login -> password 가 다름
+253 : /sign_system/try_login -> email 없음
 
 401 : /core_system/ -> 등록되지 않은 유저의 접근
-
 
 
 501 : /core_system/ -> 코어 컨트롤러에서 발생한 파이선 로직 애러
