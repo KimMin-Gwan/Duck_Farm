@@ -31,22 +31,27 @@ class ImageListByBiasModel(SampleModelTypeOne):
             if not self.__bias:
                 return False
             
-            self.__images = self.__bias.iids
+            iids=[]
+            iids = self.__bias.iids
+
+            for i in iids:
+                image_data = self._database.get_data_with_id(target="iid", id=i)
+                image = Image()
+                image.make_with_dict(image_data)
+                self.__images.append(image)
             self.__images = self.__images[request.num_image:]
 
             if len(self.__images) > 20:
-                self.__images = self.__images[:20]          
-
+                self.__images = self.__images[:20]
+            
             return True
         
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_bias_with_bid error | " + str(e))
     
-    def _set_list_alignment(self,request):
+    def set_list_alignment(self,request):
         try:
-            image_list = self.__images
-            align = request.ordering
-            self.__images = super()._set_list_alignment(image_list, align)
+            self.__images = super()._set_list_alignment(self.__images, request.ordering)
 
         except Exception as e:
             raise CoreControllerLogicError(error_type="_set_list_alignment error | " + str(e))
@@ -57,11 +62,11 @@ class ImageListByBiasModel(SampleModelTypeOne):
                 return False
             for i in range(len(self.__images)):
                 if i % 3 == 0:
-                    self.__first_list.append(self.__images[i])
+                    self.__first_list.append(self.__images[i].iid)
                 elif i % 3 == 1:
-                    self.__second_list.append(self.__images[i])
+                    self.__second_list.append(self.__images[i].iid)
                 else:
-                    self.__third_list.append(self.__images[i])
+                    self.__third_list.append(self.__images[i].iid)
                 
 
             return True
@@ -130,7 +135,15 @@ class ImageListByBiasNScheduleModel(SampleModelTypeOne):
             if not self.__schedule:
                 return False
             
-            self.__images = self.__schedule.iids
+            iids=[]
+            iids = self.__schedule.iids
+
+            for i in iids:
+                image_data = self._database.get_data_with_id(target="iid", id=i)
+                image = Image()
+                image.make_with_dict(image_data)
+                self.__images.append(image)
+                
             self.__images = self.__images[request.num_image:]
 
             if len(self.__images) > 20:
@@ -141,11 +154,9 @@ class ImageListByBiasNScheduleModel(SampleModelTypeOne):
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_images_with_sid error | " + str(e))
 
-    def _set_list_alignment(self,request):
+    def set_list_alignment(self,request):
         try:
-            image_list = self.__images
-            align = request.ordering
-            self.__images = super()._set_list_alignment(image_list, align)
+            self.__images = super()._set_list_alignment(self.__images, request.ordering)
 
         except Exception as e:
             raise CoreControllerLogicError(error_type="_set_list_alignment error | " + str(e))
@@ -154,13 +165,14 @@ class ImageListByBiasNScheduleModel(SampleModelTypeOne):
         try:
             if not self.__images:
                 return False
+            
             for i in range(len(self.__images)):
                 if i % 3 == 0:
-                    self.__first_list.append(self.__images[i])
+                    self.__first_list.append(self.__images[i].iid)
                 elif i % 3 == 1:
-                    self.__second_list.append(self.__images[i])
+                    self.__second_list.append(self.__images[i].iid)
                 else:
-                    self.__third_list.append(self.__images[i])
+                    self.__third_list.append(self.__images[i].iid)
                 
 
             return True

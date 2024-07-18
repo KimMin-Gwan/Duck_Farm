@@ -106,11 +106,11 @@ class SampleModelTypeThree(HeaderModel):
     
     def _set_list_alignment(self,product_list , align): #정렬
         if align == "latest":
-            sorted_products = sorted(product_list, key=lambda x: x.ordering, reverse=True)
+            sorted_products = sorted(product_list, key=lambda x: x.latest, reverse=True)
         elif align == "rating":
-            sorted_products = sorted(product_list, key=lambda x: x.ordering, reverse=False)
+            sorted_products = sorted(product_list, key=lambda x: x.rating, reverse=True)
         elif align == "like":
-            sorted_products = sorted(product_list, key=lambda x: x.ordering, reverse=True)
+            sorted_products = sorted(product_list, key=lambda x: x.like, reverse=True)
         else:
             sorted_products = sorted(product_list, key=lambda x: x.iid, reverse=True)
         #sorted_products = sorted(product_list, key=lambda x: datetime.strptime(x.date, "%Y/%m/%d"))
