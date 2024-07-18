@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
+import 'package:cheese/src/ui/sign_widget/login_try_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:cheese/src/bloc/sign_bloc/sign_bloc.dart';
+import 'package:cheese/src/bloc/sign_bloc/sign_state.dart';
+import 'package:cheese/src/bloc/sign_bloc/sign_event.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -125,6 +131,24 @@ class _BottomWidgetState extends State<BottomWidget> {
       queryHeight = maxHeight;
     }
 
-    return const Placeholder();
+    return InkWell(
+        onTap: (){
+          BlocProvider.of<SignBloc>(context).add(StartSignEvent());
+        },
+        child: Container(
+            alignment: Alignment.center,
+            width: queryWidth,
+            height: 100,
+            child: const Text("로그인 시도하기")
+        )
+    );
   }
 }
+
+/*
+return BlocBuilder<SignBloc, SignState>(
+builder: (context, state){
+if ( state is EmailInputState){
+
+
+ */

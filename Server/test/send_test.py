@@ -8,7 +8,7 @@ HOST = '127.0.0.1'
 PORT = 5000
 
 def send_data():
-    url = f'http://{HOST}:{str(PORT)}/core_system/get_bias_following'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/get_bias_following'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias'
 
     #url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
@@ -16,7 +16,11 @@ def send_data():
     #url = f'http://{HOST}:{str(PORT)}/utility_system/search_schedule'
     #url = f'http://{HOST}:{str(PORT)}/utility_system/search_bias'
 
-    url = f'http://{HOST}:{str(PORT)}/sign_system/try_sign_up'
+    #url = f'http://{HOST}:{str(PORT)}/sign_system/try_sign_up'
+    #url = f'http://{HOST}:{str(PORT)}/sign_system/try_login'
+    url = f'http://{HOST}:{str(PORT)}/sign_system/try_change_password'
+    #url = f'http://{HOST}:{str(PORT)}/sign_system/try_send_email'
+    url = f'http://{HOST}:{str(PORT)}/sign_system/try_check_email'
 
     #url = f'http://{HOST}:{str(PORT)}/core_system/bias_home_data'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schdule'
@@ -50,13 +54,21 @@ def send_data():
     send_data = {
         "header" : header,
         "body" : {
-            'email' : 'test@gmail.com',
-            'password' : 'password',
-            'nickname' : 'test nickname',
-            'birthday' : '2000/03/20',
-            'uname' : '테스터'
+            'email' : 'testUser@naver.com',
+            'password' : 'password'
         }
     }
+
+    #send_data = {
+        #"header" : header,
+        #"body" : {
+            #'email' : 'test@gmail.com',
+            #'password' : 'password',
+            #'nickname' : 'test nickname',
+            #'birthday' : '2000/03/20',
+            #'uname' : '테스터'
+        #}
+    #}
 
     #send_data = {
         #"header" : header,

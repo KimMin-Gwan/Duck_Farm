@@ -39,7 +39,7 @@ class _PasswordCreateWidgetState extends State<PasswordCreateWidget> {
             SizedBox(
               height: 20,
             ),
-            BodyWidget().functionButton(queryWidth, queryHeight, '다음'),
+            BodyWidget().functionButton(queryWidth, queryHeight, '다음', context),
           ],
         ),
       ),

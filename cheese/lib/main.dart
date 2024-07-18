@@ -6,7 +6,9 @@ import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
 import 'package:cheese/src/resources/user_repository.dart';
 import 'package:cheese/src/resources/core_repository.dart';
 import 'package:cheese/src/bloc/core_bloc/core_event.dart';
+import 'package:cheese/src/bloc/sign_bloc/sign_bloc.dart';
 import 'package:cheese/src/ui/home_widget/home_widget.dart';
+import 'package:cheese/src/ui/sign_widget/super_sign_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,6 +30,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<ImageUploadBloc>(
             create: (BuildContext context) => ImageUploadBloc(),
           ),
+          BlocProvider<SignBloc>(
+            create: (BuildContext context) => SignBloc(userRepository),
+          ),
         ],
         child: const MaterialApp(
           title: 'Cheese_proto',
@@ -42,7 +47,8 @@ class StartCheese extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
-    return HomePage();
+    //return HomePage();
+    return const SuperSignWidget();
   }
 }
 

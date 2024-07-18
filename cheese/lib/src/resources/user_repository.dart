@@ -8,5 +8,11 @@ class UserRepository{
   final String uid = '1234-abcd-5678';
 
   Future<SearchEmailModel> fetchSearchEmail(email) => signNetworkProvider.fetchSearchEmail(email);
+  Future<SendEmailModel> fetchTrySendEmail(email) => signNetworkProvider.fetchTrySendEmail(email);
+  //Future<TryLoginModel> fetchTryLogin(email, password) => signNetworkProvider.fetchTryLogin(email, password);
+  Future<TrySignUpModel> fetchTrySignUp(user) => signNetworkProvider.fetchTrySignUp(user);
+  Future<TryLoginModel> fetchTryLogin(email, password) => signNetworkProvider.fetchTryLogin(email, password);
+
+
 
 }

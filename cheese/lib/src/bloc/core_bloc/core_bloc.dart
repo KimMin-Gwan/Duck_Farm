@@ -72,7 +72,6 @@ class CoreBloc extends Bloc<CoreEvent, CoreState>{
       emit(InitCoreState());
     }
   }
-
 }
 
 

@@ -78,7 +78,7 @@ class LoginBodyWidget extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        bodyWidget.functionButton(queryWidth, queryHeight, '로그인'),
+        bodyWidget.functionButton(queryWidth, queryHeight, '로그인', context, TryLoginEvent()),
         SizedBox(
           height: 20,
         ),

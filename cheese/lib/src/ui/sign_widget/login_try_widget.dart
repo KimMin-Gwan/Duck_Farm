@@ -1,6 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:cheese/src/bloc/sign_bloc/sign_bloc.dart';
+import 'package:cheese/src/bloc/sign_bloc/sign_state.dart';
+import 'package:cheese/src/bloc/sign_bloc/sign_event.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -89,12 +95,15 @@ class BodyWidget extends StatelessWidget {
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
   bool interaction = false;
+  TextEditingController emailEditingController = TextEditingController();
+  SignEvent emailInputEvent = EmailInputEvent("");
 
   String email = '로그인 혹은 회원가입을 위한 \n이메일을 입력해주세요.';
   String emailPattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
   // RegExp regExp = RegExp(emailPattern);
   @override
   Widget build(BuildContext context) {
+    emailInputEvent = EmailInputEvent(emailEditingController.text);
     double queryWidth = MediaQuery.of(context).size.width;
     if (queryWidth > maxWidth) {
       queryWidth = maxWidth;
@@ -115,7 +124,7 @@ class BodyWidget extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        functionButton(queryWidth, queryHeight, '다음'),
+        functionButton(queryWidth, queryHeight, '다음', context, emailInputEvent),
       ],
     );
   }
@@ -139,6 +148,7 @@ class BodyWidget extends StatelessWidget {
       child: Form(
         key: _formKey,
         child: TextFormField(
+          controller: emailEditingController,
           validator: (value){
             if(value!.isEmpty){
               return '이메일을 입력해주세요.';
@@ -164,10 +174,10 @@ class BodyWidget extends StatelessWidget {
     );
   }
 
-  Widget functionButton(width, height, text) {
+  Widget functionButton(width, height, text, context, event) {
     return InkWell(
       onTap: () {
-
+        BlocProvider.of<SignBloc>(context).add(event);
       },
       child: Container(
         width: width * 0.8,
