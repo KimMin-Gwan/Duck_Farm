@@ -54,7 +54,7 @@ class ImageDetailModel(SampleModelTypeOne):
                 self.__owner = True
             return
     
-    def is_image_liek(self) -> None:
+    def is_image_like(self) -> None:
         try:
             if self.__image.iid in self._user.like_iids:
                 self.__like = True
@@ -66,6 +66,7 @@ class ImageDetailModel(SampleModelTypeOne):
     def get_response_form_data(self,head_parser):
         try:
             body = {
+                "unmae" : self._user.uname,
                 "user_owner" : self.__owner,
                 "like_state" : self.__like
             }

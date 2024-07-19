@@ -96,7 +96,7 @@ class Core_Controller:
             model.set_bias_with_bid()
             model.set_schedule_with_sid()
             model.is_image_owner()
-
+            model.is_image_like()
             model.set_state_code("200")
 
         except CustomError as e:
