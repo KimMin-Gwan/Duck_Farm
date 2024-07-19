@@ -136,3 +136,35 @@ class UserEmailCheck(SampleModelTypeThree):
 
         except Exception as e:
             raise CoreControllerLogicError(error_type="response making error | " + str(e))
+
+import time
+# email 확인
+class EmailSendModel(SampleModelTypeThree):
+    def __init__(self, database) -> None:
+        super().__init__(database)
+        self.__result = False
+
+
+    def send_email_checker(self):
+        count = 0
+        while True:
+            time.sleep(1)
+            count += 1
+            if count == 5:
+                break
+
+        self.__result = True
+        return 
+
+    # json 타입의 데이터로 반환
+    def get_response_form_data(self, head_parser):
+        try:
+            body = {
+                "result" : self.__result
+            }
+
+            response = self._get_response_data(head_parser=head_parser, body=body)
+            return response
+
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="response making error | " + str(e))

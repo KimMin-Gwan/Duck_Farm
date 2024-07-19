@@ -13,7 +13,7 @@ def send_data():
     #url = f'http://{HOST}:{str(PORT)}/core_system/search_images'
     #url = f'http://{HOST}:{str(PORT)}/core_system/try_follow_bias'
 
-    url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
     #url = f'http://{HOST}:{str(PORT)}/utility_system/search_schedule'
     #url = f'http://{HOST}:{str(PORT)}/utility_system/search_schedule'
     #url = f'http://{HOST}:{str(PORT)}/utility_system/search_bias'
@@ -21,7 +21,7 @@ def send_data():
     #url = f'http://{HOST}:{str(PORT)}/sign_system/try_sign_up'
     #url = f'http://{HOST}:{str(PORT)}/sign_system/try_login'
     #url = f'http://{HOST}:{str(PORT)}/sign_system/try_change_password'
-    #url = f'http://{HOST}:{str(PORT)}/sign_system/try_send_email'
+    url = f'http://{HOST}:{str(PORT)}/sign_system/try_send_email'
     #url = f'http://{HOST}:{str(PORT)}/sign_system/try_check_email'
 
     #url = f'http://{HOST}:{str(PORT)}/core_system/bias_home_data'
@@ -81,13 +81,13 @@ def send_data():
         #}
     #}
 
-    send_data = {
-        "header" : header,
-        "body" : {
-            'uid' : '1234-abcd-5678',
-            'date' : '2024/05/26',
-        }
-    }
+    #send_data = {
+        #"header" : header,
+        #"body" : {
+            #'uid' : '1234-abcd-5678',
+            #'date' : '2024/05/26',
+        #}
+    #}
 
     #send_data = {
         #"header" : header,
