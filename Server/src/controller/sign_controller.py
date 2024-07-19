@@ -1,4 +1,4 @@
-from model import SignUpModel, LoginModel, ChangePasswordModel, UserEmailCheck, EmailSendModel
+from model import SignUpModel, LoginModel, ChangePasswordModel, UserEmailCheckModel, EmailSendModel
 from model import Local_Database
 #from view import NoneBiasHomeDataRequest, BiasHomeDataRequest
 from others import UserNotExist, CustomError
@@ -83,7 +83,7 @@ class Sign_Controller:
     
     # email 확인
     def check_user_email(self, database:Local_Database, request) -> SignUpModel:
-        model = UserEmailCheck(database=database)
+        model = UserEmailCheckModel(database=database)
 
         try:
             if not model.check_user_email(request=request):

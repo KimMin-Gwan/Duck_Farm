@@ -105,7 +105,7 @@ class ChangePasswordModel(SampleModelTypeThree):
             raise CoreControllerLogicError(error_type="response making error | " + str(e))
 
 # email 확인
-class UserEmailCheck(SampleModelTypeThree):
+class UserEmailCheckModel(SampleModelTypeThree):
     def __init__(self, database) -> None:
         super().__init__(database)
         self.__result = False
@@ -117,7 +117,6 @@ class UserEmailCheck(SampleModelTypeThree):
                 self.__result = False
             else : # email이 일치함
                 self.__result = True
-                print(self.__user.email)
 
             return True
         except Exception as e:
