@@ -66,7 +66,7 @@ class ImageDetailModel(SampleModelTypeOne):
     def get_response_form_data(self,head_parser):
         try:
             body = {
-                "unmae" : self._user.uname,
+                "uname" : self._user.uname,
                 "user_owner" : self.__owner,
                 "like_state" : self.__like
             }
