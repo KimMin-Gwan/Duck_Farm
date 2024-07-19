@@ -33,7 +33,9 @@ class LoginModel(SampleModelTypeThree):
                         "uid" : self.__user.uid,
                         "uname" : self.__user.uname,
                         "email" : self.__user.email,
-                        "nickname" : self.__user.nickname
+                        "nickname" : self.__user.nickname,
+                        "bid" : self.__user.bids,
+                        "iid" : self.__user.iids
                     },
                     "result" : True
                 }

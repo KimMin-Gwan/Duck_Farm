@@ -4,6 +4,7 @@ from model.fake_database import Local_Database
 from model.data_domain import Bias, Schedule
 from datetime import datetime
 from others import CoreControllerLogicError
+
 class BiasListModel(SampleModelTypeOne):
     def __init__(self, database:Local_Database) -> None:
         super().__init__(database)
@@ -37,3 +38,50 @@ class BiasListModel(SampleModelTypeOne):
             raise CoreControllerLogicError(error_type="response making error | " + str(e))
 
     
+class BiasFollowModel(SampleModelTypeOne):
+    def __init__(self, database:Local_Database) -> None:
+        super().__init__(database)
+        self.__result = False
+    
+    def check_bias_id(self, request) -> bool:
+        try:
+            if request.bid in self._user.bids:
+                self.__try_remove_bias(request.bid)
+            else:
+                self.__try_add_bias(request.bid)
+
+            self._save_user_data()
+            print(request.bid)
+        except Exception as e:
+            print(e)
+            #raise CoreControllerLogicError(error_type="check_bias_id error | ")
+
+    #bids로 biases 데이터 받아오기 (객체에 저장됨)
+    def __try_add_bias(self, bid):
+        self._user.bids.append(bid)
+        self.__result = True
+        return
+
+    
+    def __try_remove_bias(self, bid):
+        self._user.bids.remove(bid)
+        self.__result = False
+        return
+    
+    def _save_user_data(self):
+        self._database.modify_data_with_id(target_id="uid",
+                                            target_data=self._user.get_dict_form_data())
+        return
+
+    def get_response_form_data(self, head_parser):
+        try:
+            body = {
+                "result" :  self.__result
+            }
+
+            response = self._get_response_data(head_parser=head_parser, body=body)
+            return response
+
+        except Exception as e:
+            print(e)
+            raise CoreControllerLogicError(error_type="response making error | " + str(e))

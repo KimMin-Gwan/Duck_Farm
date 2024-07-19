@@ -163,8 +163,10 @@ class Local_Database:
             func = self._select_save_function(target=target_id)
             func()
             return True
+
         except Exception as e:
-            raise DatabaseLogicError("modifiy_data_with_id error | " + str(e))
+            print(e)
+            raise DatabaseLogicError(error_type="modifiy_data_with_id error | " + str(e))
 
     # db.add_new_data(target_id="uid", new_data={key: value})
     def add_new_data(self, target_id:str, new_data:dict):

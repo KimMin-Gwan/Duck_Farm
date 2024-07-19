@@ -138,6 +138,7 @@ class SearchBiasModel(SampleModelTypeTwo):
     def get_response_form_data(self,head_parser):
         try:
             body = {
+
                 "biases" : self._make_dict_list_data(list_data=self.__find_bias)
             }
 

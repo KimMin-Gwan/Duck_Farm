@@ -20,7 +20,8 @@
         "email": "uploadUser@naver.com",
         "nickname": "Upload User",
         "bids": [
-            "1002"
+            "1002",
+            "1001"
         ],
         "like_iids": []
     },
