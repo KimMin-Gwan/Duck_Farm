@@ -93,7 +93,7 @@ class Core_Controller:
 
         try:
             model.set_image_with_iid(request=request)
-            model.set_bias_with_bid(request=request)
+            model.set_bias_with_bid()
             model.set_schedule_with_sid()
             model.is_image_owner()
 

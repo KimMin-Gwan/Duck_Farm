@@ -24,9 +24,9 @@ class ImageDetailModel(SampleModelTypeOne):
         except Exception as e:
             raise CoreControllerLogicError(error_type="set_image_with_iid error | " + str(e))
 
-    def set_bias_with_bid(self,request) -> bool: 
+    def set_bias_with_bid(self) -> bool: 
         try:
-            bias_data = self._database.get_data_with_id(target="bid", id=request.bid)
+            bias_data = self._database.get_data_with_id(target="bid", id=self.__image.bid)
 
             if not bias_data:
                 return False
