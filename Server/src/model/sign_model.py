@@ -103,3 +103,36 @@ class ChangePasswordModel(SampleModelTypeThree):
 
         except Exception as e:
             raise CoreControllerLogicError(error_type="response making error | " + str(e))
+
+# email 확인
+class UserEmailCheck(SampleModelTypeThree):
+    def __init__(self, database) -> None:
+        super().__init__(database)
+        self.__result = False
+
+    def check_user_email(self, request):
+        try:
+            user_data = self._database.get_data_with_key(target="uid", key="email", key_data=request.email)
+            if not user_data :
+                self.__result = False
+            else : # email이 일치함
+                self.__result = True
+                print(self.__user.email)
+
+            return True
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="check_user_email error | " + str(e))
+
+
+    # json 타입의 데이터로 반환
+    def get_response_form_data(self, head_parser):
+        try:
+            body = {
+                "result" : self.__result
+            }
+
+            response = self._get_response_data(head_parser=head_parser, body=body)
+            return response
+
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="response making error | " + str(e))

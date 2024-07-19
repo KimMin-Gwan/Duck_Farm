@@ -10,6 +10,7 @@ PORT = 5000
 def send_data():
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_bias_following'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/search_images'
 
     #url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
     #url = f'http://{HOST}:{str(PORT)}/utility_system/search_schedule'
@@ -18,7 +19,7 @@ def send_data():
 
     #url = f'http://{HOST}:{str(PORT)}/sign_system/try_sign_up'
     #url = f'http://{HOST}:{str(PORT)}/sign_system/try_login'
-    url = f'http://{HOST}:{str(PORT)}/sign_system/try_change_password'
+    #url = f'http://{HOST}:{str(PORT)}/sign_system/try_change_password'
     #url = f'http://{HOST}:{str(PORT)}/sign_system/try_send_email'
     url = f'http://{HOST}:{str(PORT)}/sign_system/try_check_email'
 
@@ -44,18 +45,20 @@ def send_data():
         #}
     #}
 
-    #send_data = {
-        #"header" : header,
-        #"body" : {
-            #'key_word' : '디어마이',
-        #}
-    #}
+    # send_data = {
+    #     "header" : header,
+    #     "body" : {
+    #         'key_word' : '케이팝',
+    #         'ordering' : 'latest',
+    #         'num_image' : 0
+    #     }
+    # }
 
     send_data = {
         "header" : header,
         "body" : {
             'email' : 'testUser@naver.com',
-            'password' : 'password'
+            #'password' : 'password'
         }
     }
 

@@ -8,9 +8,16 @@
 222 : /Core_Controller/ -> 최애 팔로잉 데이터가 없을 때
 223 : /Core_Controller/get_bias_list -> get_bias_list 정상 반환
 
+233 : /core_system/search_images -> 이미지 검색 데이터 없음
+234 : /core_system/search_images -> 이미지 정렬 실패
+235 : /core_system/search_images -> try_search_image 정상 반환
+
 251 : /sign_system/try_login -> 로그인 정상 동작
 252 : /sign_system/try_login -> password 가 다름
 253 : /sign_system/try_login -> email 없음
+
+265 : /sign_system/try_check_email -> email 일치하지 않음
+266 : /sign_system/try_check_email -> email 일치
 
 401 : /core_system/ -> 등록되지 않은 유저의 접근
 

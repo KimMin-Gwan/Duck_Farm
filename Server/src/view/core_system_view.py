@@ -75,6 +75,16 @@ class Core_Service_View(Master_View):
                                                      request=request)
             response = model.get_response_form_data(self._head_parser)
             return response
+        
+        # 이미지 검색
+        @self.__app.post(endpoint+'/search_images')
+        def get_search_images(raw_request:dict):
+            request = ImageListByRequest(request=raw_request)
+            core_controller = Core_Controller()
+            model = core_controller.try_search_image(database=self.__database,
+                                                     request=request)
+            response = model.get_response_form_data(self._head_parser)
+            return response
 
 
 class NoneBiasHomeDataRequest(RequestHeader):
@@ -126,8 +136,14 @@ class BiasListByUid(RequestHeader):
         body = request['body']
         self.uid = body['uid']
 
-
-
+# 이미지 검색
+class ImageListByRequest(RequestHeader):
+    def __init__(self, request) -> None:
+        super().__init__(request)
+        body = request['body']
+        self.key_word = body['key_word']
+        self.ordering = body['ordering']
+        self.num_image = body['num_image']
 
 
 

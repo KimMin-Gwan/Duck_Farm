@@ -126,7 +126,7 @@ class SampleModelTypeThree(HeaderModel):
     # self._set_list_alignment(image_list = images, align = request.ordering)
     def _set_list_alignment(self, image_list, align): #정렬
         if align == "latest":
-            sorted_products = sorted(image_list, key=lambda x: x.iid , reverse=True)
+            sorted_products = sorted(image_list, key=lambda x: x.upload_date , reverse=False)
         elif align == "like":
             sorted_products = sorted(image_list, key=lambda x: x.like, reverse=True)
         else:
