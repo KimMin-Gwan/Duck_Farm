@@ -88,8 +88,17 @@ class SampleModelTypeTwo(HeaderModel):
         return result
 
     # 추상
-    def get_response_form_data(self):
-        pass
+    def get_response_form_data(self,head_parser):
+        try:
+            body = {
+                "default" : "Default state get_response_form_data func"
+            }
+
+            response = self._get_response_data(head_parser=head_parser, body=body)
+            return response
+
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="response making error | " + str(e))
 
 
     def _make_dict_list_data(self, list_data:list)-> list:
@@ -113,21 +122,35 @@ class SampleModelTypeThree(HeaderModel):
         self._user.make_with_dict(user_data)
         return True
     
-    def _set_list_alignment(self,product_list , align): #정렬
+    # 정렬 함수
+    # self._set_list_alignment(image_list = images, align = request.ordering)
+    def _set_list_alignment(self, image_list, align): #정렬
         if align == "latest":
-            sorted_products = sorted(product_list, key=lambda x: x.latest, reverse=True)
-        elif align == "rating":
-            sorted_products = sorted(product_list, key=lambda x: x.rating, reverse=True)
+            sorted_products = sorted(image_list, key=lambda x: x.iid , reverse=True)
         elif align == "like":
-            sorted_products = sorted(product_list, key=lambda x: x.like, reverse=True)
+            sorted_products = sorted(image_list, key=lambda x: x.like, reverse=True)
         else:
-            sorted_products = sorted(product_list, key=lambda x: x.iid, reverse=True)
+            sorted_products = sorted(image_list, key=lambda x: x.iid, reverse=True)
         #sorted_products = sorted(product_list, key=lambda x: datetime.strptime(x.date, "%Y/%m/%d"))
 
         return sorted_products
     
-
     # 추상
-    def get_response_form_data(self):
-        pass
+    def get_response_form_data(self,head_parser):
+        try:
+            body = {
+                "default" : "Default state get_response_form_data func"
+            }
 
+            response = self._get_response_data(head_parser=head_parser, body=body)
+            return response
+
+        except Exception as e:
+            raise CoreControllerLogicError(error_type="response making error | " + str(e))
+
+    # 리스트 인스턴스를 딕셔너리형태로 변경시켜줌
+    def _make_dict_list_data(self, list_data:list)-> list:
+        dict_list_data = []
+        for data in list_data:
+            dict_list_data.append(data.get_dict_form_data())
+        return dict_list_data

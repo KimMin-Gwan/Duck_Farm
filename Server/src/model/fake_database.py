@@ -120,6 +120,29 @@ class Local_Database:
             return self.__schedule_data
         else:
             raise DatabaseLogicError("target id did not define")
+        
+    def search_image_with_data(self, data:str):
+        iid_list = []
+        try:
+
+            for image in self.__image_data:
+                if data in image['image_detail']:
+                    iid_list.append(image['iid'])
+            
+            for schedule in self.__schedule_data:
+                if data in schedule['sname']:
+                    iid_list.extend(schedule['iids'])
+                elif data in schedule['location']:
+                    iid_list.extend(schedule['iids'])
+            
+            for bias in self.__bias_data:
+                if data in bias['bname']:
+                    iid_list.extend(schedule['iids'])
+        except Exception as e:
+            print(e)
+            raise DatabaseLogicError("Search image error in database")
+        return iid_list
+
 
     # db.modify_data_with_id(target="uid", target_data={key: value})
     def modify_data_with_id(self, target_id, target_data:dict):
