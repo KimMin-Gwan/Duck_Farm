@@ -35,7 +35,7 @@ class LoginModel(SampleModelTypeThree):
                         "email" : self.__user.email,
                         "nickname" : self.__user.nickname,
                         "bid" : self.__user.bids,
-                        "iid" : self.__user.iids
+                        "birthday" : self.__user.birthday
                     },
                     "result" : True
                 }
@@ -45,7 +45,9 @@ class LoginModel(SampleModelTypeThree):
                         "uid" : "",
                         "uname" : "",
                         "email" : "",
-                        "nickname" : ""
+                        "nickname" : "",
+                        "bid" : [],
+                        "birthday" : ""
                     },
                     "result" : False
                 }

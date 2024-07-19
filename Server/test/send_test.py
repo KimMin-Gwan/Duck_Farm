@@ -19,10 +19,10 @@ def send_data():
     #url = f'http://{HOST}:{str(PORT)}/utility_system/search_bias'
 
     #url = f'http://{HOST}:{str(PORT)}/sign_system/try_sign_up'
-    #url = f'http://{HOST}:{str(PORT)}/sign_system/try_login'
+    url = f'http://{HOST}:{str(PORT)}/sign_system/try_login'
     #url = f'http://{HOST}:{str(PORT)}/sign_system/try_change_password'
     #url = f'http://{HOST}:{str(PORT)}/sign_system/try_send_email'
-    url = f'http://{HOST}:{str(PORT)}/sign_system/try_check_email'
+    #url = f'http://{HOST}:{str(PORT)}/sign_system/try_check_email'
 
     #url = f'http://{HOST}:{str(PORT)}/core_system/bias_home_data'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schdule'
@@ -59,7 +59,7 @@ def send_data():
         "header" : header,
         "body" : {
             'email' : 'testUser@naver.com',
-            #'password' : 'password'
+            'password' : '1324897'
         }
     }
     #send_data = {
