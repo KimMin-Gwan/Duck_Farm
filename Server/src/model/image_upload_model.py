@@ -14,11 +14,11 @@ class ImageUploadModel(SampleModelTypeOne):
         self.__image = Image()
         self.__images = []
         
-        self.__service_name = '_______________'
-        self.__endpoint_url = '_______________'
-        self.__access_key = '_______________'
-        self.__secret_key = '_______________'
-        self.__bucket_name = '________'
+        self.__service_name = 's3'
+        self.__endpoint_url = 'https://kr.object.ncloudstorage.com'
+        self.__access_key = 'eeJ2HV8gE5XTjmrBCi48'
+        self.__secret_key = 'zAGUlUjXMup1aSpG6SudbNDzPEXHITNkEUDcOGnv'
+        self.__bucket_name = 'cheese-images'
 
 
     def set_bias_with_bid(self,request) -> bool: 
