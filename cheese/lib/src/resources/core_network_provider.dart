@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:http/http.dart' show Client;
 import 'dart:convert';
 import 'package:cheese/src/resources/main_json_parser.dart';
+import 'package:cheese/src/model/bias_model.dart';
 
 class NoneBiasApiJsonParser extends MainJsonParser{
   final Map body = {
@@ -28,6 +29,32 @@ class NoneBiasApiJsonParser extends MainJsonParser{
   void makeBodyData(uid, date){
     body['uid'] = uid;
     body['date'] = date;
+  }
+
+  String getData() => super.makeSendData(this.body);
+
+  Uri getUri() => this.__url;
+}
+
+class BiasListApiJsonParser extends MainJsonParser{
+  final Map body = {
+    'uid' : '',
+    'bid' : '',
+  };
+  Uri __url = Uri();
+
+  BiasListApiJsonParser(String endpoint):super(){
+    __url = Uri(
+      scheme: 'http',
+      host:super.host,
+      port:super.port,
+      path:endpoint,
+    );
+  }
+
+  void makeBodyData(uid, bid){
+    body['uid'] = uid;
+    body['bid'] = bid;
   }
 
   String getData() => super.makeSendData(this.body);

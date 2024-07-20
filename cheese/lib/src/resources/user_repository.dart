@@ -12,7 +12,7 @@ class UserRepository{
   //Future<TryLoginModel> fetchTryLogin(email, password) => signNetworkProvider.fetchTryLogin(email, password);
   Future<TrySignUpModel> fetchTrySignUp(user) => signNetworkProvider.fetchTrySignUp(user);
   Future<TryLoginModel> fetchTryLogin(email, password) => signNetworkProvider.fetchTryLogin(email, password);
-  Future<PasswordChangeModel>fetchPasswordChange(email,password)=>signNetworkProvider.fetchPassowrdChange(email.password);
+  Future<PasswordChangeModel>fetchPasswordChange(email,password)=>signNetworkProvider.fetchPasswordChange(email.password);
 
 
 }

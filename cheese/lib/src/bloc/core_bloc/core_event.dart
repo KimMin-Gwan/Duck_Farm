@@ -32,6 +32,16 @@ class DetailImageDataEvent extends CoreEvent{
   List<Object> get props => [iid];
 }
 
+class BiasListEvent extends CoreEvent{
+  final String bid;
+  final String bname;
+
+  BiasListEvent(this.bid,this.bname);
+
+  @override
+  List<Object> get props => [bid,bname];
+}
+
 class ImageListCategoryEvent extends CoreEvent{
   // 멤버
   final String bid;

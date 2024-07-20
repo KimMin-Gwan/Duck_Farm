@@ -5,6 +5,7 @@ import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 import 'package:cheese/src/resources/user_repository.dart';
 import 'package:cheese/src/model/image_model.dart';
 import 'package:cheese/src/resources/core_repository.dart';
+import 'package:cheese/src/model/bias_model.dart';
 
 class CoreBloc extends Bloc<CoreEvent, CoreState>{
   final UserRepository _userRepository;
@@ -19,6 +20,7 @@ class CoreBloc extends Bloc<CoreEvent, CoreState>{
     on<ImageListCategoryEvent>(_onImageListCategoryEvent);
     on<ImageListCategoryByScheduleEvent>(_onImageListCategoryByScheduleEvent);
     on<LoadBackwardEvent>(_onLoadBackwardEvent);
+    on<BiasListEvent>(_onBiasListEvent);
   }
 
   /*
@@ -28,6 +30,14 @@ class CoreBloc extends Bloc<CoreEvent, CoreState>{
     add(NoneBiasHomeDataEvent(_userRepository.getUserModel()));
   }
    */
+
+  Future<void> _onBiasListEvent(BiasListEvent event, Emitter<CoreState> emit) async {
+    String bid =event.bid;
+    BiasListModel biasListModel = await _coreRepository.fetchBiasList(_userRepository.uid, bid);
+    var state = BiasListState(biasListModel);
+    _coreStateStack.add(state);
+    emit(state);
+  }
 
   Future<void> _onNoneBiasHomeDataEvent(NoneBiasHomeDataEvent event, Emitter<CoreState> emit) async {
     HomeDataModel homeDataModel = await _coreRepository.fetchNoneBiasHomeData(_userRepository.uid, event.date);
