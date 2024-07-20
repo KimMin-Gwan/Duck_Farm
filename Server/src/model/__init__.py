@@ -9,3 +9,4 @@ from model.utility_model import *
 from model.sign_model import *
 from model.login_model import *
 from model.image_search_model import *
+from model.image_upload_model import *

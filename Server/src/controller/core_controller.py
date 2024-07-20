@@ -260,6 +260,34 @@ class Core_Controller:
         finally:
             return model
 
+    def image_upload(self, database:Local_Database, request):
+        model = ImageUploadModel(database=database)
+        try:
+            # 유저가 있는지 확인
+            if not model.set_user_with_uid(request=request):
+                raise UserNotExist("Can not find User with uid")
+        except UserNotExist as e:
+            print("Error Catched : ", e)
+            model.set_state_code(e.error_code) # 종합 에러
+            return model
 
+        try:
+            model.set_bias_with_bid(request=request)
+            model.get_image_info(request=request)
+            model.upload_image()
+            model.set_state_code("220")
+
+        except CustomError as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+            print(e.error_type)
+
+        except Exception as e:
+            print("Error Catched : ", e.error_type)
+            model.set_state_code(e.error_code) # 종합 에러
+            print(e.error_type)
+        
+        finally:
+            return model
 
 

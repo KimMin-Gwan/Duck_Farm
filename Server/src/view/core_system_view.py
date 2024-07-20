@@ -95,7 +95,15 @@ class Core_Service_View(Master_View):
                                                      request=request)
             response = model.get_response_form_data(self._head_parser)
             return response
-
+        # 이미지 업로드
+        @self.__app.post(endpoint+'/image_upload')
+        def iamge_upload(request:dict):
+            request = ImageUpload(request=request)
+            core_controller = Core_Controller()
+            model = core_controller.image_upload(database=self.__database,
+                                                     request=request)
+            response = model.get_response_form_data(self._head_parser)
+            return response
 
 class NoneBiasHomeDataRequest(RequestHeader):
     def __init__(self, request) -> None:
@@ -162,7 +170,21 @@ class TryFollowBiasRequest(RequestHeader):
         self.uid = body['uid']
         self.bid = body['bid']
 
-
+class ImageUpload(RequestHeader):
+    def __init__(self, request) -> None:
+        super().__init__(request)
+        body = request['body']
+        self.images = body['images']
+        self.iid = body['iid']
+        self.iname = body['iname']
+        self.image_type = body['image_type']
+        self.location = body['location']
+        self.image_detail = body['image_detail']
+        self.upload_date = body['upload_date']
+        self.like = body['like']
+        self.sid = body['sid']
+        self.bid = body['bid']
+        self.uid = body['uid']
 
 
 
