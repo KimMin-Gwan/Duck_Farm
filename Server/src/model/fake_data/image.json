@@ -296,5 +296,65 @@
         "upload_date": "2024/06/07",
         "location": "",
         "like": 0
+    },
+    {
+        "iid": "1003_2",
+        "iname": "",
+        "image_detail": "실험용 이미지 입니다.",
+        "image_type": "jpg",
+        "upload_date": "2024/07/21",
+        "location": "",
+        "like": 0,
+        "sid": "6",
+        "bid": "1003",
+        "uid": ""
+    },
+    {
+        "iid": "1003_3",
+        "iname": "",
+        "image_detail": "실험용 이미지 입니다.",
+        "image_type": "jpg",
+        "upload_date": "2024/07/21",
+        "location": "",
+        "like": 0,
+        "sid": "6",
+        "bid": "1003",
+        "uid": ""
+    },
+    {
+        "iid": "1003_4",
+        "iname": "",
+        "image_detail": "실험용 이미지 입니다.",
+        "image_type": "jpg",
+        "upload_date": "2024/07/21",
+        "location": "",
+        "like": 0,
+        "sid": "6",
+        "bid": "1003",
+        "uid": ""
+    },
+    {
+        "iid": "1003_5",
+        "iname": "",
+        "image_detail": "실험용 이미지 입니다.",
+        "image_type": "jpg",
+        "upload_date": "2024/07/21",
+        "location": "",
+        "like": 0,
+        "sid": "6",
+        "bid": "1003",
+        "uid": ""
+    },
+    {
+        "iid": "1003_6",
+        "iname": "",
+        "image_detail": "실험용 이미지 입니다.",
+        "image_type": "jpg",
+        "upload_date": "2024/07/21",
+        "location": "",
+        "like": 0,
+        "sid": "6",
+        "bid": "1003",
+        "uid": ""
     }
 ]
