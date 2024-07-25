@@ -1,5 +1,5 @@
 import 'package:cheese/src/model/image_model.dart';
-import 'package:cheese/src/resources/image_upload_network_provider.dart';
+import 'package:cheese/src/resources/network_provider/image_upload_network_provider.dart';
 
 class ImageRepository{
   String uid = "1234-abcd-5678";

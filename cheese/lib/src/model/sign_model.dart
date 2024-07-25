@@ -15,9 +15,11 @@ class SearchEmailModel extends SampleModel {
   }) : super(stateCode);
 
   factory SearchEmailModel.fromJson(Map data) {
+    print("in search email model ");
+    print(data);
     return SearchEmailModel(
       stateCode: data['header']['state-code'],
-      flag: data['body']['flag'],
+      flag: data['body']['result'],
     );
   }
 }
@@ -47,9 +49,10 @@ class SendEmailModel extends SampleModel{
   }):super(stateCode);
 
   factory SendEmailModel.fromJson(Map data){
+    print(data);
     return SendEmailModel(
       stateCode: data['header']['state-code'],
-      flag: data['body']['flag'],
+      flag: data['body']['result'],
     );
   }
 }
@@ -118,5 +121,4 @@ class TryLoginModel extends SampleModel{
     );
   }
 }
-
  */

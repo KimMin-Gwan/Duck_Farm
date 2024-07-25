@@ -14,11 +14,27 @@ class InitCoreEvent extends CoreEvent{
   List<Object> get props => [];
 }
 
+class StartMainServiceEvent extends CoreEvent{
+
+  @override
+  List<Object> get props => [];
+}
+
 class NoneBiasHomeDataEvent extends CoreEvent{
   String date = DateFormat('yyyy/MM/dd').format(DateTime.now());
 
   NoneBiasHomeDataEvent(this.date){}
   NoneBiasHomeDataEvent.none_date(){}
+  @override
+  List<Object> get props => [date];
+}
+
+class BiasHomeDataEvent extends CoreEvent{
+  String date = DateFormat('yyyy/MM/dd').format(DateTime.now());
+  final String bid;
+
+  BiasHomeDataEvent(this.date, this.bid);
+
   @override
   List<Object> get props => [date];
 }
@@ -33,36 +49,33 @@ class DetailImageDataEvent extends CoreEvent{
 }
 
 class BiasListEvent extends CoreEvent{
-  final String bid;
-  final String bname;
-
-  BiasListEvent(this.bid,this.bname);
-
   @override
-  List<Object> get props => [bid,bname];
+  List<Object> get props => [];
 }
 
 class ImageListCategoryEvent extends CoreEvent{
   // 멤버
   final String bid;
+  final String ordering;
 
   //생성자
-  ImageListCategoryEvent(this.bid);
+  ImageListCategoryEvent(this.bid, this.ordering);
 
   @override
-  List<Object> get props => [bid];
+  List<Object> get props => [bid, ordering];
 }
 
 class ImageListCategoryByScheduleEvent extends CoreEvent{
   // 멤버
   final String bid;
   final String sid;
+  final String ordering;
 
   //생성자
-  ImageListCategoryByScheduleEvent(this.bid, this.sid);
+  ImageListCategoryByScheduleEvent(this.bid, this.sid, this.ordering);
 
   @override
-  List<Object> get props => [bid, sid];
+  List<Object> get props => [bid, sid, ordering];
 }
 
 

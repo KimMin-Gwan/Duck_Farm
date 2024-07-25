@@ -3,6 +3,12 @@ import 'package:cheese/src/ui/styles/login_theme.dart';
 import 'package:cheese/src/ui/sign_widget/login_try_widget.dart';
 import 'package:cheese/src/ui/sign_widget/member_login_widget.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:cheese/src/bloc/sign_bloc/sign_bloc.dart';
+import 'package:cheese/src/bloc/sign_bloc/sign_state.dart';
+import 'package:cheese/src/bloc/sign_bloc/sign_event.dart';
+
 class PasswordCreateWidget extends StatefulWidget {
   const PasswordCreateWidget({super.key});
 
@@ -16,49 +22,65 @@ class _PasswordCreateWidgetState extends State<PasswordCreateWidget> {
   final double maxHeight = 900.0;
   bool interaction = false;
 
+  TextEditingController emailTextController = TextEditingController();
+  TextEditingController passwordTextController= TextEditingController();
   String createPassword = '치즈와 함께할 \n비밀번호를 생성해주세요.';
+
+  bool flag = false;
+
   @override
   Widget build(BuildContext context) {
     double queryWidth = MediaQuery.of(context).size.width;
-    if (queryWidth > maxWidth) {
-      queryWidth = maxWidth;
-    }
-
     double queryHeight = MediaQuery.of(context).size.height;
-    if (queryHeight > maxHeight) {
-      queryHeight = maxHeight;
-    }
 
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
             TopBarWidget(),
-            BodyWidget().titleArea(queryWidth, queryHeight, createPassword),
-            InputPasswordWidget(),
+            TitleArea(
+                width:queryWidth,
+                height:queryHeight,
+                text: createPassword),
+            inputPasswordWidget(),
             SizedBox(
               height: 20,
             ),
-            BodyWidget().functionButton(queryWidth, queryHeight, '다음', context),
+            functionButton(queryWidth, queryHeight,
+                '다음', context,
+            ),
           ],
         ),
       ),
     );
   }
-}
 
-class InputPasswordWidget extends StatefulWidget {
-  const InputPasswordWidget({super.key});
+  Widget functionButton(width, height, text, context) {
+    return InkWell(
+      onTap: () {
+        if (flag){
+          BlocProvider.of<SignBloc>(context).add(
+              PasswordInputEvent(
+                  passwordTextController.text)
+          );
+        }
+      },
+      child: Container(
+        width: width * 0.8,
+        height: height * 0.05,
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
 
-  @override
-  State<InputPasswordWidget> createState() => _InputPasswordWidgetState();
-}
-
-class _InputPasswordWidgetState extends State<InputPasswordWidget> {
-  final LoginTheme _style = LoginTheme(); // 테마
-  final double maxWidth = 400.0;
-  final double maxHeight = 900.0;
-  bool interaction = false;
   final _formKey = GlobalKey<FormState>();
   String _passwordValue = '';
   String _passwordCheckValue = '';
@@ -66,16 +88,9 @@ class _InputPasswordWidgetState extends State<InputPasswordWidget> {
   bool obscureCheckToggle = true;
 
   @override
-  Widget build(BuildContext context) {
+  Widget inputPasswordWidget() {
     double queryWidth = MediaQuery.of(context).size.width;
-    if (queryWidth > maxWidth) {
-      queryWidth = maxWidth;
-    }
-
     double queryHeight = MediaQuery.of(context).size.height;
-    if (queryHeight > maxHeight) {
-      queryHeight = maxHeight;
-    }
 
     return Form(
       key: _formKey,
@@ -145,13 +160,17 @@ class _InputPasswordWidgetState extends State<InputPasswordWidget> {
       height: height * 0.1,
       width: width * 0.8,
         child: TextFormField(
+          controller: passwordTextController,
           validator: (value){
             if(value!.isEmpty){
               return '비밀번호를 입력해주세요.';
             }else if(_passwordValue != value) {
               return '비밀번호가 일치하지 않아요.';
-            }else
-              return null;
+            }else{
+              setState(() {
+                flag = true;
+              });
+            }
           },
           onTapOutside: (event) {
             FocusManager.instance.primaryFocus?.unfocus();

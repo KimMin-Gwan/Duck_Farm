@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
 import 'package:cheese/src/ui/sign_widget/login_try_widget.dart';
-import 'package:cheese/src/ui/sign_widget/password_create_widget.dart';
-// import 'package:cheese/src/ui/login_widget.dart';
-import 'package:cheese/src/ui/sign_widget/member_login_widget.dart';
 
 class ChangePasswordWidget extends StatefulWidget {
   const ChangePasswordWidget({super.key});
@@ -24,6 +21,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
   bool obscureInputToggle = true;
   bool obscureChangeToggle = true;
 
+  TextEditingController emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double queryWidth = MediaQuery.of(context).size.width;
@@ -43,7 +41,10 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
           child: Column(
             children: [
               TopBarWidget(),
-              BodyWidget().titleArea(queryWidth, queryHeight, changePassword),
+              TitleArea(
+                  width: queryWidth,
+                  height: queryHeight,
+                  text:changePassword),
               passwordInputArea(queryWidth, queryHeight, '비밀번호 입력'),
               passwordChangeArea(queryWidth, queryHeight, '비밀번호 확인'),
               SizedBox(

@@ -21,17 +21,11 @@ class _CompleteSignUpWidgetState extends State<CompleteSignUpWidget> {
   final double maxHeight = 900.0;
   bool interaction = false;
 
+  TextEditingController emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double queryWidth = MediaQuery.of(context).size.width;
-    if (queryWidth > maxWidth) {
-      queryWidth = maxWidth;
-    }
-
     double queryHeight = MediaQuery.of(context).size.height;
-    if (queryHeight > maxHeight) {
-      queryHeight = maxHeight;
-    }
 
     return Scaffold(
       body: SafeArea(
@@ -46,38 +40,42 @@ class _CompleteSignUpWidgetState extends State<CompleteSignUpWidget> {
             SizedBox(
               height: 20,
             ),
-            TextBodyWidget(),
+            textBodyArea(queryWidth, queryHeight),
             SizedBox(
               height: 20,
             ),
-            BodyWidget().functionButton(queryWidth, queryHeight, '최애 설정하기', context, InitSignEvent()),
+            functionButton(queryWidth, queryHeight,
+                '최애 설정하기', context),
           ],
         ),
       ),
     );
   }
-}
 
-class TextBodyWidget extends StatelessWidget {
-  TextBodyWidget({super.key});
+  Widget functionButton(width, height, text, context) {
+    return InkWell(
+      onTap: () {
+        BlocProvider.of<SignBloc>(context).add( InitSignEvent());
+      },
+      child: Container(
+        width: width * 0.8,
+        height: height * 0.05,
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
 
-  final LoginTheme _style = LoginTheme(); // 테마
-  final double maxWidth = 400.0;
-  final double maxHeight = 900.0;
-  bool interaction = false;
 
-  @override
-  Widget build(BuildContext context) {
-    double queryWidth = MediaQuery.of(context).size.width;
-    if (queryWidth > maxWidth) {
-      queryWidth = maxWidth;
-    }
 
-    double queryHeight = MediaQuery.of(context).size.height;
-    if (queryHeight > maxHeight) {
-      queryHeight = maxHeight;
-    }
-
+  Widget textBodyArea(queryWidth, queryHeight) {
     return Column(
       children: [
         completeTextArea(queryWidth, queryHeight),

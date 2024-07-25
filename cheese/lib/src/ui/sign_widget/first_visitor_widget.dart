@@ -1,41 +1,86 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/sign_widget/login_try_widget.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FirstVisitorWidget extends StatefulWidget {
-  const FirstVisitorWidget({super.key});
+import 'package:cheese/src/bloc/sign_bloc/sign_bloc.dart';
+import 'package:cheese/src/bloc/sign_bloc/sign_event.dart';
 
-  @override
-  State<FirstVisitorWidget> createState() => _FirstVisitorWidgetState();
-}
 
-class _FirstVisitorWidgetState extends State<FirstVisitorWidget> {
+class FirstVisitorWidget extends StatelessWidget {
+  final bool state;
+  FirstVisitorWidget({super.key, required this.state});
+
   final LoginTheme _style = LoginTheme(); // 테마
-  final double maxWidth = 400.0;
-  final double maxHeight = 900.0;
   bool interaction = false;
 
   @override
   Widget build(BuildContext context) {
     double queryWidth = MediaQuery.of(context).size.width;
-    if (queryWidth > maxWidth) {
-      queryWidth = maxWidth;
-    }
 
     double queryHeight = MediaQuery.of(context).size.height;
-    if (queryHeight > maxHeight) {
-      queryHeight = maxHeight;
-    }
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            TopBarWidget(),
-            SignUpEmailWidget(),
+            Column(
+              children: [
+                TopBarWidget(),
+                SignUpEmailWidget(),
+              ],
+            ),
+            state ? Container(
+              color: Colors.black87.withOpacity(0.3),
+              width: queryWidth,
+              height: queryHeight,
+            ) : Container(),
+            state ? Container(
+                alignment: Alignment.center,
+                width: queryWidth,
+                height: queryHeight,
+                child: Container(
+                    alignment: Alignment.center,
+                    width: 350,
+                    height: 180,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("이메일 인증이 성공적으로.",
+                            style: TextStyle(fontSize:22, fontWeight: FontWeight.w700)
+                        ),
+                        Text("완료되었습니다.",
+                            style: TextStyle(fontSize:22, fontWeight: FontWeight.w700)
+                        ),
+                        InkWell(
+                          onTap: () {
+                            BlocProvider.of<SignBloc>(context).add(SendEmailConfirmEvent());
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            width: 300,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.deepPurple,
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              "확인",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        )
+                      ],
+                    )
+                )
+            ) : Container(),
           ],
-        ),
+        )
       ),
     );
   }
@@ -54,11 +99,15 @@ class _SignUpEmailWidgetState extends State<SignUpEmailWidget> {
   final double maxHeight = 900.0;
   bool interaction = false;
 
+  TextEditingController emailTextController = TextEditingController();
+
   String firstVisit = '치즈가 처음이시군요! \n이메일 인증을 해주세요.';
-  BodyWidget bodyWidget = BodyWidget();
 
   @override
   Widget build(BuildContext context) {
+    BodyWidget bodyWidget = BodyWidget(
+      emailEditingController: emailTextController,
+    );
     double queryWidth = MediaQuery.of(context).size.width;
     if (queryWidth > maxWidth) {
       queryWidth = maxWidth;
@@ -71,7 +120,10 @@ class _SignUpEmailWidgetState extends State<SignUpEmailWidget> {
 
     return Column(
       children: [
-        bodyWidget.titleArea(queryWidth, queryHeight, firstVisit),
+        TitleArea(
+            width: queryWidth,
+            height: queryHeight,
+            text: firstVisit),
         infoCheckEmail(queryWidth, queryHeight),
         timeArea(queryWidth, queryHeight),
         SizedBox(

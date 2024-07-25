@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 import 'package:cheese/src/model/home_data_model.dart';
 import 'package:cheese/src/model/image_model.dart';
@@ -39,7 +38,6 @@ class NoneBiasApiJsonParser extends MainJsonParser{
 class BiasListApiJsonParser extends MainJsonParser{
   final Map body = {
     'uid' : '',
-    'bid' : '',
   };
   Uri __url = Uri();
 
@@ -52,9 +50,8 @@ class BiasListApiJsonParser extends MainJsonParser{
     );
   }
 
-  void makeBodyData(uid, bid){
+  void makeBodyData(uid){
     body['uid'] = uid;
-    body['bid'] = bid;
   }
 
   String getData() => super.makeSendData(this.body);
@@ -91,7 +88,9 @@ class ImageDetailApiJsonParser extends MainJsonParser{
 class ImageListCategoryApiJsonParser extends MainJsonParser{
   final Map body = {
     'uid' : '',
-    'bid' : ''
+    'bid' : '',
+    'ordering' : '',
+    'num_image' : 0
   };
   Uri __url = Uri();
 
@@ -104,9 +103,11 @@ class ImageListCategoryApiJsonParser extends MainJsonParser{
     );
   }
 
-  void makeBodyData(uid, bid){
+  void makeBodyData(uid, bid, ordering, numImage){
     body['uid'] = uid;
     body['bid'] = bid;
+    body['ordering'] = ordering;
+    body['numImage'] = numImage;
   }
 
   String getData() => super.makeSendData(this.body);
@@ -118,7 +119,9 @@ class ImageListCategoryByScheduleApiJsonParser extends MainJsonParser{
   final Map body = {
     'uid' : '',
     'bid' : '',
-    'sid' : ''
+    'sid' : '',
+    'ordering' : '',
+    'num_image' : 0
   };
   Uri __url = Uri();
 
@@ -131,10 +134,12 @@ class ImageListCategoryByScheduleApiJsonParser extends MainJsonParser{
     );
   }
 
-  void makeBodyData(uid, bid, sid){
+  void makeBodyData(uid, bid, sid, ordering, numImage){
     body['uid'] = uid;
     body['bid'] = bid;
     body['sid'] = sid;
+    body['ordering'] = ordering;
+    body['num_image'] = numImage;
   }
 
   String getData() => super.makeSendData(this.body);
@@ -148,6 +153,7 @@ class CoreNetworkProvider{
   final String image_detail_endpoint = '/core_system/image_detail';
   final String imageListCategoryEndpoint= '/core_system/get_image_list_by_bias';
   final String imageListCategoryByScheduleEndpoint= '/core_system/get_image_list_by_bias_n_schedule';
+  final String biasListEndpoint = '/core_system/get_bias_following';
   Client client = Client();
 
   Future<HomeDataModel> fetchNoneBiasHome(String uid, String date) async {
@@ -186,10 +192,11 @@ class CoreNetworkProvider{
     }
   }
 
-  Future<ImageListCategoryModel> fetchImageListCategory(String uid, String bid) async {
+  Future<ImageListCategoryModel> fetchImageListCategory(
+      String uid, String bid, String ordering, int numImage) async {
     ImageListCategoryApiJsonParser imageListCategoryApiJsonParser= ImageListCategoryApiJsonParser(this.imageListCategoryEndpoint);
     imageListCategoryApiJsonParser.setHeader(uid, this.imageListCategoryEndpoint);
-    imageListCategoryApiJsonParser.makeBodyData(uid, bid);
+    imageListCategoryApiJsonParser.makeBodyData(uid, bid, ordering, numImage);
 
     final response = await client.post(
         imageListCategoryApiJsonParser.getUri(),
@@ -204,11 +211,11 @@ class CoreNetworkProvider{
     }
   }
 
-  Future<ImageListCategoryModel> fetchImageListCategoryBySchedule(String uid, String bid, String sid) async {
-
+  Future<ImageListCategoryModel> fetchImageListCategoryBySchedule(
+      String uid, String bid, String sid, String ordering, int numImage) async {
     ImageListCategoryByScheduleApiJsonParser imageListCategoryByScheduleApiJsonParser= ImageListCategoryByScheduleApiJsonParser(this.imageListCategoryByScheduleEndpoint);
     imageListCategoryByScheduleApiJsonParser.setHeader(uid, this.imageListCategoryByScheduleEndpoint);
-    imageListCategoryByScheduleApiJsonParser.makeBodyData(uid, bid, sid);
+    imageListCategoryByScheduleApiJsonParser.makeBodyData(uid, bid, sid, ordering, numImage);
 
     final response = await client.post(
         imageListCategoryByScheduleApiJsonParser.getUri(),
@@ -218,6 +225,26 @@ class CoreNetworkProvider{
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
       return ImageListCategoryModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
+  Future<BiasListModel> fetchBiasList(
+      String uid) async {
+    BiasListApiJsonParser biasListApiJsonParser= BiasListApiJsonParser(this.biasListEndpoint);
+    biasListApiJsonParser.setHeader(uid, this.biasListEndpoint);
+    biasListApiJsonParser.makeBodyData(uid);
+
+    final response = await client.post(
+        biasListApiJsonParser.getUri(),
+        headers: {'Content-Type': 'application/json'},
+        body: biasListApiJsonParser.getData()
+    );
+
+    print('request status: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      return BiasListModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to load post');
     }

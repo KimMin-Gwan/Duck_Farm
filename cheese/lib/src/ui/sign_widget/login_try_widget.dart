@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/login_theme.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:cheese/src/bloc/sign_bloc/sign_bloc.dart';
-import 'package:cheese/src/bloc/sign_bloc/sign_state.dart';
 import 'package:cheese/src/bloc/sign_bloc/sign_event.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -22,6 +19,7 @@ class _LoginTryWidgetState extends State<LoginTryWidget> {
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
   bool interaction = false;
+  TextEditingController emailEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class _LoginTryWidgetState extends State<LoginTryWidget> {
         child: Column(
           children: [
             TopBarWidget(),
-            BodyWidget(),
+            BodyWidget(emailEditingController: emailEditingController,),
           ],
         ),
       ),
@@ -88,16 +86,31 @@ class _TopBarWidgetState extends State<TopBarWidget> {
   }
 }
 
-class BodyWidget extends StatelessWidget {
-  BodyWidget({super.key});
+class BodyWidget extends StatefulWidget {
+  TextEditingController emailEditingController;
+  BodyWidget({super.key, required this.emailEditingController});
+
+  @override
+  State<BodyWidget> createState() => _BodyWidgetState();
+}
+
+class _BodyWidgetState extends State<BodyWidget> {
+  late TextEditingController emailEditingController;
+
+  @override
+  void initState() {
+    super.initState();
+    emailEditingController = widget.emailEditingController; // 수정: widget에서 전달받은 값으로 초기화
+  }
+
 
   final LoginTheme _style = LoginTheme();// 테마
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
   bool interaction = false;
-  TextEditingController emailEditingController = TextEditingController();
+  //TextEditingController emailEditingController;
   SignEvent emailInputEvent = EmailInputEvent("");
-
+  bool flag = false;
   String email = '로그인 혹은 회원가입을 위한 \n이메일을 입력해주세요.';
   String emailPattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
   // RegExp regExp = RegExp(emailPattern);
@@ -116,7 +129,10 @@ class BodyWidget extends StatelessWidget {
 
     return Column(
       children: [
-        titleArea(queryWidth, queryHeight, email),
+        TitleArea(
+            width:queryWidth,
+            height: queryHeight,
+            text: email),
         SizedBox(
           height: 20,
         ),
@@ -124,22 +140,12 @@ class BodyWidget extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        functionButton(queryWidth, queryHeight, '다음', context, emailInputEvent),
+        functionButton(queryWidth, queryHeight, '다음', context,
+            emailInputEvent, flag),
       ],
     );
   }
 
-  Widget titleArea(width, height, text) {
-    return Container(
-      alignment: Alignment.topLeft,
-      height: height * 0.1,
-      width: width * 0.8,
-      child: Text(
-        text,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-      ),
-    );
-  }
 
   Widget emailInputArea(width, height) {
     return Container(
@@ -154,8 +160,11 @@ class BodyWidget extends StatelessWidget {
               return '이메일을 입력해주세요.';
             }else if(!RegExp(emailPattern).hasMatch(value)){
               return '※ 올바른 이메일 형식을 입력해주세요';
-            }else
-              return null;
+            }else{
+              setState(() {
+                flag = true;
+              });
+            }
           },
             onTapOutside: (event){
             FocusManager.instance.primaryFocus?.unfocus();
@@ -174,10 +183,12 @@ class BodyWidget extends StatelessWidget {
     );
   }
 
-  Widget functionButton(width, height, text, context, event) {
+  Widget functionButton(width, height, text, context, event, flag) {
     return InkWell(
       onTap: () {
-        BlocProvider.of<SignBloc>(context).add(event);
+        if (flag){
+          BlocProvider.of<SignBloc>(context).add(event);
+        }
       },
       child: Container(
         width: width * 0.8,
@@ -194,6 +205,28 @@ class BodyWidget extends StatelessWidget {
       ),
     );
   }
+}
 
+class TitleArea extends StatelessWidget {
+  final double width;
+  final double height;
+  final String text;
 
+  const TitleArea({super.key, required this.width,
+    required this.height,
+    required this.text
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.topLeft,
+      height: height * 0.1,
+      width: width * 0.8,
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
 }

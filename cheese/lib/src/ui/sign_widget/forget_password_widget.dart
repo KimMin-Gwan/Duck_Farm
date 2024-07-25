@@ -17,6 +17,7 @@ class _ForgetPasswordWidgetState extends State<ForgetPasswordWidget> {
   bool interaction = false;
 
   String forgetPwd = '비밀번호가 기억나지 않나요?';
+  TextEditingController emailTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,10 @@ class _ForgetPasswordWidgetState extends State<ForgetPasswordWidget> {
         child: Column(
           children: [
             TopBarWidget(),
-            BodyWidget().titleArea(queryWidth, queryHeight, forgetPwd),
+            TitleArea(
+                width:queryWidth,
+                height:queryHeight,
+                text:forgetPwd),
             EmailBodyWidget(),
             ReTransmitEmailWidget(),
           ],

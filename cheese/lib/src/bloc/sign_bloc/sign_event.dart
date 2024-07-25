@@ -27,6 +27,11 @@ class StartSignEvent extends SignEvent{
   List<Object> get props => [];
 }
 
+class SendEmailConfirmEvent extends SignEvent{
+  @override
+  List<Object> get props => [];
+}
+
 
 class TryLoginEvent extends SignEvent{
   final String email;

@@ -1,11 +1,5 @@
 import 'dart:convert';
 
-class DictMakingError implements Exception {
-  final String errorType;
-
-  DictMakingError(this.errorType);
-}
-
 // 추상 클래스
 abstract class SampleDomain {
   Map<String, dynamic> getDictFormData();
@@ -19,7 +13,7 @@ class User extends SampleDomain {
   String birthday;
   String email;
   String nickname;
-  List<dynamic> bids;
+  List<String> bids;
 
   User({
     this.uid = "",
@@ -31,19 +25,29 @@ class User extends SampleDomain {
     this.bids = const [],
   });
 
+  factory User.fromJson(Map data) {
+    Map user = data['body']['user'];
+
+    return User(
+      uid: user['uid'],
+      uname: user['uname'],
+      password: "",
+      birthday: user['birthday'],
+      email: user['email'],
+      nickname: user['nickname'],
+      bids: user['bids'],
+    );
+  }
+
   @override
   void makeWithDict(Map<String, dynamic> dictData) {
-    try {
-      uid = dictData['uid'];
-      uname = dictData['uname'];
-      password = dictData['password'];
-      birthday = dictData['birthday'];
-      email = dictData['email'];
-      nickname = dictData['nickname'];
-      bids = dictData['bids'];
-    } catch (e) {
-      throw DictMakingError(e.toString());
-    }
+    uid = dictData['uid'];
+    uname = dictData['uname'];
+    password = "";
+    birthday = dictData['birthday'];
+    email = dictData['email'];
+    nickname = dictData['nickname'];
+    bids = dictData['bid'];
   }
 
   @override
@@ -75,14 +79,10 @@ class Bias extends SampleDomain {
 
   @override
   void makeWithDict(Map<String, dynamic> dictData) {
-    try {
-      bid = dictData['bid'];
-      bname = dictData['bname'];
-      sids = dictData['sids'];
-      iids = dictData['iids'];
-    } catch (e) {
-      throw DictMakingError(e.toString());
-    }
+    bid = dictData['bid'];
+    bname = dictData['bname'];
+    sids = dictData['sids'];
+    iids = dictData['iids'];
   }
 
   @override
@@ -116,17 +116,13 @@ class Schedule {
   });
 
   void makeWithDict(Map<String, dynamic> dictData) {
-    try {
-      sid = dictData['sid'];
-      sname = dictData['sname'];
-      date = dictData['date'];
-      location = dictData['location'];
-      type = dictData['type'];
-      bids = dictData['bids'];
-      iids = dictData['iids'];
-    } catch (e) {
-      throw DictMakingError(e.toString());
-    }
+    sid = dictData['sid'];
+    sname = dictData['sname'];
+    date = dictData['date'];
+    location = dictData['location'];
+    type = dictData['type'];
+    bids = dictData['bids'];
+    iids = dictData['iids'];
   }
 
   Map<String, dynamic> getDictFormData() {
@@ -168,20 +164,16 @@ class Image {
   });
 
   void makeWithDict(Map<String, dynamic> dictData) {
-    try {
-      iid = dictData['iid'];
-      iname = dictData['iname'];
-      imageType = dictData['image_type'];
-      imageDetail = dictData['image_detail'];
-      uploadDate = dictData['upload_date'];
-      location = dictData['location'];
-      sid = dictData['sid'];
-      bid = dictData['bid'];
-      uid = dictData['uid'];
-      like = dictData['like'];
-    } catch (e) {
-      throw DictMakingError(e.toString());
-    }
+    iid = dictData['iid'];
+    iname = dictData['iname'];
+    imageType = dictData['image_type'];
+    imageDetail = dictData['image_detail'];
+    uploadDate = dictData['upload_date'];
+    location = dictData['location'];
+    sid = dictData['sid'];
+    bid = dictData['bid'];
+    uid = dictData['uid'];
+    like = dictData['like'];
   }
 
   Map<String, dynamic> getDictFormData() {

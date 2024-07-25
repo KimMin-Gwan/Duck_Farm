@@ -110,12 +110,12 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         children: [
           CircleAvatar(
               radius: 20,
-              backgroundImage: NetworkImage("https://kr.object.ncloudstorage.com/cheese-images/${core_data['bid']}.jpg")
+              backgroundImage: NetworkImage("https://kr.object.ncloudstorage.com/cheese-images/T${core_data['bid']}.jpg")
             //AssetImage('images/assets/chodan.jpg'), // 이미지 경로 수정 필요
           ),
           InkWell(
             onTap:(){
-              BlocProvider.of<CoreBloc>(context).add(ImageListCategoryEvent(core_data['bid']));
+              BlocProvider.of<CoreBloc>(context).add(ImageListCategoryEvent(core_data['bid'], 'like'));
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const ImageListByCategoryWidget())
               );
@@ -182,7 +182,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         child: InkWell(
           onTap: (){
             BlocProvider.of<CoreBloc>(context).add(ImageListCategoryByScheduleEvent(core_data['bid'],
-                core_data['schedule_data'][numSchedule]['sid']));
+                core_data['schedule_data'][numSchedule]['sid'], 'like'));
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const ImageListCategoryByScheduleWidget())
             );
@@ -191,7 +191,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                core_data['schedule_data'][numSchedule]['schedule_name'],
+                core_data['schedule_data'][numSchedule]['sname'],
                 style: _style.eventTitle,
               ),
               const Icon(
@@ -214,7 +214,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
         decoration: _style.eventGalleryBox,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: core_data['schedule_data'][numSchedule]['image_url'].length, // 내부 사각형 개수 -> 추후 바꾸기
+          itemCount: core_data['schedule_data'][numSchedule]['iids'].length, // 내부 사각형 개수 -> 추후 바꾸기
           itemBuilder: (context, index) => _buildGalleryItem(index, core_data, numSchedule),
         ),
       ),
@@ -222,7 +222,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
   }
 
   Widget _buildGalleryItem(int index, core_data, numSchedule) {
-    String url =  core_data['schedule_data'][numSchedule]['image_url'][index];
+    String url =  core_data['schedule_data'][numSchedule]['iids'][index];
     String iid = url.split('.').first;
     return InkWell(
         onTap:(){
@@ -243,7 +243,7 @@ class _HomeBodyState extends State<HomeBodyWidget> {
                   child: SizedBox(
                       width : maxHeight * 0.09,
                       height : maxHeight * 0.09,
-                      child:Image.network("https://kr.object.ncloudstorage.com/cheese-images/${url}", fit:BoxFit.cover)
+                      child:Image.network("https://kr.object.ncloudstorage.com/cheese-images/T${url}.jpg", fit:BoxFit.cover)
                   )
               )
           ),
@@ -355,13 +355,13 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
         children: [
           CircleAvatar(
               radius: 20,
-              backgroundImage: NetworkImage("https://kr.object.ncloudstorage.com/cheese-images/${core_data['bid']}.jpg")
+              backgroundImage: NetworkImage("https://kr.object.ncloudstorage.com/cheese-images/T${core_data['bid']}.jpg")
             //AssetImage('images/assets/chodan.jpg'),
             // 이미지 경로 수정 필요
           ),
           InkWell(
             onTap:(){
-              BlocProvider.of<CoreBloc>(context).add(ImageListCategoryEvent(core_data['bid']));
+              BlocProvider.of<CoreBloc>(context).add(ImageListCategoryEvent(core_data['bid'], 'like'));
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ImageListByCategoryWidget())
               );
@@ -428,7 +428,7 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
         child: InkWell(
           onTap: (){
             BlocProvider.of<CoreBloc>(context).add(ImageListCategoryByScheduleEvent(core_data['bid'],
-                core_data['schedule_data'][numSchedule]['sid']));
+                core_data['schedule_data'][numSchedule]['sid'], 'like'));
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const ImageListCategoryByScheduleWidget())
             );
@@ -437,7 +437,7 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                core_data['schedule_data'][numSchedule]['schedule_name'],
+                core_data['schedule_data'][numSchedule]['sname'],
                 style: _style.eventTitle,
               ),
               const Icon(
@@ -460,7 +460,7 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
         decoration: _style.eventGalleryBox,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: core_data['schedule_data'][numSchedule]['image_url'].length, // 내부 사각형 개수 -> 추후 바꾸기
+          itemCount: core_data['schedule_data'][numSchedule]['iids'].length, // 내부 사각형 개수 -> 추후 바꾸기
           itemBuilder: (context, index) => _buildGalleryItem(index, core_data, numSchedule),
         ),
       ),
@@ -468,7 +468,7 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
   }
 
   Widget _buildGalleryItem(int index, core_data, numSchedule) {
-    String url =  core_data['schedule_data'][numSchedule]['image_url'][index];
+    String url =  core_data['schedule_data'][numSchedule]['iids'][index];
     String iid = url.split('.').first;
     return InkWell(
         onTap:(){
@@ -489,7 +489,7 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
                   child: SizedBox(
                       width : maxHeight * 0.09,
                       height : maxHeight * 0.09,
-                      child:Image.network("https://kr.object.ncloudstorage.com/cheese-images/${url}", fit:BoxFit.cover)
+                      child:Image.network("https://kr.object.ncloudstorage.com/cheese-images/T${url}.jpg", fit:BoxFit.cover)
                   )
               )
           ),

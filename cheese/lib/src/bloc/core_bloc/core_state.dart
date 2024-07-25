@@ -15,6 +15,11 @@ class InitCoreState extends CoreState{
   List<Object> get props => [];
 }
 
+class StartMainServiceState extends CoreState{
+  @override
+  List<Object> get props => [];
+}
+
 class NoneBiasState extends CoreState{
   final HomeDataModel homeDataModel;
   final String date;

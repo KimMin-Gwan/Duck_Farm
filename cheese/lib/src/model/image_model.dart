@@ -23,9 +23,9 @@ class ImageListCategoryModel{
 
   // 생성자
   factory ImageListCategoryModel.fromJson(Map data){
-    print(data['body']);
+    print(data);
     var bodyData = data['body'];
-    if (data['header']['state-code'] == "209"){
+    if (data['header']['state-code'] == "218"){
       return ImageListCategoryModel(
         bid: bodyData['bid'],
         bname: bodyData['bname'],
@@ -36,7 +36,7 @@ class ImageListCategoryModel{
         scheduleDate: "",
         scheduleName: "",
       );
-    } else if (data['header']['state-code'] == "210"){
+    } else if (data['header']['state-code'] == "219"){
       return ImageListCategoryModel(
         bid: bodyData['bid'],
         bname: bodyData['bname'],

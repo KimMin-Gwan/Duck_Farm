@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/bloc/image_upload/image_upload_event.dart';
 import 'package:cheese/src/bloc/image_upload/image_upload_state.dart';
-import 'package:cheese/src/resources/image_repository.dart';
+import 'package:cheese/src/resources/repository/image_repository.dart';
 import 'package:cheese/src/model/image_model.dart';
 
 

@@ -116,7 +116,7 @@ class TrySignUpApiJsonParser extends MainJsonParser{
 
 
 class SignNetworkProvider{
-  final String searchEmailEndpoint = '/sign_system/try_search_email';
+  final String searchEmailEndpoint = '/sign_system/try_check_email';
   final String sendEmailEndpoint = '/sign_system/try_send_email';
   final String trySignUpEndpoint = '/sign_system/try_sign_up';
   final String tryLoginEndpoint = '/sign_system/try_login';
@@ -136,7 +136,7 @@ class SignNetworkProvider{
     );
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
-      return SearchEmailModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      return SearchEmailModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to load post');
     }
@@ -155,7 +155,7 @@ class SignNetworkProvider{
 
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
-      return SendEmailModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      return SendEmailModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to load post');
     }
@@ -175,7 +175,7 @@ class SignNetworkProvider{
 
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
-      return TryLoginModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      return TryLoginModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to load post');
     }
@@ -184,7 +184,7 @@ class SignNetworkProvider{
   Future<PasswordChangeModel> fetchPasswordChange(String email, String password) async {
 
     PasswordChangeApiJsonParser passwordChangeApiJsonParser = PasswordChangeApiJsonParser(this.passwordChangeEndpoint);
-    PasswordChangeApiJsonParser.setHeader("", this.passwordChangeEndpoint);
+    passwordChangeApiJsonParser.setHeader("", this.passwordChangeEndpoint);
     passwordChangeApiJsonParser.makeBodyData(email, password);
 
     final response = await client.post(
@@ -195,7 +195,7 @@ class SignNetworkProvider{
 
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
-      return PasswordChangeModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      return PasswordChangeModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to load post');
     }
@@ -216,34 +216,11 @@ class SignNetworkProvider{
 
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
-      return TrySignUpModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      return TrySignUpModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to load post');
     }
   }
-
-/*
-  Future<TryLoginModel> fetchTryLogin(String email, String password) async {
-    TryLoginApiJsonParser tryLoginApiJsonParser = TryLoginApiJsonParser(this.tryLoginEndpoint);
-    tryLoginApiJsonParser.setHeader("", this.tryLoginEndpoint);
-    tryLoginApiJsonParser.makeBodyData(email, password);
-
-    final response = await client.post(
-        tryLoginApiJsonParser.getUri(),
-        headers: {'Content-Type': 'application/json'},
-        body: tryLoginApiJsonParser.getData()
-    );
-
-    print('request status: ${response.statusCode}');
-    if (response.statusCode == 200) {
-      return TryLoginModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-    } else {
-      throw Exception('Failed to load post');
-    }
-  }
-
- */
-
 }
 
 

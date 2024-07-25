@@ -8,14 +8,14 @@ import 'package:cheese/src/bloc/core_bloc/core_event.dart';
 import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 import 'package:cheese/src/ui/image_detail_widget.dart';
 
-class ImageListCategoryByScheduleWidget extends StatefulWidget {
-  const ImageListCategoryByScheduleWidget({super.key});
+class ImageSearchWidget extends StatefulWidget {
+  const ImageSearchWidget({super.key});
 
   @override
-  State<ImageListCategoryByScheduleWidget> createState() => _ImageListCategoryByScheduleWidgetState();
+  State<ImageSearchWidget> createState() => _ImageSearchState();
 }
 
-class _ImageListCategoryByScheduleWidgetState extends State<ImageListCategoryByScheduleWidget> {
+class _ImageSearchState extends State<ImageSearchWidget> {
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
   bool interaction = false;
@@ -65,7 +65,7 @@ class _BodyByScheduleWidgetState extends State<BodyByScheduleWidget> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const ScheduleDetailWidget(),
+          //const ScheduleDetailWidget(),
           Container(
             height: 50,
             child: Row(
@@ -98,54 +98,6 @@ class _BodyByScheduleWidgetState extends State<BodyByScheduleWidget> {
           )
         ],
       ),
-    );
-  }
-}
-
-class ScheduleDetailWidget extends StatefulWidget {
-  const ScheduleDetailWidget({super.key});
-
-  @override
-  State<ScheduleDetailWidget> createState() => _ScheduleDetailWidgetState();
-}
-
-class _ScheduleDetailWidgetState extends State<ScheduleDetailWidget> {
-  final _style = ImageCategoryTheme();
-  final double maxWidth = 400.0;
-  final double maxHeight = 900.0;
-  bool interaction = false;
-
-  @override
-  Widget build(BuildContext context) {
-    double queryWidth = MediaQuery.of(context).size.width;
-    if (queryWidth > maxWidth) { queryWidth = maxWidth; }
-
-    double queryHeight = MediaQuery.of(context).size.height;
-    if (queryHeight > maxHeight) { queryHeight = maxHeight; }
-
-    return BlocBuilder<CoreBloc, CoreState>(
-        builder: (context, state)
-      {
-        if (state is ImageListCategoryByScheduleState) {
-          return Container(
-            height: 40,
-            color: _style.scheduleTitleColor,
-            child: Center(
-              child: Text('${state.imageListCategoryModel.scheduleDate} | ${state.imageListCategoryModel.scheduleName}',
-                style: _style.scheduleTitleText,),
-            ),
-          );
-        } else {
-          return Container(
-            height: 40,
-            color: _style.scheduleTitleColor,
-            child: Center(
-              child: Text('',
-                style: _style.scheduleTitleText,),
-            ),
-          );
-        }
-      }
     );
   }
 }
@@ -208,98 +160,98 @@ class _TopBarWidgetState extends State<TopBarWidget> {
 
     return BlocBuilder<CoreBloc, CoreState>(
         builder: (context, state){
-      if (state is ImageListCategoryState) {
-        return Column(
-          children: [
-            Container(
-              alignment: Alignment.bottomCenter,
-              height: queryHeight * 0.02,
-            ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              height: queryHeight * 0.1,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        onPressed: (){
-                          BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.chevron_left),
-                      )
+          if (state is ImageListCategoryState) {
+            return Column(
+              children: [
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  height: queryHeight * 0.02,
+                ),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  height: queryHeight * 0.1,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          child: IconButton(
+                            onPressed: (){
+                              BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.chevron_left),
+                          )
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        width: queryWidth * 0.75,
+                        child: Text(state.imageListCategoryModel.bname,
+                          style: _style.biasNameText,),
+                      ),
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          child: IconButton(
+                            onPressed: (){
+                            },
+                            icon: Icon(Icons.add),
+                          )
+                      ),
+                    ],
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    width: queryWidth * 0.75,
-                    child: Text(state.imageListCategoryModel.bname,
-                      style: _style.biasNameText,),
+                )
+              ],
+            );
+          }else if(state is ImageListCategoryByScheduleState){
+            return Column(
+              children: [
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  height: queryHeight * 0.02,
+                ),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  height: queryHeight * 0.1,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          child: IconButton(
+                            onPressed: (){
+                              BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.chevron_left),
+                          )
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        width: queryWidth * 0.75,
+                        child: Text(state.imageListCategoryModel.bname,
+                          style: _style.biasNameText,),
+                      ),
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          child: IconButton(
+                            onPressed: (){
+                            },
+                            icon: Icon(Icons.add),
+                          )
+                      ),
+                    ],
                   ),
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        onPressed: (){
-                        },
-                        icon: Icon(Icons.add),
-                      )
-                  ),
-                ],
-              ),
-            )
-          ],
-        );
-      }else if(state is ImageListCategoryByScheduleState){
-        return Column(
-          children: [
-            Container(
-              alignment: Alignment.bottomCenter,
-              height: queryHeight * 0.02,
-            ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              height: queryHeight * 0.1,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        onPressed: (){
-                          BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(Icons.chevron_left),
-                      )
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    width: queryWidth * 0.75,
-                    child: Text(state.imageListCategoryModel.bname,
-                      style: _style.biasNameText,),
-                  ),
-                  Container(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        onPressed: (){
-                        },
-                        icon: Icon(Icons.add),
-                      )
-                  ),
-                ],
-              ),
-            )
-          ],
-        );
-      }
-      else{
-        return Container(
-          alignment: Alignment.center,
-          child: const Text("로딩중")
-        );
-      }
-    });
+                )
+              ],
+            );
+          }
+          else{
+            return Container(
+                alignment: Alignment.center,
+                child: const Text("로딩중")
+            );
+          }
+        });
   }
 }
 
@@ -385,53 +337,53 @@ class _ImageListWidgetState extends State<ImageListWidget> {
 
     return BlocBuilder<CoreBloc, CoreState>(
         builder: (context, state) {
-      if (state is ImageListCategoryState) {
-        print("making");
-        print(state.imageListCategoryModel.firstImageList);
+          if (state is ImageListCategoryState) {
+            print("making");
+            print(state.imageListCategoryModel.firstImageList);
 
-        firstWidgetList = makeImageContainerList(queryWidth,
-            state.imageListCategoryModel.firstImageList);
-        secondWidgetList = makeImageContainerList(queryWidth,
-            state.imageListCategoryModel.secondImageList);
-        thirdWidgetList = makeImageContainerList(queryWidth,
-            state.imageListCategoryModel.thirdImageList);
+            firstWidgetList = makeImageContainerList(queryWidth,
+                state.imageListCategoryModel.firstImageList);
+            secondWidgetList = makeImageContainerList(queryWidth,
+                state.imageListCategoryModel.secondImageList);
+            thirdWidgetList = makeImageContainerList(queryWidth,
+                state.imageListCategoryModel.thirdImageList);
 
-        return SingleChildScrollView(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                singleColumnImageWidget(queryWidth, firstWidgetList),
-                singleColumnImageWidget(queryWidth, secondWidgetList),
-                singleColumnImageWidget(queryWidth, thirdWidgetList)
-              ],
-            )
-        );
-      } else if(state is ImageListCategoryByScheduleState){
-        firstWidgetList = makeImageContainerList(queryWidth,
-            state.imageListCategoryModel.firstImageList);
-        secondWidgetList = makeImageContainerList(queryWidth,
-            state.imageListCategoryModel.secondImageList);
-        thirdWidgetList = makeImageContainerList(queryWidth,
-            state.imageListCategoryModel.thirdImageList);
+            return SingleChildScrollView(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    singleColumnImageWidget(queryWidth, firstWidgetList),
+                    singleColumnImageWidget(queryWidth, secondWidgetList),
+                    singleColumnImageWidget(queryWidth, thirdWidgetList)
+                  ],
+                )
+            );
+          } else if(state is ImageListCategoryByScheduleState){
+            firstWidgetList = makeImageContainerList(queryWidth,
+                state.imageListCategoryModel.firstImageList);
+            secondWidgetList = makeImageContainerList(queryWidth,
+                state.imageListCategoryModel.secondImageList);
+            thirdWidgetList = makeImageContainerList(queryWidth,
+                state.imageListCategoryModel.thirdImageList);
 
-        return SingleChildScrollView(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                singleColumnImageWidget(queryWidth, firstWidgetList),
-                singleColumnImageWidget(queryWidth, secondWidgetList),
-                singleColumnImageWidget(queryWidth, thirdWidgetList)
-              ],
-            )
-        );
+            return SingleChildScrollView(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    singleColumnImageWidget(queryWidth, firstWidgetList),
+                    singleColumnImageWidget(queryWidth, secondWidgetList),
+                    singleColumnImageWidget(queryWidth, thirdWidgetList)
+                  ],
+                )
+            );
 
-      }
-      else{
-        return Container();
-      }
-    });
+          }
+          else{
+            return Container();
+          }
+        });
   }
 
   List<InkWell> makeImageContainerList(width, iidList){
@@ -439,32 +391,32 @@ class _ImageListWidgetState extends State<ImageListWidget> {
 
     for ( String iid in iidList){
       InkWell inkWell = InkWell(
-        onTap: (){
-          BlocProvider.of<CoreBloc>(context).add(DetailImageDataEvent(iid));
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ImageDetailWidget())
-          );
-        },
-        child: Container(
-          padding: const EdgeInsets.all(4),
-          width: width * 0.3,
-          child : ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: Image.network("https://kr.object.ncloudstorage.com/cheese-images/T${iid}.jpg",
-              fit: BoxFit.fitHeight, loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress)
-              {
-                if(loadingProgress == null){
-                  return child;
-                }
-                return Center(
-                  child : CircularProgressIndicator(
-                    value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
-                  ),
-                );
-              }
-            ),
+          onTap: (){
+            BlocProvider.of<CoreBloc>(context).add(DetailImageDataEvent(iid));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ImageDetailWidget())
+            );
+          },
+          child: Container(
+              padding: const EdgeInsets.all(4),
+              width: width * 0.3,
+              child : ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.network("https://kr.object.ncloudstorage.com/cheese-images/${iid}.jpg",
+                    fit: BoxFit.fitHeight, loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress)
+                    {
+                      if(loadingProgress == null){
+                        return child;
+                      }
+                      return Center(
+                        child : CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
+                        ),
+                      );
+                    }
+                ),
+              )
           )
-        )
       );
 
       imageList.add(inkWell);
@@ -475,12 +427,12 @@ class _ImageListWidgetState extends State<ImageListWidget> {
 
   Container singleColumnImageWidget(width, List<Widget>imageList){
     return Container(
-      padding: EdgeInsets.all(3),
-      width: width * 0.3,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: imageList,
-      )
+        padding: EdgeInsets.all(3),
+        width: width * 0.3,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: imageList,
+        )
     );
   }
 }

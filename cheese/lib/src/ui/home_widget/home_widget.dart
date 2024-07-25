@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/home_widget/bar_widgets.dart';
 import 'package:cheese/src/ui/styles/home_theme.dart';
 import 'package:cheese/src/ui/upload_widget.dart';
+import 'package:cheese/src/bloc/core_bloc/core_event.dart';
+import 'package:cheese/src/ui/home_widget/bias_add_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,14 +26,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double queryWidth = MediaQuery.of(context).size.width;
-    if (queryWidth > maxWidth) {
-      queryWidth = maxWidth;
-    }
-
     double queryHeight = MediaQuery.of(context).size.height;
-    if (queryHeight > maxHeight) {
-      queryHeight = maxHeight;
-    }
+
     return Scaffold(
         backgroundColor: _style.mainWhiteColor,
         floatingActionButton: Container(

@@ -29,14 +29,22 @@ class _ImageDetailWidgetState extends State<ImageDetailWidget> {
     // 세로 최대 길이를 1200으로  한정
     if (queryHeight > maxHeight) { queryHeight = maxHeight; }
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          DetailBodyWidget(),
-          TopBarWidget(),
-        ],
-      ),
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (bool didPop){
+        BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
+      },
+      child: const Scaffold(
+        body: Stack(
+          children: [
+            DetailBodyWidget(),
+            TopBarWidget(),
+          ],
+        )
+      )
     );
+
+
   }
 }
 

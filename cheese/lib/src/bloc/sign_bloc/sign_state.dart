@@ -18,12 +18,12 @@ class PasswordChangeState extends SignState{
 }
 
 class TryLoginState extends SignState{
-  final String email;
+  final TryLoginModel tryLoginModel;
 
-  TryLoginState(this.email);
+  TryLoginState(this.tryLoginModel);
 
   @override
-  List<Object> get props => [email];
+  List<Object> get props => [tryLoginModel];
 }
 
 class LoginSuccessState extends SignState{
@@ -42,9 +42,12 @@ class EmailInputState extends SignState{
 }
 
 class TrySendEmailState extends SignState{
+  final bool state;
+
+  TrySendEmailState(this.state);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [state];
 }
 
 class PasswordInputState extends SignState{

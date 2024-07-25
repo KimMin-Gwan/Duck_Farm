@@ -1,10 +1,11 @@
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
+import 'package:cheese/src/bloc/core_bloc/core_event.dart';
 import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/home_theme.dart';
-import 'package:cheese/src/ui/bias_following_widget.dart';
+import 'package:cheese/src/ui/home_widget/bias_following_widget.dart';
 
 // BiasWidget
 class BiasWidget extends StatefulWidget {
@@ -13,8 +14,6 @@ class BiasWidget extends StatefulWidget {
 }
 
 class _BiasState extends State<BiasWidget> {
-  final List<String> _items = ['Item 1','Item 1','Item 1','Item 1']; // 가상의 데이터 리스트
-
   final HomeTheme _style = HomeTheme(); // 테마
   final double maxWidth = 400.0;
   final double maxHeight = 900.0;
@@ -22,21 +21,9 @@ class _BiasState extends State<BiasWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double queryWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    if (queryWidth > maxWidth) {
-      queryWidth = maxWidth;
-    }
+    double queryWidth = MediaQuery.of(context).size.width;
+    double queryHeight = MediaQuery.of(context).size.height;
 
-    double queryHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
-    if (queryHeight > maxHeight) {
-      queryHeight = maxHeight;
-    }
     double mainHeight = max(
         queryHeight * 0.18, minHeight); // minHeight와 비교하여 더 큰 값을 선택
 
@@ -67,7 +54,15 @@ class _BiasState extends State<BiasWidget> {
                   Container(
                     height: 9,
                     width: 9,
-                    child: Icon(Icons.more_vert), // 오른쪽 상단에 위치하는 아이콘
+                    child: InkWell(
+                      onTap: () {
+                        BlocProvider.of<CoreBloc>(context).add(BiasListEvent());
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => BiasFollowingWidget())
+                        );
+                      },
+                      child:Icon(Icons.more_vert), // 오른쪽 상단에 위치하는 아이콘
+                    )
                   )
                 ],
               ),
@@ -110,6 +105,7 @@ class _BiasState extends State<BiasWidget> {
     if (biasId == "0000"){
       return InkWell(
         onTap: (){
+          BlocProvider.of<CoreBloc>(context).add(BiasListEvent());
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => BiasFollowingWidget())
           );
@@ -138,8 +134,11 @@ class _BiasState extends State<BiasWidget> {
         ),
       );
     }else{
-      return
-        Column(
+      return InkWell(
+        onTap: (){
+
+        },
+        child: Column(
           children: [
             Container(
               decoration: BoxDecoration(
@@ -149,7 +148,7 @@ class _BiasState extends State<BiasWidget> {
               child: CircleAvatar(
                   radius: height * 0.17, // 원의 크기 설정
                   //backgroundImage: AssetImage('images/assets/chodan.jpg'), // 이미지 경로
-                  backgroundImage: NetworkImage("https://kr.object.ncloudstorage.com/cheese-images/${url}.jpg")
+                  backgroundImage: NetworkImage("https://kr.object.ncloudstorage.com/cheese-images/T${url}.jpg")
               ),
             ),
             Padding(
@@ -160,7 +159,8 @@ class _BiasState extends State<BiasWidget> {
               ),
             )
           ],
-        );
+        )
+      );
     }
   }
 }

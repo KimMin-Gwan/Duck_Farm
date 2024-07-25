@@ -12,7 +12,7 @@ class BiasFollowingTheme extends MainTheme {
     listBoxDecoration = BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-            color: Colors.deepPurpleAccent.shade100,
+            color: Colors.grey,
             width: 0.8
         )
     );
