@@ -8,9 +8,15 @@
 222 : /Core_Controller/ -> 최애 팔로잉 데이터가 없을 때
 223 : /Core_Controller/get_bias_list -> get_bias_list 정상 반환
 
-233 : /core_system/search_images -> 이미지 검색 데이터 없음
-234 : /core_system/search_images -> 이미지 정렬 실패
-235 : /core_system/search_images -> try_search_image 정상 반환
+233 : /utility_system/search_images -> 이미지 검색 데이터 없음
+234 : /utility_system/search_images -> 이미지 정렬 실패
+235 : /utility_system/search_images -> try_search_image 정상 반환
+
+236 : /utility_system/search_bias -> 바이어스 검색 테이터 없음
+237 : /utility_system/search_bias -> 바이어스 검색 정상 반환
+
+
+
 
 251 : /sign_system/try_login -> 로그인 정상 동작
 252 : /sign_system/try_login -> password 가 다름

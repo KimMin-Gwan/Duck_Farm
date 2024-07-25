@@ -76,7 +76,7 @@ class BiasFollowModel(SampleModelTypeOne):
     def get_response_form_data(self, head_parser):
         try:
             body = {
-                "result" :  self.__result
+                "user" :  self._user.get_dict_form_data()
             }
 
             response = self._get_response_data(head_parser=head_parser, body=body)

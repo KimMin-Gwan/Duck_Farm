@@ -48,6 +48,23 @@ class Utility_Service_View(Master_View):
             response = model.get_response_form_data(self._head_parser)
             return response
 
+        # 최애 팔로우 시도(언팔 시도 )
+        @self.__app.post(endpoint+'/try_follow_bias')
+        def try_follow_bias(raw_request:dict):
+            request = TryFollowBiasRequest(request=raw_request)
+            utility_controller=Utility_Controller()
+            model = utility_controller.try_follow_bias(database=self.__database,
+                                                     request=request)
+            response = model.get_response_form_data(self._head_parser)
+            return response
+
+# 최애 팔로우 시도
+class TryFollowBiasRequest(RequestHeader):
+    def __init__(self, request) -> None:
+        super().__init__(request)
+        body = request['body']
+        self.uid = body['uid']
+        self.bid = body['bid']
 
 class ImageLikeRequest(RequestHeader):
     def __init__(self, request) -> None:
