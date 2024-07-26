@@ -13,7 +13,7 @@ def send_data():
     #url = f'http://{HOST}:{str(PORT)}/core_system/search_images'
     #url = f'http://{HOST}:{str(PORT)}/core_system/try_follow_bias'
 
-    #url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
+    url = f'http://{HOST}:{str(PORT)}/core_system/none_bias_home_data'
 
     #url = f'http://{HOST}:{str(PORT)}/utility_system/search_schedule'
     #url = f'http://{HOST}:{str(PORT)}/utility_system/search_schedule'
@@ -28,7 +28,7 @@ def send_data():
     #url = f'http://{HOST}:{str(PORT)}/core_system/bias_home_data'
     #url = f'http://{HOST}:{str(PORT)}/core_system/get_image_list_by_bias_n_schdule'
     #url = f'http://{HOST}:{str(PORT)}/core_system/upload_post'
-    url = f'http://{HOST}:{str(PORT)}/core_system/image_detail'
+    #url = f'http://{HOST}:{str(PORT)}/core_system/image_detail'
     #url = f'http://{HOST}:{str(PORT)}/utility_system/image_like_n_dislike'
 
     header = {
@@ -66,6 +66,7 @@ def send_data():
             #'password' : '1324897'
         #}
     #}
+
     #send_data = {
         #"header" : header,
         #"body" : {
@@ -92,6 +93,15 @@ def send_data():
             #'date' : '2024/05/26',
         #}
     #}
+
+    send_data = {
+        "header" : header,
+        "body" : {
+            'uid' : '1234-abcd-5678',
+            'date' : '2024/05/26',
+            'bid' : '1002'
+        }
+    }
 
     #send_data = {
         #"header" : header,
@@ -131,13 +141,13 @@ def send_data():
 
 
 
-    send_data = {
-        "header" : header,
-        "body" : {
-            'uid' : '1234-abcd-5678',
-            'iid' : '1001-1'
-        }
-    }
+    #send_data = {
+        #"header" : header,
+        #"body" : {
+            #'uid' : '1234-abcd-5678',
+            #'iid' : '1001-1'
+        #}
+    #}
 
     #send_data = {
         #"body" : {
