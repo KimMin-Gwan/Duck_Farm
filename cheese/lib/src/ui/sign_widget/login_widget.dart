@@ -39,6 +39,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             LoginBodyWidget(),
+            MiddleWidget(),
             BottomWidget(),
           ],
         ),
@@ -98,12 +99,64 @@ Widget mainTitleArea(width, height) {
   );
 }
 
-Widget mainLogoArea(width, height){
+Widget mainLogoArea(width, height) {
   return Container(
     width: 130,
     height: 130,
     color: Colors.grey,
   );
+}
+
+class MiddleWidget extends StatelessWidget {
+  MiddleWidget({super.key});
+  final LoginTheme _style = LoginTheme();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('카카오톡으로 시작하기'),
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.yellow,
+            fixedSize: _style.emailStartButtonSize,
+          ),
+        ),
+        SizedBox(height: 10,),
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('구글로 시작하기'),
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
+            fixedSize: _style.emailStartButtonSize,
+          ),
+        ),
+        SizedBox(height: 10,),
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('네이버로 시작하기'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            fixedSize: _style.emailStartButtonSize,
+          ),
+        ),
+        SizedBox(height: 40,), // 작대기 자리
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('이메일로 시작하기'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.grey,
+            foregroundColor: Colors.white,
+            fixedSize: _style.emailStartButtonSize,
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class BottomWidget extends StatefulWidget {
@@ -132,16 +185,14 @@ class _BottomWidgetState extends State<BottomWidget> {
     }
 
     return InkWell(
-        onTap: (){
+        onTap: () {
           BlocProvider.of<SignBloc>(context).add(StartSignEvent());
         },
         child: Container(
             alignment: Alignment.center,
             width: queryWidth,
             height: 100,
-            child: const Text("로그인 시도하기")
-        )
-    );
+            child: const Text("로그인 시도하기")));
   }
 }
 
