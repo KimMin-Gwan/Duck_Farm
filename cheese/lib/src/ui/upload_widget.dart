@@ -110,13 +110,13 @@ class _ImageUploadWidgetState extends State<ImageUploadWidget> {
   Widget uploadWidgetBody(width, height){
     return Column(
       children: [
-        SizedBox(
-          width: width,
-          height: height * 0.03,
-        ),
+        // SizedBox(
+        //   width: width,
+        //   height: height * 0.03,
+        // ),
         Container(
           width: width,
-          height: height * 0.08,
+          height: height * 0.11,
           color: _style.mainWhiteColor,
           child: Row(
             children: [

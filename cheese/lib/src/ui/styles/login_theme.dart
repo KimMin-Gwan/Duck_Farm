@@ -5,12 +5,14 @@ class LoginTheme extends MainTheme {
   TextStyle emailTransmitText = TextStyle();
   TextStyle remainTimeText = TextStyle();
 
+  Size emailStartButtonSize = Size(300, 50);
+
   LoginTheme() {
     emailTransmitText = TextStyle(
       shadows: [
         Shadow(
           color: Colors.grey,
-          offset: Offset(0,3),
+          offset: Offset(0, 3),
           blurRadius: 5,
         ),
       ],
