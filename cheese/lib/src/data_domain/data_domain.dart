@@ -13,7 +13,7 @@ class User extends SampleDomain {
   String birthday;
   String email;
   String nickname;
-  List<String> bids;
+  List bids;
 
   User({
     this.uid = "",

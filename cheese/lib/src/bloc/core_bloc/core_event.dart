@@ -31,12 +31,15 @@ class NoneBiasHomeDataEvent extends CoreEvent{
 
 class BiasHomeDataEvent extends CoreEvent{
   String date = DateFormat('yyyy/MM/dd').format(DateTime.now());
+  bool initFlag = false;
+
   final String bid;
 
   BiasHomeDataEvent(this.date, this.bid);
+  BiasHomeDataEvent.none_date(this.bid){initFlag = true;}
 
   @override
-  List<Object> get props => [date];
+  List<Object> get props => [date, bid];
 }
 
 class DetailImageDataEvent extends CoreEvent{
@@ -51,6 +54,18 @@ class DetailImageDataEvent extends CoreEvent{
 class BiasListEvent extends CoreEvent{
   @override
   List<Object> get props => [];
+}
+
+class ImageSearchEvent extends CoreEvent{
+  // 멤버
+  final String keyword;
+  final String ordering;
+
+  //생성자
+  ImageSearchEvent(this.keyword, this.ordering);
+
+  @override
+  List<Object> get props => [keyword, ordering];
 }
 
 class ImageListCategoryEvent extends CoreEvent{
@@ -81,6 +96,11 @@ class ImageListCategoryByScheduleEvent extends CoreEvent{
 
 
 class LoadBackwardEvent extends CoreEvent{
+  @override
+  List<Object> get props => [];
+}
+
+class CoreRefreshEvent extends CoreEvent{
   @override
   List<Object> get props => [];
 }

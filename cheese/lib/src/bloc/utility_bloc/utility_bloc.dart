@@ -62,8 +62,8 @@ class UtilityBloc extends Bloc<UtilityEvent, UtilityState> {
       //_coreStateStack.add(state);
       emit(state);
     }else{
-      var duration = const Duration(milliseconds: 150);
-      sleep(duration);
+      //var duration = const Duration(milliseconds: 150);
+      //sleep(duration);
       return;
     }
   }

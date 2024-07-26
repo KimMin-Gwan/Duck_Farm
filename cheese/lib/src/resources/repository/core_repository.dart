@@ -9,10 +9,13 @@ class CoreRepository{
 
 
   Future<HomeDataModel> fetchNoneBiasHomeData(uid, date) => coreNetworkProvider.fetchNoneBiasHome(uid, date);
+  Future<HomeDataModel> fetchBiasHomeData(uid, date, bid) => coreNetworkProvider.fetchBiasHome(uid, date, bid);
   Future<DetailImageModel> fetchDetailImageData(uid, iid) => coreNetworkProvider.fetchImageDetail(uid, iid);
   Future<BiasListModel> fetchBiasList(uid)=>coreNetworkProvider.fetchBiasList(uid);
   Future<ImageListCategoryModel> fetchImageListCategory(uid, bid, ordering, numImage)
   => coreNetworkProvider.fetchImageListCategory(uid, bid, ordering, numImage);
   Future<ImageListCategoryModel> fetchImageListCategoryBySchedule(uid, bid, sid, ordering, numImage)
   => coreNetworkProvider.fetchImageListCategoryBySchedule(uid, bid, sid, ordering, numImage);
+  Future<ImageSearchModel> fetchImageSearch(uid, keyword, ordering, numImage)
+  => coreNetworkProvider.fetchImageSearch(uid, keyword, ordering, numImage);
 }

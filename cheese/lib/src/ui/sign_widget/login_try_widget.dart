@@ -105,8 +105,6 @@ class _BodyWidgetState extends State<BodyWidget> {
 
 
   final LoginTheme _style = LoginTheme();// 테마
-  final double maxWidth = 400.0;
-  final double maxHeight = 900.0;
   bool interaction = false;
   //TextEditingController emailEditingController;
   SignEvent emailInputEvent = EmailInputEvent("");
@@ -118,14 +116,7 @@ class _BodyWidgetState extends State<BodyWidget> {
   Widget build(BuildContext context) {
     emailInputEvent = EmailInputEvent(emailEditingController.text);
     double queryWidth = MediaQuery.of(context).size.width;
-    if (queryWidth > maxWidth) {
-      queryWidth = maxWidth;
-    }
-
     double queryHeight = MediaQuery.of(context).size.height;
-    if (queryHeight > maxHeight) {
-      queryHeight = maxHeight;
-    }
 
     return Column(
       children: [

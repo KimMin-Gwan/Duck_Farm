@@ -29,6 +29,17 @@ class NoneBiasState extends CoreState{
   List<Object> get props => [homeDataModel, date];
 }
 
+class BiasState extends CoreState{
+  final HomeDataModel homeDataModel;
+  final String date;
+  final String targetBid;
+
+  BiasState(this.homeDataModel, this.date, this.targetBid);
+
+  @override
+  List<Object> get props => [homeDataModel, date, targetBid];
+}
+
 class BiasListState extends CoreState{
   final BiasListModel biasListModel;
 
@@ -63,4 +74,13 @@ class ImageListCategoryByScheduleState extends CoreState{
 
   @override
   List<Object> get props => [imageListCategoryModel];
+}
+
+class ImageSearchState extends CoreState{
+  final ImageSearchModel imageSearchModel;
+
+  ImageSearchState(this.imageSearchModel);
+
+  @override
+  List<Object> get props => [imageSearchModel];
 }

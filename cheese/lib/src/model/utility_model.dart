@@ -18,7 +18,8 @@ class SearchBiasModel extends SampleModel{
   factory SearchBiasModel.fromJson(Map data) {
     List<Bias> biasList = [];
 
-    for ( Map<String, dynamic> biasData in data['body']){
+    print(data);
+    for ( Map<String, dynamic> biasData in data['body']['biases']){
       Bias bias = Bias();
       bias.makeWithDict(biasData);
       biasList.add(bias);

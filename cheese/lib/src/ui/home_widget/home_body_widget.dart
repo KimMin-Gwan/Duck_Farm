@@ -5,7 +5,7 @@ import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:cheese/src/ui/styles/home_theme.dart';
-import 'package:cheese/src/ui/image_detail_widget.dart';
+import 'package:cheese/src/ui/image_detail/image_detail_widget.dart';
 import 'package:cheese/src/ui/image_list/image_list_category_widget.dart';
 
 // HomeBodyWidget
@@ -277,7 +277,7 @@ class _HomeBodyState2 extends State<HomeBodyWidget2> {
 
     return BlocBuilder<CoreBloc, CoreState>(
         builder: (context, state) {
-          if (state is NoneBiasState){
+          if (state is BiasState){
             if (state.homeDataModel.homeBodyData.length == 0){
               return Container(
                   child : Text("텅~!")

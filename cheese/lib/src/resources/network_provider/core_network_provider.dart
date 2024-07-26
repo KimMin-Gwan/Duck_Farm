@@ -35,6 +35,34 @@ class NoneBiasApiJsonParser extends MainJsonParser{
   Uri getUri() => this.__url;
 }
 
+class BiasApiJsonParser extends MainJsonParser{
+  final Map body = {
+    'uid' : '',
+    'date' : '',
+    'bid' : ''
+  };
+  Uri __url = Uri();
+
+  BiasApiJsonParser(String endpoint):super(){
+    __url = Uri(
+      scheme: 'http',
+      host:super.host,
+      port:super.port,
+      path:endpoint,
+    );
+  }
+
+  void makeBodyData(uid, date, bid){
+    body['uid'] = uid;
+    body['date'] = date;
+    body['bid'] = bid;
+  }
+
+  String getData() => super.makeSendData(this.body);
+
+  Uri getUri() => this.__url;
+}
+
 class BiasListApiJsonParser extends MainJsonParser{
   final Map body = {
     'uid' : '',
@@ -78,6 +106,36 @@ class ImageDetailApiJsonParser extends MainJsonParser{
   void makeBodyData(uid, iid){
     body['uid'] = uid;
     body['iid'] = iid;
+  }
+
+  String getData() => super.makeSendData(this.body);
+
+  Uri getUri() => this.__url;
+}
+
+class ImageSearchApiJsonParser extends MainJsonParser{
+  final Map body = {
+    'uid' : '',
+    'keyword' : '',
+    'ordering' : '',
+    'num_image' : 0
+  };
+  Uri __url = Uri();
+
+  ImageSearchApiJsonParser(String endpoint):super(){
+    __url = Uri(
+      scheme: 'http',
+      host:super.host,
+      port:super.port,
+      path:endpoint,
+    );
+  }
+
+  void makeBodyData(uid, keyword, ordering, numImage){
+    body['uid'] = uid;
+    body['key_word'] = keyword;
+    body['ordering'] = ordering;
+    body['numImage'] = numImage;
   }
 
   String getData() => super.makeSendData(this.body);
@@ -150,8 +208,10 @@ class ImageListCategoryByScheduleApiJsonParser extends MainJsonParser{
 
 class CoreNetworkProvider{
   final String none_bias_endpoint = '/core_system/none_bias_home_data';
+  final String biasEndpoint = '/core_system/bias_home_data';
   final String image_detail_endpoint = '/core_system/image_detail';
   final String imageListCategoryEndpoint= '/core_system/get_image_list_by_bias';
+  final String imageSearchEndpoint= '/core_system/search_images';
   final String imageListCategoryByScheduleEndpoint= '/core_system/get_image_list_by_bias_n_schedule';
   final String biasListEndpoint = '/core_system/get_bias_following';
   Client client = Client();
@@ -165,6 +225,24 @@ class CoreNetworkProvider{
         noneBiasApiJsonParser.getUri(),
         headers: {'Content-Type': 'application/json'},
         body: noneBiasApiJsonParser.getData()
+    );
+    print('request status: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      return HomeDataModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
+  Future<HomeDataModel> fetchBiasHome(String uid, String date, String bid) async {
+    BiasApiJsonParser biasApiJsonParser = BiasApiJsonParser(this.biasEndpoint);
+    biasApiJsonParser.setHeader(uid, biasEndpoint);
+    biasApiJsonParser.makeBodyData(uid, date, bid);
+
+    final response = await client.post(
+        biasApiJsonParser.getUri(),
+        headers: {'Content-Type': 'application/json'},
+        body: biasApiJsonParser.getData()
     );
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
@@ -225,6 +303,25 @@ class CoreNetworkProvider{
     print('request status: ${response.statusCode}');
     if (response.statusCode == 200) {
       return ImageListCategoryModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
+  Future<ImageSearchModel> fetchImageSearch(
+      String uid, String keyword, String ordering, int numImage) async {
+    ImageSearchApiJsonParser imageSearchApiJsonParser= ImageSearchApiJsonParser(this.imageSearchEndpoint);
+    imageSearchApiJsonParser.setHeader(uid, this.imageSearchEndpoint);
+    imageSearchApiJsonParser.makeBodyData(uid, keyword, ordering, numImage);
+
+    final response = await client.post(
+        imageSearchApiJsonParser.getUri(),
+        headers: {'Content-Type': 'application/json'},
+        body: imageSearchApiJsonParser.getData()
+    );
+    print('request status: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      return ImageSearchModel.fromJson(jsonDecode(jsonDecode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to load post');
     }

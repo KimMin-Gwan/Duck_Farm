@@ -13,55 +13,93 @@ class CoreBloc extends Bloc<CoreEvent, CoreState>{
   final List<CoreState> _coreStateStack = [];
   int numImage = 0;
   String selectedBid = "";
+  CoreEvent latestEvent = InitCoreEvent();
+  bool _refreshFlag = false;
+  CoreState _state = StartMainServiceState();
+  String targetBid = "";
 
   CoreBloc(this._userRepository, this._coreRepository) : super(StartMainServiceState()){
     on<StartMainServiceEvent>(_onStartMainServiceEvent);
     on<NoneBiasHomeDataEvent>(_onNoneBiasHomeDataEvent);
+    on<BiasHomeDataEvent>(_onBiasHomeDataEvent);
     on<DetailImageDataEvent>(_onDetailImageEvent);
     on<ImageListCategoryEvent>(_onImageListCategoryEvent);
     on<ImageListCategoryByScheduleEvent>(_onImageListCategoryByScheduleEvent);
+    on<ImageSearchEvent>(_onImageSearchEvent);
     on<LoadBackwardEvent>(_onLoadBackwardEvent);
     on<BiasListEvent>(_onBiasListEvent);
+    on<CoreRefreshEvent>(_onCoreRefreshEvent);
   }
 
-  /*
-  void _onInitHomePage(Emitter<CoreState> emit) async{
-    UserModel userModel = await _userRepository.fetchUserData();
-    _userRepository.setUserModel(userModel);
-    add(NoneBiasHomeDataEvent(_userRepository.getUserModel()));
-  }
-   */
   Future<void> _onStartMainServiceEvent(StartMainServiceEvent event, Emitter<CoreState> emit) async {
-    CoreState state = StartMainServiceState();
-    _coreStateStack.add(state);
-    emit(state);
+    latestEvent = event;
+    _state = StartMainServiceState();
+    if(!_refreshFlag){
+      _coreStateStack.add(_state);
+    }
+    _refreshFlag = false;
+    emit(_state);
   }
 
 
   Future<void> _onBiasListEvent(BiasListEvent event, Emitter<CoreState> emit) async {
+    latestEvent = event;
     BiasListModel biasListModel = await _coreRepository.fetchBiasList(_userRepository.user.uid);
-    var state = BiasListState(biasListModel);
-    _coreStateStack.add(state);
-    emit(state);
+    _state = BiasListState(biasListModel);
+    if(!_refreshFlag){
+      _coreStateStack.add(_state);
+    }
+    _refreshFlag = false;
+    emit(_state);
   }
 
   Future<void> _onNoneBiasHomeDataEvent(NoneBiasHomeDataEvent event, Emitter<CoreState> emit) async {
+    targetBid = "";
+    latestEvent = event;
     HomeDataModel homeDataModel = await _coreRepository.fetchNoneBiasHomeData(_userRepository.user.uid, event.date);
-    var state = NoneBiasState(homeDataModel, event.date);
-    _coreStateStack.add(state);
+    _state = NoneBiasState(homeDataModel, event.date);
+    if(!_refreshFlag){
+      _coreStateStack.add(_state);
+    }
+    _refreshFlag = false;
+    emit(_state);
+  }
+
+  Future<void> _onBiasHomeDataEvent(BiasHomeDataEvent event, Emitter<CoreState> emit) async {
+    if (_state is BiasState){
+      if(targetBid == event.bid && event.initFlag){
+        add(NoneBiasHomeDataEvent.none_date());
+        return;
+      }
+    }
+    latestEvent = event;
+    HomeDataModel homeDataModel = await _coreRepository
+        .fetchBiasHomeData(_userRepository.user.uid, event.date, event.bid);
+    CoreState state = BiasState(homeDataModel, event.date, event.bid);
+    if(!_refreshFlag || _state is! BiasState){
+      _coreStateStack.add(state);
+    }
+    targetBid = event.bid;
+    _state = state;
+    _refreshFlag = false;
     emit(state);
   }
 
   Future<void> _onDetailImageEvent(DetailImageDataEvent event, Emitter<CoreState> emit) async {
+    latestEvent = event;
     String iid = event.iid;
     DetailImageModel detailImageModel = await _coreRepository.fetchDetailImageData(_userRepository.user.uid, iid);
 
-    var state = DetailImageState(detailImageModel);
-    _coreStateStack.add(state);
-    emit(state);
+    _state = DetailImageState(detailImageModel);
+    if(!_refreshFlag){
+      _coreStateStack.add(_state);
+    }
+    _refreshFlag = false;
+    emit(_state);
   }
 
   Future<void> _onImageListCategoryEvent(ImageListCategoryEvent event, Emitter<CoreState> emit) async {
+    latestEvent = event;
     String bid = event.bid;
     String ordering = event.ordering;
 
@@ -71,36 +109,65 @@ class CoreBloc extends Bloc<CoreEvent, CoreState>{
 
     numImage = imageListCategoryModel.numImage;
 
-    var state = ImageListCategoryState(imageListCategoryModel);
-    _coreStateStack.add(state);
-    emit(state);
+    _state = ImageListCategoryState(imageListCategoryModel);
+    if(!_refreshFlag){
+      _coreStateStack.add(_state);
+    }
+    _refreshFlag = false;
+    emit(_state);
   }
 
   Future<void> _onImageListCategoryByScheduleEvent(ImageListCategoryByScheduleEvent event, Emitter<CoreState> emit) async {
+    latestEvent = event;
     String bid = event.bid;
     String sid = event.sid;
     String ordering = event.ordering;
 
     ImageListCategoryModel imageListCategoryModel = await _coreRepository.fetchImageListCategoryBySchedule(
         _userRepository.user.uid, bid, sid, ordering, numImage);
-    var state = ImageListCategoryByScheduleState(imageListCategoryModel);
-    _coreStateStack.add(state);
-    emit(state);
+    _state = ImageListCategoryByScheduleState(imageListCategoryModel);
+    if(!_refreshFlag){
+      _coreStateStack.add(_state);
+    }
+    _refreshFlag = false;
+    emit(_state);
+  }
+
+  Future<void> _onImageSearchEvent(ImageSearchEvent event, Emitter<CoreState> emit) async {
+    String keyword= event.keyword;
+    String ordering = event.ordering;
+
+    ImageSearchModel imageSearchModel=
+    await _coreRepository.fetchImageSearch(
+        _userRepository.user.uid, keyword, ordering, numImage);
+
+    numImage = imageSearchModel.numImage;
+
+    _state = ImageSearchState(imageSearchModel);
+    emit(_state);
   }
 
   Future<void> _onLoadBackwardEvent(LoadBackwardEvent event, Emitter<CoreState> emit) async {
+    latestEvent = event;
     numImage = 0;
-    print("hello");
+
     //print(_coreStateStack);
     _coreStateStack.removeLast();
     if (!_coreStateStack.isEmpty){
       if (_coreStateStack.last is NoneBiasState){
         add(NoneBiasHomeDataEvent.none_date());
       }
-      emit(_coreStateStack.last);
+      _state = _coreStateStack.last;
+      emit(_state);
     }else{
-      emit(InitCoreState());
+      emit(StartMainServiceState());
     }
+  }
+
+  Future<void> _onCoreRefreshEvent(CoreRefreshEvent event, Emitter<CoreState> emit) async {
+    print("Refreshing");
+    _refreshFlag = true;
+    add(latestEvent);
   }
 }
 

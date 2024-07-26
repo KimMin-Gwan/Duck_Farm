@@ -1,4 +1,8 @@
+import 'package:cheese/src/bloc/core_bloc/core_event.dart';
+import 'package:cheese/src/ui/search_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
 
 // TopBarWidget
 class TopBarWidget extends StatefulWidget {
@@ -61,7 +65,15 @@ class _BottomBarWidgetState extends State<BottomBarWidget> {
             Container(
               width: queryWidth * 0.15,
             ),
-            const Icon(Icons.search, color : Colors.white),
+            InkWell(
+              onTap: (){
+                BlocProvider.of<CoreBloc>(context).add(ImageSearchEvent("", "like"));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const SearchImagePage())
+                );
+              },
+              child: Icon(Icons.search, color : Colors.white),
+            )
           ],
         )
     );

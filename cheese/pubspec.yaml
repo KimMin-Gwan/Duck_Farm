@@ -79,6 +79,7 @@ flutter:
     - images/assets/eng_logo.png
     - images/assets/upload_button.png
     - images/assets/loading.gif
+    - images/assets/add_bias.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

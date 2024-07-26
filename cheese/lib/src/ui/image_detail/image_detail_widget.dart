@@ -1,3 +1,4 @@
+import 'package:cheese/src/ui/image_detail/original_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cheese/src/ui/styles/image_detail_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,10 +25,8 @@ class _ImageDetailWidgetState extends State<ImageDetailWidget> {
   Widget build(BuildContext context) {
     double queryWidth = MediaQuery.of(context).size.width;
     // 가로 최대 길이를 400으로 한정
-    if (queryWidth > maxWidth) { queryWidth = maxWidth; }
     double queryHeight = MediaQuery.of(context).size.height;
     // 세로 최대 길이를 1200으로  한정
-    if (queryHeight > maxHeight) { queryHeight = maxHeight; }
 
     return PopScope(
       canPop: true,
@@ -372,10 +371,14 @@ class _MiddleDetailWidgetState extends State<MiddleDetailWidget> {
   Widget imageViewArea(width, height, state){
     var model = state.detailImageModel;
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => OriginalImage(iid: model.iid))
+        );
+      },
       child: Container(
         width: width,
-        child:Image.network("https://kr.object.ncloudstorage.com/cheese-images/${model.iid}.jpg", fit:BoxFit.cover)
+        child:Image.network("https://kr.object.ncloudstorage.com/cheese-images/O${model.iid}.jpg", fit:BoxFit.cover)
       )
     );
   }

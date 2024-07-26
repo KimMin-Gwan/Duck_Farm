@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_event.dart';
 import 'package:cheese/src/bloc/core_bloc/core_state.dart';
-import 'package:cheese/src/ui/image_detail_widget.dart';
+import 'package:cheese/src/ui/image_detail/image_detail_widget.dart';
 
 class ImageListCategoryByScheduleWidget extends StatefulWidget {
   const ImageListCategoryByScheduleWidget({super.key});
@@ -386,7 +386,6 @@ class _ImageListWidgetState extends State<ImageListWidget> {
     return BlocBuilder<CoreBloc, CoreState>(
         builder: (context, state) {
       if (state is ImageListCategoryState) {
-        print("making");
         print(state.imageListCategoryModel.firstImageList);
 
         firstWidgetList = makeImageContainerList(queryWidth,
@@ -426,7 +425,25 @@ class _ImageListWidgetState extends State<ImageListWidget> {
               ],
             )
         );
+      } else if(state is ImageSearchState){
+        firstWidgetList = makeImageContainerList(queryWidth,
+            state.imageSearchModel.firstImageList);
+        secondWidgetList = makeImageContainerList(queryWidth,
+            state.imageSearchModel.secondImageList);
+        thirdWidgetList = makeImageContainerList(queryWidth,
+            state.imageSearchModel.thirdImageList);
 
+        return SingleChildScrollView(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                singleColumnImageWidget(queryWidth, firstWidgetList),
+                singleColumnImageWidget(queryWidth, secondWidgetList),
+                singleColumnImageWidget(queryWidth, thirdWidgetList)
+              ],
+            )
+        );
       }
       else{
         return Container();

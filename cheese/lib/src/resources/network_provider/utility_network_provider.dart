@@ -7,7 +7,7 @@ import 'package:cheese/src/resources/main_json_parser.dart';
 
 class SearchApiJsonParser extends MainJsonParser{
   final Map body = {
-    'keyword' : '',
+    'key_word' : '',
   };
   Uri __url = Uri();
 
@@ -21,7 +21,7 @@ class SearchApiJsonParser extends MainJsonParser{
   }
 
   void makeBodyData(String keyword){
-    body['keyword'] = keyword;
+    body['key_word'] = keyword;
   }
 
   String getData() => super.makeSendData(body);
@@ -61,7 +61,7 @@ class FollowBiasApiJsonParser extends MainJsonParser{
 class UtilityNetworkProvider {
   final String searchBiasEndpoint = '/utility_system/search_bias';
   final String searchScheduleEndpoint = '/utility_system/search_schedule';
-  final String followBiasEndpoint= '/utility_system/follow_bias';
+  final String followBiasEndpoint= '/utility_system/try_follow_bias';
   Client client = Client();
 
   Future<SearchBiasModel> fetchSearchBias(String keyword) async {

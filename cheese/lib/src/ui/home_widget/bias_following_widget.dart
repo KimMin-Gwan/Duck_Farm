@@ -25,18 +25,24 @@ class _BiasFollowingWidgetState extends State<BiasFollowingWidget> {
     double queryWidth = MediaQuery.of(context).size.width;
     double queryHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            topBarWidget(context),
-            Container(
-              height: queryHeight,
-              child: const BiasListWidget(),
-            ),
-            // AddButtonWidget(),
-          ],
-        ),
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (bool didPop){
+        BlocProvider.of<CoreBloc>(context).add(LoadBackwardEvent());
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              topBarWidget(context),
+              Container(
+                height: queryHeight,
+                child: const BiasListWidget(),
+              ),
+              // AddButtonWidget(),
+            ],
+          ),
+        )
       )
     );
   }

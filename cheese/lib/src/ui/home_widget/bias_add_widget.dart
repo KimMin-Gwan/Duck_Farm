@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:cheese/src/bloc/utility_bloc/utility_bloc.dart';
 import 'package:cheese/src/bloc/utility_bloc/utility_event.dart';
 import 'package:cheese/src/bloc/utility_bloc/utility_state.dart';
+import 'package:cheese/src/bloc/core_bloc/core_event.dart';
+import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
+
 import 'package:cheese/src/ui/styles/bias_add_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cheese/src/data_domain/data_domain.dart';
+import 'package:cheese/src/data_domain/data_domain.dart' hide Image;
 
 /*
 
@@ -123,7 +126,9 @@ class _AnimatedScrollableBottomSheetState
           if (state is InitUtilityState) {
             BlocProvider.of<UtilityBloc>(context).add(SearchBiasEvent(_textController.text));
           }else if(state is SearchBiasState){
-            _searchBiasModel = state.searchBiasModel;
+            setState(() {
+              _searchBiasModel = state.searchBiasModel;
+            });
           }
         },
       child : AnimatedContainer(
@@ -206,6 +211,8 @@ class _AnimatedScrollableBottomSheetState
                           onPressed: () {
                             BlocProvider.of<UtilityBloc>(context)
                             .add(FollowBiasEvent(bias.bid, _textController.text));
+                            BlocProvider.of<CoreBloc>(context)
+                            .add(CoreRefreshEvent());
                           },
                           style: TextButton.styleFrom(
                               foregroundColor: _searchBiasModel.followedBidList[index] ? BiasAddTheme().mainWhiteColor : BiasAddTheme().mainPurpleColor// 텍스트 색상
@@ -221,10 +228,9 @@ class _AnimatedScrollableBottomSheetState
 
             Column(
               children: [
-                Icon(
-                  Icons.chat_bubble_outline,
-                  color: BiasAddTheme().mainPurpleColor, // 아이콘 색상
-                  size: 50.0, // 아이콘 크기
+                Container(
+                  height: 55,
+                  child: Image.asset("images/assets/add_bias.png")
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 50.0), // 버튼 밖에 패딩 추가

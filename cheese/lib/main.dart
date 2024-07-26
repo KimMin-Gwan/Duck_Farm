@@ -2,15 +2,12 @@ import 'package:cheese/src/bloc/image_upload/image_upload_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cheese/src/bloc/core_bloc/core_bloc.dart';
-//import 'package:cheese/src/ui/home_widget_sample.dart';
 import 'package:cheese/src/resources/repository/user_repository.dart';
 import 'package:cheese/src/resources/repository/core_repository.dart';
 import 'package:cheese/src/resources/repository/utility_repository.dart';
 import 'package:cheese/src/bloc/core_bloc/core_state.dart';
 import 'package:cheese/src/bloc/core_bloc/core_event.dart';
 import 'package:cheese/src/bloc/sign_bloc/sign_bloc.dart';
-import 'package:cheese/src/bloc/utility_bloc/utility_state.dart';
-import 'package:cheese/src/bloc/utility_bloc/utility_event.dart';
 import 'package:cheese/src/bloc/utility_bloc/utility_bloc.dart';
 import 'package:cheese/src/ui/home_widget/home_widget.dart';
 import 'package:cheese/src/ui/sign_widget/super_sign_widget.dart';
@@ -29,6 +26,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MultiBlocProvider(
         providers: [
           BlocProvider<CoreBloc>(
@@ -56,6 +54,8 @@ class StartCheese extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double queryWidth = MediaQuery.of(context).size.width;
+    double queryHeight = MediaQuery.of(context).size.height;
       return BlocBuilder<CoreBloc, CoreState>(
         builder: (context, state) {
           if (state is InitCoreState) {
@@ -71,7 +71,7 @@ class StartCheese extends StatelessWidget {
                   child: Text("치즈를 준비합니다!")
               )
             );
-          }else if(state is NoneBiasState){
+          }else if(state is NoneBiasState || state is BiasState){
             return PopScope(
               canPop: false,
               onPopInvoked: (bool didPop){
@@ -83,11 +83,31 @@ class StartCheese extends StatelessWidget {
               )
             );
           }else{
-            return Container(
-              alignment: Alignment.center,
-              width: 300,
-              height: 300,
-              child: Text("치즈에 문제가 있나봅니다!")
+            print(state);
+            return Scaffold(
+              body: Container(
+                  alignment: Alignment.center,
+                  width: queryWidth,
+                  height: queryHeight,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("치즈에 문제가 있나봅니다!", style: TextStyle(fontSize: 22),),
+                      InkWell(
+                        onTap:(){
+                          BlocProvider.of<CoreBloc>(context).add(NoneBiasHomeDataEvent.none_date());
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(12)
+                          ),
+                          child: Text("홈으로")
+                        )
+                      )
+                    ]
+                  )
+              )
             );
           }
         },

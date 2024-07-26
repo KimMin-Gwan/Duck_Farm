@@ -1,4 +1,29 @@
 
+class ImageSearchModel{
+  final int numImage;
+  final List<dynamic> firstImageList;
+  final List<dynamic> secondImageList;
+  final List<dynamic> thirdImageList;
+
+  ImageSearchModel({
+    required this.numImage,
+    required this.firstImageList,
+    required this.secondImageList,
+    required this.thirdImageList,
+  });
+
+  // 생성자
+  factory ImageSearchModel.fromJson(Map data){
+    print(data);
+    var bodyData = data['body'];
+    return ImageSearchModel(
+      numImage: bodyData['num_image'],
+      firstImageList: bodyData['first_list'],
+      secondImageList: bodyData['second_list'],
+      thirdImageList: bodyData['third_list'],
+    );
+  }
+}
 
 class ImageListCategoryModel{
   final String bid;
